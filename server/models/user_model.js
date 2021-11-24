@@ -37,6 +37,18 @@ const deleteUserById = async (id) => {
     });
 };
 
+const deleteUserRole = async (id) => {
+  const result = `CALL delete_user_role_connection(${id});`;
+  await pool
+    .query(result)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
+};
+
 const getUserById = async (id) => {
   const userQuery = `SELECT * FROM users WHERE user_id=${id}`;
   let user = "";
@@ -53,9 +65,9 @@ const getUserById = async (id) => {
 };
 
 const createUser = async (body) => {
-  let { email, name, surname, password } = body;
+  let { email, name, surname, password, role_id } = body;
   let password_hash = getPasswordHash(email, password);
-  const newUserQuery = `CALL create_user(null, '${email}', '${name}', '${surname}', '${password_hash}');`;
+  const newUserQuery = `CALL create_user(null, '${email}', '${name}', '${surname}', '${password_hash}', ${role_id});`;
 
   let userId = null;
   await pool
@@ -75,10 +87,24 @@ const updateUser = async (body) => {
   let { user_id, email, name, surname, password } = body;
   let password_hash = getPasswordHash(email, password);
   const changeUserQuery = `CALL update_user(${user_id}, '${email}', '${name}', '${surname}', '${password_hash}');`;
-  
+
   console.log(changeUserQuery);
   await pool
     .query(changeUserQuery)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const updateUserRole = async (body) => {
+  let { id, user_id, role_id } = body;
+  const changeUserRoleQuery = `CALL update_role_connection(${id}, ${user_id}, ${role_id})`;
+
+  await pool
+    .query(changeUserRoleQuery)
     .then((res) => {
       console.log(res);
     })
@@ -93,6 +119,8 @@ module.exports = {
   deleteUserById,
   createUser,
   updateUser,
+  updateUserRole,
+  deleteUserRole
 };
 
 query();

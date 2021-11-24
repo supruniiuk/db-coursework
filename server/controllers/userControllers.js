@@ -21,12 +21,21 @@ class UserControllers {
   }
 
   async createUser(req, res) {
-    let userId = await user_model.createUser(req.bod);
+    let userId = await user_model.createUser(req.body);
     res.json(userId);
   }
 
   async updateUser(req, res) {
     res.json(await user_model.updateUser(req.body));
+  }
+
+  async updateUserRole(req, res) {
+    res.json(await user_model.updateUserRole(req.body));
+  }
+
+  async deleteUserRole(req, res) {
+    let connection_id = req.params.id;
+    res.json(await user_model.deleteUserRole(connection_id));
   }
 }
 
