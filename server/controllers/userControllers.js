@@ -21,10 +21,12 @@ class UserControllers {
   }
 
   async createUser(req, res) {
-    let { email, name, surname, password_hash } = req.body;
-    console.log(req.body);
+    let userId = await user_model.createUser(req.bod);
+    res.json(userId);
+  }
 
-    await user_model.createUser(email, name, surname, password_hash);
+  async updateUser(req, res) {
+    res.json(await user_model.updateUser(req.body));
   }
 }
 

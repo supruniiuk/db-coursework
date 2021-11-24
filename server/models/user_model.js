@@ -1,7 +1,12 @@
 const pool = require("../database");
-
+const bcrypt = require("bcryptjs");
 const query = async () => {
   await pool.connect();
+};
+
+const getPasswordHash = (email, password) => {
+  let salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(email + password, salt);
 };
 
 const getUsers = async () => {
@@ -11,14 +16,25 @@ const getUsers = async () => {
     .query(users)
     .then((res) => {
       user_table = res.rows;
-      pool.end();
     })
     .catch((err) => {
       console.log(err);
-      pool.end();
     });
 
   return user_table;
+};
+
+const deleteUserById = async (id) => {
+  //нужно сделать транзакцию так как есть зависимости на ролях
+  const result = `CALL delete_user(${id});`;
+  await pool
+    .query(result)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
 };
 
 const getUserById = async (id) => {
@@ -28,46 +44,55 @@ const getUserById = async (id) => {
     .query(userQuery)
     .then((res) => {
       user = res.rows;
-      pool.end();
     })
     .catch((err) => {
       console.log(err);
-      pool.end();
     });
 
-  return user ? user : `No user with id = ${id}`;
+  return user;
 };
 
-const deleteUserById = async (id) => {
-  //нужно сделать транзакцию так как есть зависимости на ролях
-  const result = `CALL delete_user(${id});`;
-  await pool
-    .query(result)
-    .then((res) => {
-      pool.end();
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-      pool.end();
-    });
-};
+const createUser = async (body) => {
+  let { email, name, surname, password } = body;
+  let password_hash = getPasswordHash(email, password);
+  const newUserQuery = `CALL create_user(null, '${email}', '${name}', '${surname}', '${password_hash}');`;
 
-const createUser = async (email, name, surname, password_hash) => {
-  //https://stackoverflow.com/questions/51574394/cannot-post-api-users-register
-  const newUserQuery = `CALL create_user(${email}, ${name}, ${surname}, ${password_hash});`;
+  let userId = null;
   await pool
     .query(newUserQuery)
     .then((res) => {
-      console.log(res.rows);
+      userId = res.rows;
       newUser = res.rows;
-      pool.end();
     })
     .catch((err) => {
       console.log(err);
-      pool.end();
+    });
+
+  return userId;
+};
+
+const updateUser = async (body) => {
+  let { user_id, email, name, surname, password } = body;
+  let password_hash = getPasswordHash(email, password);
+  const changeUserQuery = `CALL update_user(${user_id}, '${email}', '${name}', '${surname}', '${password_hash}');`;
+  
+  console.log(changeUserQuery);
+  await pool
+    .query(changeUserQuery)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
-module.exports = { getUsers, getUserById, deleteUserById, createUser };
+module.exports = {
+  getUsers,
+  getUserById,
+  deleteUserById,
+  createUser,
+  updateUser,
+};
 
 query();
