@@ -1,6 +1,7 @@
 const ApiError = require("../error/apiError");
 const user_model = require("../models/user_model");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const generateToken = (id, email) => {
   return jwt.sign({ user_id: id, user_email: email }, process.env.SECRET_KEY, {
@@ -9,7 +10,21 @@ const generateToken = (id, email) => {
 };
 
 class UserControllers {
-  async login() {}
+  async login(req, res, next) {
+    const { email, password } = req.body;
+    const user = await user_model.getUserByEmail(email);
+    if (!user) {
+      return next(new ApiError.internal("User undefined"));
+    }
+
+    let comparePassword = bcrypt.compare(password, user.password);
+    if (!comparePassword) {
+      return next(new ApiError.internal("User undefined"));
+    }
+
+    const token = generateToken(user.user_id, user.email);
+    return res.json(token);
+  }
 
   async registration(req, res, next) {
     const { email, password } = req.body;
@@ -30,7 +45,6 @@ class UserControllers {
 
   async getUsers(req, res) {
     let users = await user_model.getUsers();
-    console.log("users", users);
     res.json(users);
   }
 

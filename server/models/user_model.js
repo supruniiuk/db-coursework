@@ -63,14 +63,12 @@ const getUserById = async (id) => {
     .catch((err) => {
       console.log(err);
     });
-console.log(user)
   return user[0];
 };
 
 const getUserByEmail = async (email) => {
   const userQuery = `SELECT * FROM users WHERE email='${email}'`;
   let user = "";
-  console.log("userQuery",userQuery)
   await pool
     .query(userQuery)
     .then((res) => {
@@ -78,7 +76,7 @@ const getUserByEmail = async (email) => {
     })
     .catch((err) => {
       console.log(err);
-      user = false
+      user = false;
     });
 
   return user;
@@ -130,7 +128,6 @@ const updateUser = async (body) => {
   let password_hash = getPasswordHash(email, password);
   const changeUserQuery = `CALL update_user(${user_id}, '${email}', '${name}', '${surname}', '${password_hash}');`;
 
-  console.log(changeUserQuery);
   await pool
     .query(changeUserQuery)
     .then((res) => {
@@ -163,7 +160,7 @@ module.exports = {
   updateUser,
   updateUserRole,
   deleteUserRole,
-  getUserByEmail
+  getUserByEmail,
 };
 
 query();

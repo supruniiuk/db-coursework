@@ -58,7 +58,6 @@ const createCar = async (body) => {
     animals,
   } = body;
   const newCarQuery = `CALL create_car(null, ${driver_id}, '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
-  console.log(newCarQuery);
   let carId = null;
   await pool
     .query(newCarQuery)
@@ -85,7 +84,6 @@ const updateCar = async (body) => {
     animals,
   } = body;
   const changeCarQuery = `CALL update_car(${car_id}, ${driver_id}, '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
-  console.log(changeCarQuery);
   await pool
     .query(changeCarQuery)
     .then((res) => {
