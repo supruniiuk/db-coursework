@@ -1,5 +1,6 @@
 const pool = require("../database");
 const bcrypt = require("bcryptjs");
+
 const query = async () => {
   await pool.connect();
 };
@@ -8,6 +9,8 @@ const getPasswordHash = (email, password) => {
   let salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(email + password, salt);
 };
+
+const comparePassword = (email, password) => {};
 
 const getUsers = async () => {
   const users = `SELECT * FROM users`;
@@ -60,10 +63,49 @@ const getUserById = async (id) => {
     .catch((err) => {
       console.log(err);
     });
+console.log(user)
+  return user[0];
+};
+
+const getUserByEmail = async (email) => {
+  const userQuery = `SELECT * FROM users WHERE email='${email}'`;
+  let user = "";
+  console.log("userQuery",userQuery)
+  await pool
+    .query(userQuery)
+    .then((res) => {
+      user = res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err);
+      user = false
+    });
 
   return user;
 };
 
+/*const getUserByLoginInfo = async (email, password) => {
+  const userQuery = `SELECT * FROM users WHERE email='${email}'`;
+
+  console.log(userQuery);
+  let user = "";
+  await pool
+    .query(userQuery)
+    .then((res) => {
+      user = res.rows[0];
+      bcrypt.compare(password, user["password_hash"], function (err, matches) {
+        if (err) console.log("Error while checking password");
+        else if (matches) console.log("The password matches!");
+        else console.log("The password does NOT match!");
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return user;
+};
+*/
 const createUser = async (body) => {
   let { email, name, surname, password, role_id } = body;
   let password_hash = getPasswordHash(email, password);
@@ -80,7 +122,7 @@ const createUser = async (body) => {
       console.log(err);
     });
 
-  return userId;
+  return userId[0];
 };
 
 const updateUser = async (body) => {
@@ -113,7 +155,6 @@ const updateUserRole = async (body) => {
     });
 };
 
-
 module.exports = {
   getUsers,
   getUserById,
@@ -121,7 +162,8 @@ module.exports = {
   createUser,
   updateUser,
   updateUserRole,
-  deleteUserRole
+  deleteUserRole,
+  getUserByEmail
 };
 
 query();
