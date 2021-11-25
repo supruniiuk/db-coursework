@@ -113,6 +113,7 @@ const updateUserRole = async (body) => {
     });
 };
 
+
 module.exports = {
   getUsers,
   getUserById,

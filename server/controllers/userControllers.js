@@ -28,7 +28,7 @@ class UserControllers {
   async updateUser(req, res) {
     res.json(await user_model.updateUser(req.body));
   }
-
+  
   async updateUserRole(req, res) {
     res.json(await user_model.updateUserRole(req.body));
   }
