@@ -1,0 +1,23 @@
+{
+    "driver_id": 73,
+    "license_number": "FCS626",
+    "model": "Escalade Esv Luxury", 
+    "color": "white", 
+    "type_id": 1, 
+    "air_conditioning": "true",
+    "terminal": "false",
+    "empty_trunk": "true", 
+    "animals": "false"
+}
+
+{
+    "driver_id": 74,
+    "license_number": "L80GPP",
+    "model": "Accord Lx", 
+    "color": "ифдсл", 
+    "type_id": 1, 
+    "air_conditioning": "true",
+    "terminal": "true",
+    "empty_trunk": "true", 
+    "animals": "false"
+}

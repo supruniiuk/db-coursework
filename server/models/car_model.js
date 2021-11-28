@@ -49,6 +49,7 @@ const deleteCarById = async (id) => {
 const createCar = async (body) => {
   let {
     driver_id,
+    license_number,
     model,
     color,
     type_id,
@@ -57,7 +58,7 @@ const createCar = async (body) => {
     empty_trunk,
     animals,
   } = body;
-  const newCarQuery = `CALL create_car(null, ${driver_id}, '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
+  const newCarQuery = `CALL create_car(null, ${driver_id}, '${license_number}', '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
   let carId = null;
   await pool
     .query(newCarQuery)
@@ -75,6 +76,7 @@ const updateCar = async (body) => {
   let {
     car_id,
     driver_id,
+    license_number,
     model,
     color,
     type_id,
@@ -83,7 +85,7 @@ const updateCar = async (body) => {
     empty_trunk,
     animals,
   } = body;
-  const changeCarQuery = `CALL update_car(${car_id}, ${driver_id}, '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
+  const changeCarQuery = `CALL update_car(${car_id}, ${driver_id}, '${license_number}', '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
   await pool
     .query(changeCarQuery)
     .then((res) => {
