@@ -1,25 +1,117 @@
 {
     "driver_id": 73,
     "license_number": "FCS626",
-    "model": "Escalade Esv Luxury", 
-    "color": "white", 
-    "type_id": 1, 
+    "model": "Escalade Esv Luxury",
+    "color": "white",
+    "type_id": 1,
     "air_conditioning": "true",
     "terminal": "false",
-    "empty_trunk": "true", 
+    "empty_trunk": "true",
     "animals": "false"
 }
 
 {
     "driver_id": 74,
     "license_number": "L80GPP",
-    "model": "Accord Lx", 
-    "color": "ифдсл", 
-    "type_id": 1, 
+    "model": "Accord Lx",
+    "color": "ифдсл",
+    "type_id": 1,
     "air_conditioning": "true",
     "terminal": "true",
-    "empty_trunk": "true", 
+    "empty_trunk": "true",
     "animals": "false"
 }
 
-https://randomlicenseplate.com/
+https: //randomlicenseplate.com/
+
+-----users-----
+{
+    "name": "Julia",
+    "surname": "Supruniuk",
+    "email": "juliasupruniuk23@gmail.com",
+    "phone": "+380951254744",
+    "password": "timofey",
+    "role_id": 1
+}
+
+  {
+    "name": "Herman",
+    "surname": "Hayes",
+    "email": "herman.hayes@example.com",
+    "phone": "+380953756312",
+    "password": "illinois",
+    "role_id": 2
+}
+  {
+    "name": "Danny",
+    "surname": "Brewer",
+    "email": "danny.brewer@example.com",
+    "phone": "+380973451276",
+    "password": "crescent",
+    "role_id": 2
+}
+{
+    "name": "Vicki",
+    "surname": "Barrett",
+    "email": "vicki.barrett@example.com",
+    "phone": "+380972349878",
+    "password": "5424",
+    "role_id": 3
+}
+
+{
+    "name": "Katherine",
+    "surname": "Simmons",
+    "email": "katherine.simmons@example.com",
+    "phone": "+380967213491",
+    "password": "irish1",
+    "role_id": 3
+}
+{
+    "name": "Marlene",
+    "surname": "Hawkins",
+    "email": "marlene.hawkins@example.com",
+    "phone": "+380962213491",
+    "password": "mariner",
+    "role_id": 3
+}
+  {
+    "name": "Juan",
+    "surname": "Lynch",
+    "email": "juan.lynch@example.com",
+    "phone": "+380969213191",
+    "password": "toolman",
+    "role_id": 3
+}
+{
+    "name": "Cassandra",
+    "surname": "Wilson",
+    "email": "cassandra.wilson@example.com",
+    "phone": "+380941383497",
+    "password": "pedro",
+    "role_id": 4
+}
+  {
+    "name": "Ellen",
+    "surname": "Burns",
+    "email": "ellen.burns@example.com",
+    "phone": "+380912319497",
+    "password": "1945",
+    "role_id": 4
+}
+{
+    "name": "Kirk",
+    "surname": "Perkins",
+    "email": "kirk.perkins@example.com",
+    "phone": "+380991239167",
+    "password": "oranges",
+    "role_id": 4
+}
+{
+    "name": "Alexander",
+    "surname": "Morozov",
+    "email": "alexander.morozov@example.com",
+    "phone": "+380994329865",
+    "password": "darkling",
+    "role_id": 4
+}

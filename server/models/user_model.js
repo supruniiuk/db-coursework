@@ -105,16 +105,16 @@ const getUserByEmail = async (email) => {
 };
 */
 const createUser = async (body) => {
-  let { email, name, surname, password, role_id } = body;
+  let { name, surname, email, phone, password, role_id } = body;
+  console.log( name, surname, email, phone, password, role_id )
   let password_hash = getPasswordHash(email, password);
-  const newUserQuery = `CALL create_user(null, '${email}', '${name}', '${surname}', '${password_hash}', ${role_id});`;
-
+  const newUserQuery = `CALL create_user(null, '${name}', '${surname}','${email}', '${phone}', '${password_hash}', ${role_id});`;
+console.log( newUserQuery)
   let userId = null;
   await pool
     .query(newUserQuery)
     .then((res) => {
       userId = res.rows;
-      newUser = res.rows;
     })
     .catch((err) => {
       console.log(err);
@@ -124,9 +124,9 @@ const createUser = async (body) => {
 };
 
 const updateUser = async (body) => {
-  let { user_id, email, name, surname, password } = body;
+  let { name, surname, email, phone, password } = body;
   let password_hash = getPasswordHash(email, password);
-  const changeUserQuery = `CALL update_user(${user_id}, '${email}', '${name}', '${surname}', '${password_hash}');`;
+  const changeUserQuery = `CALL update_user(${user_id}, '${name}', '${surname}','${email}', '${phone}, '${password_hash}');`;
 
   await pool
     .query(changeUserQuery)
@@ -151,6 +151,8 @@ const updateUserRole = async (body) => {
       console.log(err);
     });
 };
+
+/* add role to user */
 
 module.exports = {
   getUsers,
