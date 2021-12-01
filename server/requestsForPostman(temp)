@@ -1,8 +1,8 @@
 {
-    "driver_id": 73,
-    "license_number": "FCS626",
-    "model": "Escalade Esv Luxury",
-    "color": "white",
+    "driver_id": 5,
+    "license_number": "FGX801",
+    "model": "Mitsubishi OUTLANDER",
+    "color": "black",
     "type_id": 1,
     "air_conditioning": "true",
     "terminal": "false",
@@ -11,17 +11,40 @@
 }
 
 {
-    "driver_id": 74,
-    "license_number": "L80GPP",
-    "model": "Accord Lx",
-    "color": "ифдсл",
-    "type_id": 1,
-    "air_conditioning": "true",
+    "driver_id": 6,
+    "license_number": "554740",
+    "model": "NEOPLANADVANCED",
+    "color": "white",
+    "type_id": 2,
+    "air_conditioning": "false",
     "terminal": "true",
     "empty_trunk": "true",
     "animals": "false"
 }
 
+{
+    "driver_id": 8,
+    "license_number": "JPNC80",
+    "model": "AcuraTL",
+    "color": "black",
+    "type_id": 3,
+    "air_conditioning": "true",
+    "terminal": "false",
+    "empty_trunk": "false",
+    "animals": "true"
+}
+
+{
+    "driver_id": 9,
+    "license_number": "GMZJ76",
+    "model": "NissanMaxima Platinum",
+    "color": "white",
+    "type_id": 4,
+    "air_conditioning": "true",
+    "terminal": "true",
+    "empty_trunk": "true",
+    "animals": "true"
+}
 https: //randomlicenseplate.com/
 
 -----users-----
