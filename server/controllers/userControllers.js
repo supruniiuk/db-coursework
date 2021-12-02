@@ -59,8 +59,15 @@ class UserControllers {
   }
 
   async getUsers(req, res) {
-    let users = await user_model.getUsers();
-    res.json(users);
+    let {limit, page} = req.query
+    console.log(limit, page)
+    page = page || 1
+    limit = limit || 10
+    let offset = page * limit - limit
+
+    let usersInfo = await user_model.getUsers(limit, offset);
+    
+    res.json(usersInfo);
   }
 
   async getUserById(req, res) {

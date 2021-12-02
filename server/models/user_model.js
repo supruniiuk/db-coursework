@@ -13,8 +13,25 @@ const getPasswordHash = (email, password) => {
 
 const comparePassword = (email, password) => {};
 
-const getUsers = async () => {
-  const users = `SELECT * FROM users`;
+const getPage = async () => {
+  const pageQuery = `SELECT COUNT(*) FROM users;`;
+  let page = null;
+
+  await pool
+    .query(pageQuery)
+    .then((res) => {
+      page = res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return +page.count;
+};
+
+const getUsers = async (limit_num, offset_num) => {
+  const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
+  let pages = await getPage()
 
   let user_table = [];
   await pool
@@ -26,7 +43,8 @@ const getUsers = async () => {
       console.log(err);
     });
 
-  return user_table;
+  console.log(user_table);
+  return {pages, user_table};
 };
 
 const deleteUserById = async (id) => {
