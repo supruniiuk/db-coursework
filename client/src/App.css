@@ -1,0 +1,15 @@
+.App {
+  margin: 0 auto;
+  height: 100vh;
+}
+.main-content{
+  background-color: thistle;
+
+}
+
+.Navbar {
+  height: 20vh;
+}
+.main-content {
+  height: 80vh;
+}
