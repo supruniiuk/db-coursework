@@ -1,11 +1,15 @@
 const pool = require("../database");
+const service = require("./service");
 
 const query = async () => {
   await pool.connect();
 };
 
-const getCars = async () => {
-  const cars = `SELECT * FROM cars`;
+
+const getCars = async (limit_num, offset_num) => {
+  const cars = `SELECT * FROM cars  LIMIT ${limit_num} OFFSET ${offset_num}`;
+  let pages = await service.getPages('cars')
+  
   let car_table = [];
   await pool
     .query(cars)
@@ -16,7 +20,7 @@ const getCars = async () => {
       console.log(err);
     });
 
-  return car_table;
+  return {pages, car_table};
 };
 
 const getCarById = async (id) => {

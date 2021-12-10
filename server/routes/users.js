@@ -7,6 +7,8 @@ router.get("/auth", authMiddleware, userControllers.check);
 
 router.get("/", userControllers.getUsers);
 router.get("/:id", userControllers.getUserById);
+router.get("/role/:rolename", userControllers.getUsersByRole);
+
 router.delete("/:id", userControllers.deleteUserById);
 router.post("/", userControllers.registration);
 router.put("/", userControllers.updateUser);

@@ -1,6 +1,7 @@
 const pool = require("../database");
 const bcrypt = require("bcryptjs");
 const role_model = require("./role_model");
+const service = require("./service");
 
 const query = async () => {
   await pool.connect();
@@ -13,25 +14,9 @@ const getPasswordHash = (email, password) => {
 
 const comparePassword = (email, password) => {};
 
-const getPage = async () => {
-  const pageQuery = `SELECT COUNT(*) FROM users;`;
-  let page = null;
-
-  await pool
-    .query(pageQuery)
-    .then((res) => {
-      page = res.rows[0];
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  return +page.count;
-};
-
 const getUsers = async (limit_num, offset_num) => {
   const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let pages = await getPage()
+  let pages = await service.getPages("users");
 
   let user_table = [];
   await pool
@@ -44,7 +29,7 @@ const getUsers = async (limit_num, offset_num) => {
     });
 
   console.log(user_table);
-  return {pages, user_table};
+  return { pages, user_table };
 };
 
 const deleteUserById = async (id) => {
@@ -74,6 +59,23 @@ const getUserById = async (id) => {
       console.log(err);
     });
   return user[0];
+};
+
+const getUsersByRole = async (role, limit_num, offset_num) => {
+  const query = `SELECT * FROM get_users_by_role('${role}') LIMIT ${limit_num} OFFSET ${offset_num}`;
+  const pages = await service.getPages(`get_users_by_role('${role}')`);
+  let user_table = [];
+
+  await pool
+    .query(query)
+    .then((res) => {
+      user_table = res.rows;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return { pages, user_table };
 };
 
 const getUserByEmail = async (email) => {
@@ -138,6 +140,7 @@ module.exports = {
   createUser,
   updateUser,
   getUserByEmail,
+  getUsersByRole,
 };
 
 query();
