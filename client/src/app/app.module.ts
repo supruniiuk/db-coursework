@@ -14,6 +14,7 @@ import { OrderComponent } from './components/order/order.component';
 import { DriverComponent } from './components/drivers-page/driver/driver.component';
 import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './shared/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
