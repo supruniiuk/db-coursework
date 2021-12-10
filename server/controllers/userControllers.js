@@ -59,21 +59,21 @@ class UserControllers {
   }
 
   async getUsers(req, res) {
-    let {limit, page} = req.query
-    page = page || 1
-    limit = limit || 10
-    let offset = page * limit - limit
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 10;
+    let offset = page * limit - limit;
 
     let usersInfo = await user_model.getUsers(limit, offset);
     res.json(usersInfo);
   }
 
   async getUsersByRole(req, res) {
-    let {limit, page} = req.query
-    page = page || 1
-    limit = limit || 10
-    let offset = page * limit - limit
-    let role = req.params.rolename
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 10;
+    let offset = page * limit - limit;
+    let role = req.params.rolename;
 
     let users = await user_model.getUsersByRole(role, limit, offset);
     res.json(users);
@@ -82,6 +82,7 @@ class UserControllers {
   async getUserById(req, res) {
     let userId = req.params.id;
     let user = await user_model.getUserById(userId);
+
     res.json(user);
   }
 

@@ -8,6 +8,6 @@ const orderRouter = require("./orders");
 
 router.use("/users", userRouter);
 router.use("/cars", carRouter);
-router.use("/orders", carRouter);
+router.use("/orders", orderRouter);
 
 module.exports = router;
