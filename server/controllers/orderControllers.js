@@ -52,7 +52,6 @@ class OrderControllers {
     let orderId = req.params.id;
     res.json(await order_model.gradeOrderByDriver(orderId, req.body));
   }
-
 }
 
 module.exports = new OrderControllers();

@@ -11,9 +11,4 @@ router.put("/driver/:id",orderControllers.updateOrderByDriver)
 router.put("/grade/client/:id",orderControllers.gradeOrderByClient)
 router.put("/grade/driver/:id",orderControllers.gradeOrderByDriver)
 
-/*router.get("/:id", orderControllers.getOrderById);
-router.delete("/:id", orderControllers.deleteOrderById);
-router.post("/", orderControllers.createOrder);
-router.put("/", orderControllers.updateOrder);*/
-
 module.exports = router;

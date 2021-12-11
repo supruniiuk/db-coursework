@@ -43,7 +43,7 @@ const deleteCarById = async (id) => {
   await pool
     .query(deleteCarQuery)
     .then((res) => {
-      console.log(res);
+      console.log('Car successfully deleted');
     })
     .catch((err) => {
       console.log("ERROR", err);
@@ -93,7 +93,7 @@ const updateCar = async (body) => {
   await pool
     .query(changeCarQuery)
     .then((res) => {
-      console.log(res);
+      console.log('Car successfully updated');
     })
     .catch((err) => {
       console.log(err);

@@ -3,11 +3,11 @@ const car_model = require("../models/car_model");
 
 class CarControllers {
   async getCars(req, res) {
-    let {limit, page} = req.query
-    console.log(limit, page)
-    page = page || 1
-    limit = limit || 10
-    let offset = page * limit - limit
+    let { limit, page } = req.query;
+    console.log(limit, page);
+    page = page || 1;
+    limit = limit || 10;
+    let offset = page * limit - limit;
 
     let cars = await car_model.getCars(limit, offset);
     res.json(cars);
