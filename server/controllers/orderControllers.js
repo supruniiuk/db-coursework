@@ -4,19 +4,15 @@ const service = require("../models/service");
 
 class OrderControllers {
   async getOrders(req, res) {
-    let { limit, page, user_id } = req.query;
+    let { limit, page } = req.query;
+    let { userId, userRole } = req.body;
     page = page || 1;
     limit = limit || 10;
     let offset = page * limit - limit;
 
     let orders = [];
-    if (user_id) {
-      orders = await order_model.getOrders(limit, offset);
-    } else {
-      let userInfo = service.getUserRoleFromToken(req);
-      console.log("INFO", userInfo);
-      //orders = await order_model.getOrdersByUserRole(limit, offset, user_id);
-    }
+    orders = await order_model.getOrders(limit, offset, userId, userRole);
+
     res.json(orders);
   }
 
@@ -28,17 +24,13 @@ class OrderControllers {
 
   async createOrder(req, res) {
     //сделать после создания заказа кнопку отправки неактивной!!!
-    res.json(await order_model.createOrder(req.body));
+    let userId = service.getUserIdFromToken(req);
+    res.json(await order_model.createOrder(userId, req.body));
   }
 
   async deleteOrderById(req, res) {
     let orderId = req.params.id;
     res.json(await order_model.deleteOrderById(orderId));
-  }
-
-  async updateOrderByClient(req, res) {
-    let orderId = req.params.id;
-    res.json(await order_model.updateOrderByClient(orderId, req.body));
   }
 
   async updateOrderByDispatcher(req, res) {
@@ -50,6 +42,17 @@ class OrderControllers {
     let orderId = req.params.id;
     res.json(await order_model.updateOrderByDriver(orderId, req.body));
   }
+
+  async gradeOrderByClient(req, res) {
+    let orderId = req.params.id;
+    res.json(await order_model.gradeOrderByClient(orderId, req.body));
+  }
+
+  async gradeOrderByDriver(req, res) {
+    let orderId = req.params.id;
+    res.json(await order_model.gradeOrderByDriver(orderId, req.body));
+  }
+
 }
 
 module.exports = new OrderControllers();

@@ -6,8 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const generateToken = (id, email, role) => {
-  console.log(role);
-  return jwt.sign({ id, email, role: role }, process.env.SECRET_KEY, {
+  return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
     expiresIn: "24h",
   });
 };
@@ -15,13 +14,14 @@ const generateToken = (id, email, role) => {
 class UserControllers {
   async login(req, res, next) {
     const { email, password, role } = req.body;
+
     const user = await user_model.getUserByEmail(email);
     if (!user) {
       return next(new ApiError.internal("User undefined"));
     }
 
     const is_role = await role_model.checkUserRole(user.user_id, role);
-    if (is_role) {
+    if (!is_role) {
       return next(new ApiError.internal("User undefined"));
     }
 
@@ -30,7 +30,7 @@ class UserControllers {
       return next(new ApiError.internal("User undefined"));
     }
 
-    const token = generateToken(user.user_id, user.email);
+    const token = generateToken(user.user_id, user.email, role);
     return res.json({ token });
   }
 
@@ -48,8 +48,8 @@ class UserControllers {
 
     let userId = await user_model.createUser(req.body);
     let user = await user_model.getUserById(userId.ind);
-    const token = generateToken(user.user_id, user.email, role);
 
+    const token = generateToken(user.user_id, user.email, role);
     return res.json({ token });
   }
 

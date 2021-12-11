@@ -8,7 +8,8 @@ router.delete("/:id", orderControllers.deleteOrderById);
 router.get("/:id", orderControllers.getOrderById);
 router.put("/dispatcher/:id",orderControllers.updateOrderByDispatcher)
 router.put("/driver/:id",orderControllers.updateOrderByDriver)
-router.put("/client/:id",orderControllers.updateOrderByClient)
+router.put("/grade/client/:id",orderControllers.gradeOrderByClient)
+router.put("/grade/driver/:id",orderControllers.gradeOrderByDriver)
 
 /*router.get("/:id", orderControllers.getOrderById);
 router.delete("/:id", orderControllers.deleteOrderById);

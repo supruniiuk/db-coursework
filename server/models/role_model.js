@@ -24,7 +24,7 @@ const deleteUserRole = async (id) => {
   await pool
     .query(result)
     .then((res) => {
-      console.log(res);
+      console.log('User successfully deleted!');
     })
     .catch((err) => {
       console.log("ERROR", err);
@@ -38,7 +38,7 @@ const updateUserRole = async (body) => {
   await pool
     .query(changeUserRoleQuery)
     .then((res) => {
-      console.log(res);
+      console.log('User successfully updated!');
     })
     .catch((err) => {
       console.log(err);
