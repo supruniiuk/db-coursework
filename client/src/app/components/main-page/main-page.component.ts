@@ -4,22 +4,18 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
+  constructor(private auth: AuthService) {}
 
-  constructor(private auth: AuthService) {
+  ngOnInit(): void {}
 
-   }
-
-  ngOnInit(): void {
-  }
-
-  isAuthenticated(){
+  isAuthenticated() {
     return this.auth.isAuthenticated();
   }
 
-  logout(){
+  logout() {
     this.auth.logout();
   }
 }

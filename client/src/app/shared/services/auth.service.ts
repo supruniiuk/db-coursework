@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../interfaces';
+import { User, UserRegistration } from '../interfaces';
 import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+
 interface Token {
   token: string;
 }
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient,  private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get token(): string {
     const expires = new Date(localStorage.getItem('expires'));
@@ -21,13 +23,24 @@ export class AuthService {
   }
 
   login(user: User) {
-    this.http.post('http://localhost:5000/api/users/login', user).subscribe(
+    this.http.post(`${environment.apiAddress}/users/login`, user).subscribe(
       (response: Token) => {
-        console.log(response.token);
         this.setToken(response.token);
       },
-      (err) => {
-        console.log(err);
+      (error: Error) => {
+        console.log('Login Error', error);
+      }
+    );
+  }
+
+  registration(user: UserRegistration) {
+    console.log(user);
+    this.http.post(`${environment.apiAddress}/users`, user).subscribe(
+      (response: Token) => {
+        this.setToken(response.token);
+      },
+      (error: Error) => {
+        console.log('Registration Error', error);
       }
     );
   }
@@ -43,15 +56,13 @@ export class AuthService {
   private setToken(token: string | null) {
     if (token) {
       const tokenInfo = this.getDecodedAccessToken(token);
-      const expiresIn = new Date(tokenInfo.exp*1000);
+      const expiresIn = new Date(tokenInfo.exp * 1000);
       localStorage.setItem('token', token);
       localStorage.setItem('expires', expiresIn.toString());
-      console.log("AUTH", this.isAuthenticated());
+      console.log('AUTH', this.isAuthenticated());
 
-      this.router.navigate(['/'])
-
+      this.router.navigate(['/']);
     } else {
-      console.log("hello")
       localStorage.clear();
     }
   }

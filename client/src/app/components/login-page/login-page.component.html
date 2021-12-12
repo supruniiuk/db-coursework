@@ -1,5 +1,10 @@
 <div class="auth-page bg-light">
-  <form class="p-5 w-50" [formGroup]="form" (ngSubmit)="submit()">
+  <form
+    class="p-5 w-50"
+    [formGroup]="formLogin"
+    *ngIf="getLocation() == '/login'"
+    (ngSubmit)="submit()"
+  >
     <div class="form-group">
       <label>Email address</label>
       <input
@@ -9,12 +14,14 @@
         placeholder="Enter email"
       />
 
-      <div *ngIf="form.get('email').invalid && form.get('email').touched">
-        <small *ngIf="form.get('email').errors.required">
+      <div
+        *ngIf="formLogin.get('email').invalid && formLogin.get('email').touched"
+      >
+        <small *ngIf="formLogin.get('email').errors.required">
           Field email cannot be empty
         </small>
 
-        <small *ngIf="form.get('email').errors.email">
+        <small *ngIf="formLogin.get('email').errors.email">
           Enter correct email
         </small>
       </div>
@@ -27,8 +34,12 @@
         class="form-control"
         placeholder="Password"
       />
-      <div *ngIf="form.get('password').invalid && form.get('password').touched">
-        <small *ngIf="form.get('password').errors.required">
+      <div
+        *ngIf="
+          formLogin.get('password').invalid && formLogin.get('password').touched
+        "
+      >
+        <small *ngIf="formLogin.get('password').errors.required">
           Password cannot be empty
         </small>
       </div>
@@ -43,10 +54,138 @@
         <option value="dispatcher">Dispatcher</option>
       </select>
       <div
-        *ngIf="form.get('role').invalid && form.get('role').touched"
+        *ngIf="formLogin.get('role').invalid && formLogin.get('role').touched"
         class="validation"
       >
-        <small *ngIf="form.get('password').errors.required">
+        <small *ngIf="formLogin.get('password').errors.required">
+          Please pick your role
+        </small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-dark mt-4">Submit</button>
+  </form>
+
+  <form
+    class="p-5 w-50"
+    [formGroup]="formRegistration"
+    *ngIf="getLocation() == '/registration'"
+    (ngSubmit)="submit()"
+  >
+    <div class="form-group mt-4">
+      <input
+        formControlName="name"
+        type="name"
+        class="form-control"
+        placeholder="Name"
+      />
+      <div
+        *ngIf="
+          formRegistration.get('name').invalid &&
+          formRegistration.get('name').touched
+        "
+      >
+        <small *ngIf="formRegistration.get('name').errors.required">
+          Name cannot be empty
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <input
+        formControlName="surname"
+        type="surname"
+        class="form-control"
+        placeholder="Surname"
+      />
+      <div
+        *ngIf="
+          formRegistration.get('surname').invalid &&
+          formRegistration.get('surname').touched
+        "
+      >
+        <small *ngIf="formRegistration.get('surname').errors.required">
+          Surname cannot be empty
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <input
+        formControlName="phone"
+        type="phone"
+        class="form-control"
+        placeholder="Phone"
+      />
+      <div
+        *ngIf="
+          formRegistration.get('phone').invalid &&
+          formRegistration.get('phone').touched
+        "
+      >
+        <small *ngIf="formRegistration.get('phone').errors.required">
+          Phone cannot be empty
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        placeholder="Email"
+      />
+
+      <div
+        *ngIf="
+          formRegistration.get('email').invalid &&
+          formRegistration.get('email').touched
+        "
+      >
+        <small *ngIf="formRegistration.get('email').errors.required">
+          Field email cannot be empty
+        </small>
+
+        <small *ngIf="formRegistration.get('email').errors.email">
+          Enter correct email
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Password"
+      />
+      <div
+        *ngIf="
+          formRegistration.get('password').invalid &&
+          formRegistration.get('password').touched
+        "
+      >
+        <small *ngIf="formRegistration.get('password').errors.required">
+          Password cannot be empty
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <select formControlName="role" class="form-select">
+        <option value="" disabled selected>Passenger or Driver?</option>
+        <option value="client">Passenger</option>
+        <option value="driver">Driver</option>
+      </select>
+      <div
+        *ngIf="
+          formRegistration.get('role').invalid &&
+          formRegistration.get('role').touched
+        "
+        class="validation"
+      >
+        <small *ngIf="formRegistration.get('password').errors.required">
           Please pick your role
         </small>
       </div>
