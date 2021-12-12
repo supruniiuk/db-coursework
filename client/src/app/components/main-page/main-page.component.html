@@ -28,13 +28,27 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <button
+          *ngIf="!isAuthenticated()"
           class="btn btn-dark btn-space btn-margin"
           [routerLink]="['/login']"
         >
           Login
         </button>
-        <button class="btn btn-dark" [routerLink]="['/registration']">
+        <button
+          class="btn btn-dark"
+          *ngIf="!isAuthenticated()"
+          [routerLink]="['/registration']"
+        >
           Register
+        </button>
+
+        <button
+          class="btn btn-dark"
+          (click)="logout()"
+          *ngIf="isAuthenticated()"
+          [routerLink]="['/']"
+        >
+          Logout
         </button>
       </form>
     </div>

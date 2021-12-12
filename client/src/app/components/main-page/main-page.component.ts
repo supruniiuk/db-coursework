@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-main-page',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService) {
+
+   }
 
   ngOnInit(): void {
   }
 
+  isAuthenticated(){
+    return this.auth.isAuthenticated();
+  }
+
+  logout(){
+    this.auth.logout();
+  }
 }

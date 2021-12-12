@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginPageComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl(null, [Validators.required]),
@@ -23,21 +24,26 @@ export class LoginPageComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      console.log(this.form.value);
-      console.log('Form: ', this.form);
       const formData = { ...this.form.value };
 
-      console.log('Form Data:', formData);
-      if (location.pathname == '/login') this.login();
+      if (location.pathname == '/login'){
+        this.login(formData);
+      }
     } else if (location.pathname == '/registration') {
       this.registration();
     }
   }
 
-  login() {
-    let userLogin: User = this.form.value;
-    this.auth.login(userLogin);
+  login(authData: User) {
+    this.auth.login(authData);
   }
+
+  logout(event: Event) {
+    event.preventDefault();
+    this.auth.logout();
+    this.router.navigate(['/'])
+  }
+
   registration() {
     console.log('registration');
   }

@@ -2,17 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../interfaces';
 import jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
 interface Token {
   token: string;
 }
 
-
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,  private router: Router) {}
 
   get token(): string {
-    return '';
+    const expires = new Date(localStorage.getItem('expires'));
+    if (new Date() > expires) {
+      this.logout();
+      return null;
+    }
+    return localStorage.getItem('token');
   }
 
   login(user: User) {
@@ -27,24 +32,35 @@ export class AuthService {
     );
   }
 
-  logout() {}
+  logout() {
+    this.setToken(null);
+  }
 
   isAuthenticated(): boolean {
     return !!this.token;
   }
 
-  private setToken(token: string) {
-    const tokenInfo = this.getDecodedAccessToken(token);
-    console.log(tokenInfo);
-    localStorage.setItem('currentUser', token);
+  private setToken(token: string | null) {
+    if (token) {
+      const tokenInfo = this.getDecodedAccessToken(token);
+      const expiresIn = new Date(tokenInfo.exp*1000);
+      localStorage.setItem('token', token);
+      localStorage.setItem('expires', expiresIn.toString());
+      console.log("AUTH", this.isAuthenticated());
+
+      this.router.navigate(['/'])
+
+    } else {
+      console.log("hello")
+      localStorage.clear();
+    }
   }
 
-  private getDecodedAccessToken(token: string): any {
-    try{
-        return jwt_decode(token);
-    }
-    catch(Error){
-        return null;
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
     }
   }
 }
