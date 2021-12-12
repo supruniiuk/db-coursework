@@ -17,17 +17,17 @@ class UserControllers {
 
     const user = await user_model.getUserByEmail(email);
     if (!user) {
-      return next(new ApiError.internal("User undefined"));
+      return next(ApiError.internal("User undefined"));
     }
 
     const is_role = await role_model.checkUserRole(user.user_id, role);
     if (!is_role) {
-      return next(new ApiError.internal("User undefined"));
+      return next(ApiError.internal("User undefined"));
     }
 
     let comparePassword = bcrypt.compare(password, user.password_hash);
     if (!comparePassword) {
-      return next(new ApiError.internal("User undefined"));
+      return next(ApiError.internal("User undefined"));
     }
 
     const token = generateToken(user.user_id, user.email, role);
@@ -37,13 +37,13 @@ class UserControllers {
   async registration(req, res, next) {
     const { email, password, role } = req.body;
     if (!email || !password || !role) {
-      return next(new ApiError.badRequest("Incorrect email or password"));
+      return next(ApiError.badRequest("Incorrect email or password"));
     }
 
     /* а тут надо проверка на роль, потому что можно много ролей иметь*/
     const checkExisting = await user_model.getUserByEmail(email);
     if (checkExisting) {
-      return next(new ApiError.badRequest("User already exists"));
+      return next(ApiError.badRequest("User already exists"));
     }
 
     let userId = await user_model.createUser(req.body);
