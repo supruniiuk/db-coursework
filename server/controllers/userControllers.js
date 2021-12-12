@@ -25,7 +25,7 @@ class UserControllers {
       return next(new ApiError.internal("User undefined"));
     }
 
-    let comparePassword = bcrypt.compare(password, user.password);
+    let comparePassword = bcrypt.compare(password, user.password_hash);
     if (!comparePassword) {
       return next(new ApiError.internal("User undefined"));
     }
