@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/shared/interfaces';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -9,7 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginPageComponent implements OnInit {
   form: FormGroup;
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl(null, [Validators.required]),
@@ -33,7 +35,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
-    console.log('login');
+    let userLogin: User = this.form.value;
+    this.auth.login(userLogin);
   }
   registration() {
     console.log('registration');

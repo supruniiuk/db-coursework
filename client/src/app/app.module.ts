@@ -15,6 +15,7 @@ import { DriverComponent } from './components/drivers-page/driver/driver.compone
 import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './shared/services/auth.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AuthService } from './shared/services/auth.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
