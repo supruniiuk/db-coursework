@@ -8,7 +8,7 @@ const query = async () => {
 
 const getCars = async (limit_num, offset_num) => {
   const cars = `SELECT * FROM cars  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let pages = await pageService.getPages('cars')
+  let count = await pageService.getCount('cars')
   
   let car_table = [];
   await pool
@@ -20,7 +20,7 @@ const getCars = async (limit_num, offset_num) => {
       console.log(err);
     });
 
-  return {pages, car_table};
+  return {count, car_table};
 };
 
 const getCarById = async (id) => {

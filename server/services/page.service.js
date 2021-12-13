@@ -5,39 +5,24 @@ const query = async () => {
   await pool.connect();
 };
 
-const getPages = async (table) => {
+const getCount = async (table) => {
   const pageQuery = `SELECT COUNT(*) FROM ${table};`;
-  let page = null;
+  let objects = null;
 
   await pool
     .query(pageQuery)
     .then((res) => {
-      page = res.rows[0];
+      objects = res.rows[0];
     })
     .catch((err) => {
       console.log(err);
     });
 
-  return +page.count;
-};
-
-const getUserRoleFromToken = (req) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
-  return decoded.roleId;
-};
-
-
-const getUserIdFromToken = (req) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
-  return decoded.id;
+  return +objects.count;
 };
 
 module.exports = {
-  getPages,
-  getUserRoleFromToken,
-  getUserIdFromToken
+  getCount,
 };
 
 query();

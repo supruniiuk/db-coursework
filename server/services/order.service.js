@@ -16,7 +16,7 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
     orders = `SELECT * FROM orders WHERE client_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
   }
 
-  let pages = await pageService.getPages("orders");
+  let count = await pageService.getCount("orders");
 
   let order_table = [];
   await pool
@@ -28,7 +28,7 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
       console.log(err);
     });
 
-  return { pages, order_table };
+  return { count, order_table };
 };
 
 const getOrderById = async (id) => {

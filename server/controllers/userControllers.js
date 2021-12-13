@@ -71,7 +71,7 @@ class UserControllers {
   async getUsersByRole(req, res) {
     let { limit, page } = req.query;
     page = page || 1;
-    limit = limit || 10;
+    limit = limit || 5;
     let offset = page * limit - limit;
     let role = req.params.rolename;
 

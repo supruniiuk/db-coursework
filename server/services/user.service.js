@@ -14,7 +14,7 @@ const getPasswordHash = (email, password) => {
 
 const getUsers = async (limit_num, offset_num) => {
   const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let pages = await pageService.getPages("users");
+  let count = await pageService.getCount("users");
 
   let user_table = [];
   await pool
@@ -27,7 +27,7 @@ const getUsers = async (limit_num, offset_num) => {
     });
 
   console.log(user_table);
-  return { pages, user_table };
+  return { count, user_table };
 };
 
 const deleteUserById = async (id) => {
@@ -60,20 +60,20 @@ const getUserById = async (id) => {
 };
 
 const getUsersByRole = async (role, limit_num, offset_num) => {
-  const query = `SELECT * FROM get_users_by_role('${role}') LIMIT ${limit_num} OFFSET ${offset_num}`;
-  const pages = await pageService.getPages(`get_users_by_role('${role}')`);
-  let user_table = [];
+  const query = `SELECT user_id, name, surname, email, phone, created_on FROM get_users_by_role('${role}') LIMIT ${limit_num} OFFSET ${offset_num}`;
+  const count = await pageService.getCount(`get_users_by_role('${role}')`);
+  let users = [];
 
   await pool
     .query(query)
     .then((res) => {
-      user_table = res.rows;
+      users = res.rows;
     })
     .catch((err) => {
       console.log(err);
     });
 
-  return { pages, user_table };
+  return { count, users };
 };
 
 const getUserByEmail = async (email) => {
