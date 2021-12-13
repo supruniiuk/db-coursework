@@ -15,16 +15,21 @@ import { DriverComponent } from './components/drivers-page/driver/driver.compone
 import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './shared/services/auth.service';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { AuthGuard } from './shared/services/auth.guard';
-import { AuthInterceptor } from './shared/auth.interceptor';
-
+import { AuthInterceptor } from './shared/services/auth.interceptor';
+import { ClientsService } from './components/clients-page/clients.service';
+import { RequestService } from './shared/services/request.service';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
   multi: true,
-  useClass: AuthInterceptor
-}
+  useClass: AuthInterceptor,
+};
 
 @NgModule({
   declarations: [
@@ -38,16 +43,16 @@ const INTERCEPTOR_PROVIDER: Provider = {
     ClientComponent,
     OrderComponent,
     DriverComponent,
-    DispatcherComponent
+    DispatcherComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [AuthService, AuthGuard, INTERCEPTOR_PROVIDER],
-  bootstrap: [AppComponent]
+  providers: [INTERCEPTOR_PROVIDER, AuthService, AuthGuard, RequestService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
