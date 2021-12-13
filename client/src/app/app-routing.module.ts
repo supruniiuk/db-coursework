@@ -14,6 +14,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrdersPageComponent } from './components/orders-page/orders-page.component';
+import { AuthGuard } from './shared/services/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,16 +27,22 @@ const routes: Routes = [
       {
         path: 'clients',
         component: ClientsPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin', 'dispatcher'] },
         children: [{ path: 'clients/:id', component: ClientComponent }],
       },
       {
         path: 'drivers',
         component: DriversPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin', 'dispatcher'] },
         children: [{ path: 'drivers/:id', component: DriverComponent }],
       },
       {
         path: 'dispatchers',
         component: DispatchersPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin'] },
         children: [
           { path: 'dispatchers/:id', component: DispatchersPageComponent },
         ],
@@ -43,6 +50,8 @@ const routes: Routes = [
       {
         path: 'orders',
         component: OrdersPageComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin', 'dispatcher', 'client', 'driver'] },
         children: [{ path: 'orders/:id', component: OrderComponent }],
       },
     ],
@@ -51,8 +60,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes,
-    { preloadingStrategy: PreloadAllModules}),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
 })

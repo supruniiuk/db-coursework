@@ -11,19 +11,22 @@
       id="navbarText"
     >
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#" [routerLink]="['/clients']">Clients</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#"  *ngIf="role" [routerLink]="['/info']">Info</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" [routerLink]="['/dispatchers']"
+          <a class="nav-link" href="#"  *ngIf="role=='admin' || role=='dispatcher'" [routerLink]="['/clients']">Clients</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" *ngIf="role=='admin'" [routerLink]="['/dispatchers']"
             >Dispatchers</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" [routerLink]="['/drivers']">Drivers</a>
+          <a class="nav-link" href="#" *ngIf="role=='admin' || role=='dispatcher'" [routerLink]="['/drivers']">Drivers</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" [routerLink]="['/orders']">Orders</a>
+          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/orders']">Orders</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -46,7 +49,7 @@
           class="btn btn-dark"
           (click)="logout()"
           *ngIf="isAuthenticated()"
-          [routerLink]="['/']"
+          [routerLink]="['/#']"
         >
           Logout
         </button>

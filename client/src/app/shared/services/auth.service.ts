@@ -74,4 +74,10 @@ export class AuthService {
       return null;
     }
   }
+
+  getUserRole(): string {
+    let token = localStorage.getItem('token');
+    let info = this.getDecodedAccessToken(token);
+    return info.role;
+  }
 }
