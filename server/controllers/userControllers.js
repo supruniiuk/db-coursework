@@ -1,6 +1,6 @@
 const ApiError = require("../error/apiError");
-const user_model = require("../models/user_model");
-const role_model = require("../models/role_model");
+const user_model = require("../services/user.service");
+const role_model = require("../services/role.service");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");

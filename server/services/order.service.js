@@ -1,6 +1,6 @@
 const pool = require("../database");
-const service = require("./service");
-const role_model = require("./role_model");
+const pageService = require("./page.service");
+const role_model = require("./role.service");
 
 const query = async () => {
   await pool.connect();
@@ -16,7 +16,7 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
     orders = `SELECT * FROM orders WHERE client_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
   }
 
-  let pages = await service.getPages("orders");
+  let pages = await pageService.getPages("orders");
 
   let order_table = [];
   await pool

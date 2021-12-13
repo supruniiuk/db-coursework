@@ -1,6 +1,6 @@
 const ApiError = require("../error/apiError");
-const order_model = require("../models/order_model");
-const service = require("../models/service");
+const order_model = require("../services/order.service");
+const tokenService = require("../services/token.service");
 
 class OrderControllers {
   async getOrders(req, res) {
@@ -24,7 +24,7 @@ class OrderControllers {
 
   async createOrder(req, res) {
     //сделать после создания заказа кнопку отправки неактивной!!!
-    let userId = service.getUserIdFromToken(req);
+    let userId = tokenService.getUserIdFromToken(req);
     res.json(await order_model.createOrder(userId, req.body));
   }
 

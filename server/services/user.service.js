@@ -1,7 +1,7 @@
 const pool = require("../database");
 const bcrypt = require("bcryptjs");
-const role_model = require("./role_model");
-const service = require("./service");
+const role_model = require("./role.service");
+const pageService = require("./page.service");
 
 const query = async () => {
   await pool.connect();
@@ -14,7 +14,7 @@ const getPasswordHash = (email, password) => {
 
 const getUsers = async (limit_num, offset_num) => {
   const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let pages = await service.getPages("users");
+  let pages = await pageService.getPages("users");
 
   let user_table = [];
   await pool
@@ -61,7 +61,7 @@ const getUserById = async (id) => {
 
 const getUsersByRole = async (role, limit_num, offset_num) => {
   const query = `SELECT * FROM get_users_by_role('${role}') LIMIT ${limit_num} OFFSET ${offset_num}`;
-  const pages = await service.getPages(`get_users_by_role('${role}')`);
+  const pages = await pageService.getPages(`get_users_by_role('${role}')`);
   let user_table = [];
 
   await pool

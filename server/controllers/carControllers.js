@@ -1,5 +1,5 @@
 const ApiError = require("../error/apiError");
-const car_model = require("../models/car_model");
+const car_model = require("../services/car.service");
 
 class CarControllers {
   async getCars(req, res) {
