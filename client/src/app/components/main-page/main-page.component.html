@@ -1,6 +1,6 @@
 <div class="home">
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-warning pt-4 ps-5 pe-5 pb-4"
+    class="navbar navbar-expand-lg navbar-light bg-warning"
   >
     <a class="navbar-brand" href="#">TaxiCall</a>
     <button class="navbar-toggler" type="button">
@@ -56,6 +56,15 @@
       </form>
     </div>
   </nav>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="page-footer font-small bg-warning">
+    <div class="footer-copyright text-center py-3">©2021 Copyright:
+      <a href="https://github.com/supruniiuk/db-coursework">Yuliia Supruniuk</a>
+    </div>
+  </footer>
 </div>
 
-<router-outlet></router-outlet>

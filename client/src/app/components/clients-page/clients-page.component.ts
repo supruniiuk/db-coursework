@@ -16,9 +16,9 @@ export class ClientsPageComponent implements OnInit {
     this.getClients(this.page);
   }
 
-  getClients(page){
+  getClients(page) {
     this.clientService.getClients(page).subscribe((res: any) => {
-      this.pages = Math.ceil(res.count / 5);
+      this.pages = Math.ceil(res.count / 10);
       this.clients = res.users;
       console.log(this.pages);
     }),

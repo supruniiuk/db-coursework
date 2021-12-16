@@ -1,6 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
 .wrapper {
-  padding: 20px 300px;
+  padding: 20px 250px;
+}
+
+body {
+  margin-bottom: 100px;
 }
 
 a {
