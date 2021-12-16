@@ -10,7 +10,8 @@
       class="collapse navbar-collapse d-flex justify-content-between"
       id="navbarText"
     >
-      <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" *ngIf="!isAuthenticated()"></ul>
+      <ul class="navbar-nav mr-auto" *ngIf="isAuthenticated()">
         <li class="nav-item">
           <a class="nav-link" href="#"  *ngIf="role" [routerLink]="['/info']">Info</a>
         </li>
@@ -49,7 +50,7 @@
           class="btn btn-dark"
           (click)="logout()"
           *ngIf="isAuthenticated()"
-          [routerLink]="['/#']"
+          [routerLink]="['/']"
         >
           Logout
         </button>
@@ -58,6 +59,9 @@
   </nav>
 
   <main class="wrapper">
+    <div *ngIf='!isLogin' class="alert alert-success" role="alert">
+     {{isLogin}}
+    </div>
     <router-outlet></router-outlet>
   </main>
 

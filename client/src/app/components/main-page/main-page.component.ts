@@ -8,10 +8,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class MainPageComponent implements OnInit {
   role: string = '';
+  isLogin: boolean = false;
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.role = this.auth.getUserRole();
+    this.isLogin = this.isAuthenticated();
+    if (this.isLogin) {
+      this.role = this.auth.getUserRole();
+    }
   }
 
   isAuthenticated() {
