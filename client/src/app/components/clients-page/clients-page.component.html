@@ -1,4 +1,4 @@
-<div class="clients-page page">
+<div *ngIf="!errorMessage" class="clients-page page">
   <h2>Clients</h2>
   <div class="alert alert-warning" role="alert">
     Total number of clients: {{ count }}
@@ -64,4 +64,11 @@
       </li>
     </ul>
   </nav>
+</div>
+
+<div *ngIf="errorMessage">
+  <div class="alert alert-danger error" role="alert">
+    <h3>Error</h3>
+    <p>{{ errorMessage.name }}: {{ errorMessage.statusText }}</p>
+  </div>
 </div>

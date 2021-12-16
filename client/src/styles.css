@@ -28,3 +28,7 @@ a, tr {
 .alert{
   width: 500px;
 }
+
+.error{
+  width: 700px;
+}

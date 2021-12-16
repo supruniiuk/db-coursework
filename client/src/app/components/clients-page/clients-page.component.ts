@@ -7,6 +7,7 @@ import { UserInfo, UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./clients-page.component.css'],
 })
 export class ClientsPageComponent implements OnInit {
+  errorMessage
   clients: UserInfo[] = [];
   page = 1;
   pages = 0;
@@ -26,7 +27,7 @@ export class ClientsPageComponent implements OnInit {
         console.log(this.pages);
       },
       (err) => {
-        console.log(err);
+        this.errorMessage = err;
       }
     );
   }
@@ -39,6 +40,7 @@ export class ClientsPageComponent implements OnInit {
       },
       (err) => {
         console.log(err);
+        this.errorMessage = err;
       }
     );
   }
