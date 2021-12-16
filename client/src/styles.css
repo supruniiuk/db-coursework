@@ -6,6 +6,25 @@ body {
   margin-bottom: 100px;
 }
 
-a {
+a, tr {
   cursor: pointer;
+}
+
+
+.page h2 {
+  margin-bottom: 100px;
+}
+
+.page .actions {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.page .actions svg:hover {
+  transform: scale(1.2);
+}
+
+.alert{
+  width: 500px;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Client, ClientsService, UsersResponse } from './clients.service';
+import { UserInfo, UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-clients-page',
@@ -7,23 +7,39 @@ import { Client, ClientsService, UsersResponse } from './clients.service';
   styleUrls: ['./clients-page.component.css'],
 })
 export class ClientsPageComponent implements OnInit {
-  clients: Client[] = [];
+  clients: UserInfo[] = [];
   page = 1;
   pages = 0;
-  constructor(private clientService: ClientsService) {}
+  count = 0;
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.getClients(this.page);
   }
 
   getClients(page) {
-    this.clientService.getClients(page).subscribe((res: any) => {
-      this.pages = Math.ceil(res.count / 10);
-      this.clients = res.users;
-      console.log(this.pages);
-    }),
+    this.userService.getUsers(page, 'client').subscribe(
+      (res: any) => {
+        this.count = res.count;
+        this.pages = Math.ceil(this.count / 10);
+        this.clients = res.users;
+        console.log(this.pages);
+      },
       (err) => {
         console.log(err);
-      };
+      }
+    );
+  }
+
+  deleteClientById(id) {
+    this.userService.deleteUserById(id).subscribe(
+      () => {
+        this.clients = this.clients.filter((client) => client.user_id != id);
+        console.log('success');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

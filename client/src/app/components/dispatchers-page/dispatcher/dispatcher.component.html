@@ -1,1 +1,15 @@
-<p>dispatcher works!</p>
+<div class="dispatcher-page">
+  <div class="alert alert-dark" role="alert">
+    <h4 class="alert-heading">
+      {{ dispatcher.name + " " + dispatcher.surname }}
+    </h4>
+
+    <p>Email: {{ dispatcher.email }}</p>
+    <p>Phone: {{ dispatcher.phone }}</p>
+    <p>
+      Date of joining: {{ dispatcher.created_on | date: "MM/dd/yy, h:mm a" }}
+    </p>
+    <hr />
+    <p class="mb-0">Total rides: 120</p>
+  </div>
+</div>

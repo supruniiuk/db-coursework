@@ -1,1 +1,13 @@
-<p>client works!</p>
+<div class="client-page">
+  <div class="alert alert-dark" role="alert">
+    <h4 class="alert-heading">{{ client.name + " " + client.surname }}</h4>
+
+    <p>Email:  {{ client.email }}</p>
+    <p>Phone:  {{ client.phone }}</p>
+    <p>Date of joining:  {{ client.created_on | date: "MM/dd/yy, h:mm a" }}</p>
+    <hr />
+    <p class="mb-0">
+      Total rides: 120
+    </p>
+  </div>
+</div>

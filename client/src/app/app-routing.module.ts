@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { ClientComponent } from './components/clients-page/client/client.component';
 import { ClientsPageComponent } from './components/clients-page/clients-page.component';
+import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { DispatchersPageComponent } from './components/dispatchers-page/dispatchers-page.component';
 import { DriverComponent } from './components/drivers-page/driver/driver.component';
 import { DriversPageComponent } from './components/drivers-page/drivers-page.component';
@@ -28,25 +29,23 @@ const routes: Routes = [
         path: 'clients',
         component: ClientsPageComponent,
         canActivate: [AuthGuard],
-        data: { allowedRoles: ['admin', 'dispatcher'] },
-        children: [{ path: 'clients/:id', component: ClientComponent }],
+        data: { allowedRoles: ['admin', 'dispatcher'] }
       },
+      { path: 'clients/:id', component: ClientComponent },
       {
         path: 'drivers',
         component: DriversPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher'] },
-        children: [{ path: 'drivers/:id', component: DriverComponent }],
       },
+      { path: 'drivers/:id', component: DriverComponent },
       {
         path: 'dispatchers',
         component: DispatchersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin'] },
-        children: [
-          { path: 'dispatchers/:id', component: DispatchersPageComponent },
-        ],
       },
+      { path: 'dispatchers/:id', component: DispatcherComponent },
       {
         path: 'orders',
         component: OrdersPageComponent,

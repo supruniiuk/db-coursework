@@ -22,7 +22,6 @@ import {
 } from '@angular/common/http';
 import { AuthGuard } from './shared/services/auth.guard';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
-import { ClientsService } from './components/clients-page/clients.service';
 import { RequestService } from './shared/services/request.service';
 
 const INTERCEPTOR_PROVIDER: Provider = {

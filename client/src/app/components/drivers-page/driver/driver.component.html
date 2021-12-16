@@ -1,1 +1,11 @@
-<p>driver works!</p>
+<div class="driver-page">
+  <div class="alert alert-dark" role="alert">
+    <h4 class="alert-heading">{{ driver.name + " " + driver.surname }}</h4>
+
+    <p>Email: {{ driver.email }}</p>
+    <p>Phone: {{ driver.phone }}</p>
+    <p>Date of joining: {{ driver.created_on | date: "MM/dd/yy, h:mm a" }}</p>
+    <hr />
+    <p class="mb-0">Total rides: 120</p>
+  </div>
+</div>
