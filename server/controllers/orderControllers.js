@@ -1,5 +1,5 @@
 const ApiError = require("../error/apiError");
-const order_model = require("../services/order.service");
+const orderService = require("../services/order.service");
 const tokenService = require("../services/token.service");
 
 class OrderControllers {
@@ -11,46 +11,46 @@ class OrderControllers {
     let offset = page * limit - limit;
 
     let orders = [];
-    orders = await order_model.getOrders(limit, offset, userId, userRole);
+    orders = await orderService.getOrders(limit, offset, userId, userRole);
 
     res.json(orders);
   }
 
   async getOrderById(req, res) {
     let orderId = req.params.id;
-    let order = await order_model.getOrderById(orderId);
+    let order = await orderService.getOrderById(orderId);
     res.json(order);
   }
 
   async createOrder(req, res) {
     //сделать после создания заказа кнопку отправки неактивной!!!
     let userId = tokenService.getUserIdFromToken(req);
-    res.json(await order_model.createOrder(userId, req.body));
+    res.json(await orderService.createOrder(userId, req.body));
   }
 
   async deleteOrderById(req, res) {
     let orderId = req.params.id;
-    res.json(await order_model.deleteOrderById(orderId));
+    res.json(await orderService.deleteOrderById(orderId));
   }
 
   async updateOrderByDispatcher(req, res) {
     let orderId = req.params.id;
-    res.json(await order_model.updateOrderByDispatcher(orderId, req.body));
+    res.json(await orderService.updateOrderByDispatcher(orderId, req.body));
   }
 
   async updateOrderByDriver(req, res) {
     let orderId = req.params.id;
-    res.json(await order_model.updateOrderByDriver(orderId, req.body));
+    res.json(await orderService.updateOrderByDriver(orderId, req.body));
   }
 
   async gradeOrderByClient(req, res) {
     let orderId = req.params.id;
-    res.json(await order_model.gradeOrderByClient(orderId, req.body));
+    res.json(await orderService.gradeOrderByClient(orderId, req.body));
   }
 
   async gradeOrderByDriver(req, res) {
     let orderId = req.params.id;
-    res.json(await order_model.gradeOrderByDriver(orderId, req.body));
+    res.json(await orderService.gradeOrderByDriver(orderId, req.body));
   }
 }
 

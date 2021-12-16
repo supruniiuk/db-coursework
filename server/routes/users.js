@@ -3,6 +3,7 @@ const router = new Router();
 const userControllers = require("../controllers/userControllers");
 const authMiddleware = require("../middleware/authMiddleware");
 
+
 router.get("/auth", authMiddleware, userControllers.check);
 
 router.get("/", userControllers.getUsers);
