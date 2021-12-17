@@ -69,13 +69,13 @@ const checkUserRole = async (userId, role) => {
 const getUserRolesById = async (userId) => {
   let allRoles = ["client", "driver", "dispatcher"];
 
-  let userRoles = [];
+  let userRoles = {};
   for (let i = 0; i < allRoles.length; i++) {
     let role_name = allRoles[i];
     let is_role = await checkUserRole(userId, role_name);
-    userRoles.role_name = is_role;
+    userRoles[role_name] = is_role;
   }
-
+  
   return userRoles;
 };
 
