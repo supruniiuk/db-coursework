@@ -4,14 +4,14 @@ const tokenService = require("../services/token.service");
 
 class OrderControllers {
   async getOrders(req, res) {
-    let { limit, page } = req.query;
-    let { userId, userRole } = req.body;
+    let { limit, page, userId, userRole } = req.query;
     page = page || 1;
     limit = limit || 10;
     let offset = page * limit - limit;
 
     let orders = [];
     orders = await orderService.getOrders(limit, offset, userId, userRole);
+    console.log(orders)
 
     res.json(orders);
   }

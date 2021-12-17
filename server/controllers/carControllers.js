@@ -19,6 +19,12 @@ class CarControllers {
     res.json(types);
   }
 
+  async getCarTypeById(req, res) {
+    let typeId = req.params.id;
+    let type = await carTypesService.getCarTypeById(typeId);
+    res.json(type);
+  }
+
   async getCarById(req, res) {
     let carId = req.params.id;
     let car = await carService.getCarById(carId);

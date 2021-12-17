@@ -11,7 +11,7 @@ const getAllCarTypes = async () => {
   await pool
     .query(carTypes)
     .then((res) => {
-        types = res.rows;
+      types = res.rows;
     })
     .catch((err) => {
       console.log(err);
@@ -20,8 +20,24 @@ const getAllCarTypes = async () => {
   return types;
 };
 
+const getCarTypeById = async (id) => {
+  const typeQuery = `SELECT * FROM car_types WHERE type_id=${id}`;
+  let type = "";
+  await pool
+    .query(typeQuery)
+    .then((res) => {
+      type = res.rows;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return type[0];
+};
+
 module.exports = {
-    getAllCarTypes
+  getAllCarTypes,
+  getCarTypeById,
 };
 
 query();

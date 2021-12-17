@@ -1,27 +1,40 @@
 const pool = require("../database");
 const pageService = require("./page.service");
-const role_model = require("./role.service");
 
 const query = async () => {
   await pool.connect();
 };
 
 const getOrders = async (limit_num, offset_num, userId, userRole) => {
+  console.log(userRole);
   let ordersQuery = "";
   if (userRole === "admin" || userRole === "dispatcher") {
-    ordersQuery = `SELECT * FROM orders LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT * FROM orders 
+                    ORDER BY creation_date DESC 
+                    LIMIT ${limit_num} OFFSET ${offset_num}`;
   } else if (userRole === "driver") {
-    ordersQuery = `SELECT * FROM orders WHERE driver_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT * FROM orders 
+                 JOIN car_types ON car_types.type_id = orders.car_type_id
+
+                  WHERE driver_id=${userId} 
+                  ORDER BY creation_date DESC
+                  LIMIT ${limit_num} OFFSET ${offset_num}`;
   } else if (userRole === "client") {
-    ordersQuery = `SELECT * FROM orders WHERE client_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT orders.*, car_types.type_name 
+                    FROM orders 
+                    JOIN car_types ON car_types.type_id = orders.car_type_id
+                    WHERE client_id=${userId} 
+                    ORDER BY creation_date DESC
+                    LIMIT ${limit_num} OFFSET ${offset_num}`;
   }
 
   let count = await pageService.getCount("orders");
 
   let orders = [];
   await pool
-    .query(orders)
+    .query(ordersQuery)
     .then((res) => {
+      console.log(res);
       orders = res.rows;
     })
     .catch((err) => {
@@ -32,7 +45,8 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
 };
 
 const getOrderById = async (id) => {
-  const orderQuery = `SELECT * FROM orders WHERE order_id=${id}`;
+  const orderQuery = `SELECT * FROM orders
+                      WHERE order_id=${id}`;
   let order = "";
   await pool
     .query(orderQuery)
