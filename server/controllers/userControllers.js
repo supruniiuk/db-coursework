@@ -91,6 +91,13 @@ class UserControllers {
     res.json(user);
   }
 
+  async getUserRolesById(req, res) {
+    let userId = req.params.id;
+    let roles = await roleService.getUserRolesById(userId);
+    console.log(roles);
+    res.json(roles);
+  }
+
   async deleteUserById(req, res) {
     let userId = req.params.id;
     let result = await userService.deleteUserById(userId);

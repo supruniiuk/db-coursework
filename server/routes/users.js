@@ -7,6 +7,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 router.get("/auth", authMiddleware, userControllers.check);
 
 router.get("/", userControllers.getUsers);
+router.get("/:id/roles", userControllers.getUserRolesById);
 router.get("/:id", userControllers.getUserById);
 router.get("/role/:rolename", userControllers.getUsersByRole);
 

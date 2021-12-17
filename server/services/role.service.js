@@ -24,7 +24,7 @@ const deleteUserRole = async (id) => {
   await pool
     .query(result)
     .then((res) => {
-      console.log('User successfully deleted!');
+      console.log("User successfully deleted!");
     })
     .catch((err) => {
       console.log("ERROR", err);
@@ -38,7 +38,7 @@ const updateUserRole = async (body) => {
   await pool
     .query(changeUserRoleQuery)
     .then((res) => {
-      console.log('User successfully updated!');
+      console.log("User successfully updated!");
     })
     .catch((err) => {
       console.log(err);
@@ -66,11 +66,25 @@ const checkUserRole = async (userId, role) => {
   return is_exist;
 };
 
+const getUserRolesById = async (userId) => {
+  let allRoles = ["client", "driver", "dispatcher"];
+
+  let userRoles = [];
+  for (let i = 0; i < allRoles.length; i++) {
+    let role_name = allRoles[i];
+    let is_role = await checkUserRole(userId, role_name);
+    userRoles.push({ role_name, is_role });
+  }
+
+  return userRoles;
+};
+
 module.exports = {
   getRoleId,
   updateUserRole,
   deleteUserRole,
   checkUserRole,
+  getUserRolesById,
 };
 
 query();
