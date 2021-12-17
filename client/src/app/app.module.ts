@@ -23,6 +23,7 @@ import {
 import { AuthGuard } from './shared/services/auth.guard';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { RequestService } from './shared/services/request.service';
+import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -43,6 +44,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     OrderComponent,
     DriverComponent,
     DispatcherComponent,
+    CreateOrderComponent,
   ],
   imports: [
     BrowserModule,

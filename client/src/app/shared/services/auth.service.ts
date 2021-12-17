@@ -67,7 +67,7 @@ export class AuthService {
     }
   }
 
-  getDecodedAccessToken(token: string): any {
+  getDecodedAccessToken(token: string = localStorage.getItem('token')): any {
     try {
       return jwt_decode(token);
     } catch (Error) {

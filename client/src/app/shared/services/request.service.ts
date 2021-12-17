@@ -15,7 +15,9 @@ export class RequestService {
   }
 
   public create<T>(route: string, body): Observable<T> {
-    return this.http.post<T>(`${environment.apiAddress}/` + route, body);
+    return this.http.post<T>(`${environment.apiAddress}/` + route, body, {
+      headers: this.generateHeaders(),
+    });
   }
 
   public update<T>(route: string, body): Observable<T> {

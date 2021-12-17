@@ -6,13 +6,13 @@ body {
   margin-bottom: 100px;
 }
 
-a, tr {
+a,
+tr {
   cursor: pointer;
 }
 
-
 .page h2 {
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .page .actions {
@@ -25,10 +25,27 @@ a, tr {
   transform: scale(1.2);
 }
 
-.alert{
-  width: 500px;
+.alert {
+  min-width: 600px;
 }
 
-.error{
+.error {
   width: 700px;
+}
+
+.modalWidow {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
 }

@@ -7,7 +7,7 @@ import { UserInfo, UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./clients-page.component.css'],
 })
 export class ClientsPageComponent implements OnInit {
-  errorMessage
+  errorMessage;
   clients: UserInfo[] = [];
   page = 1;
   pages = 0;
