@@ -36,7 +36,7 @@ export class CreateOrderComponent implements OnInit {
     if (this.newOrder.valid) {
       const formData = { ...this.newOrder.value };
       console.log(formData);
-      this.createOrder(formData)
+      this.createOrder(formData);
     }
   }
 

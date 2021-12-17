@@ -2,12 +2,41 @@
   <div class="alert alert-dark" role="alert">
     <h4 class="alert-heading">{{ client.name + " " + client.surname }}</h4>
 
-    <p>Email:  {{ client.email }}</p>
-    <p>Phone:  {{ client.phone }}</p>
-    <p>Date of joining:  {{ client.created_on | date: "MM/dd/yy, h:mm a" }}</p>
+    <p>Email: {{ client.email }}</p>
+    <p>Phone: {{ client.phone }}</p>
+    <p>Date of joining: {{ client.created_on | date: "MM/dd/yy, h:mm a" }}</p>
+    <form [formGroup]="roles">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="client"
+          formControlName="client"
+        />
+        <label class="form-check-label">Client</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="driver"
+          formControlName="driver"
+        />
+        <label class="form-check-label">Driver</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value="dispatcher"
+          formControlName="dispatcher"
+        />
+        <label class="form-check-label">Dispatcher</label>
+      </div>
+    </form>
     <hr />
-    <p class="mb-0">
-      Total rides: 120
-    </p>
+    <p class="mb-0">Total rides: 120</p>
   </div>
 </div>
