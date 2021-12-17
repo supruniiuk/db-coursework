@@ -7,28 +7,28 @@ const query = async () => {
 };
 
 const getOrders = async (limit_num, offset_num, userId, userRole) => {
-  let orders = [];
+  let ordersQuery = "";
   if (userRole === "admin" || userRole === "dispatcher") {
-    orders = `SELECT * FROM orders LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT * FROM orders LIMIT ${limit_num} OFFSET ${offset_num}`;
   } else if (userRole === "driver") {
-    orders = `SELECT * FROM orders WHERE driver_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT * FROM orders WHERE driver_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
   } else if (userRole === "client") {
-    orders = `SELECT * FROM orders WHERE client_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = `SELECT * FROM orders WHERE client_id=${userId} LIMIT ${limit_num} OFFSET ${offset_num}`;
   }
 
   let count = await pageService.getCount("orders");
 
-  let order_table = [];
+  let orders = [];
   await pool
     .query(orders)
     .then((res) => {
-      order_table = res.rows;
+      orders = res.rows;
     })
     .catch((err) => {
       console.log(err);
     });
 
-  return { count, order_table };
+  return { count, orders };
 };
 
 const getOrderById = async (id) => {

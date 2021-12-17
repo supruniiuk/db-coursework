@@ -1,6 +1,6 @@
 const pool = require("../database");
 const bcrypt = require("bcryptjs");
-const role_model = require("./role.service");
+const roleService = require("./role.service");
 const pageService = require("./page.service");
 
 const query = async () => {
@@ -31,7 +31,19 @@ const getUsers = async (limit_num, offset_num) => {
 };
 
 const deleteUserById = async (id) => {
-  //нужно сделать транзакцию так как есть зависимости на ролях
+  const driver = await roleService.checkUserRole(id, "driver");
+  if (driver) {
+    let delCarsQuery = `DELETE FROM cars WHERE driver_id = ${id};`;
+    await pool
+      .query(delCarsQuery)
+      .then((res) => {
+        console.log("Cars successfully deleted");
+      })
+      .catch((err) => {
+        console.log("ERROR", err);
+      });
+  }
+
   const result = `CALL delete_user(${id});`;
 
   await pool
@@ -64,7 +76,7 @@ const getUsersByRole = async (role, limit_num, offset_num) => {
                 FROM get_users_by_role('${role}') 
                 ORDER BY created_on DESC
                 LIMIT ${limit_num} OFFSET ${offset_num};`;
-                
+
   const count = await pageService.getCount(`get_users_by_role('${role}')`);
   let users = [];
 
@@ -101,7 +113,7 @@ const createUser = async (body) => {
   let { name, surname, email, phone, password, role } = body;
 
   let password_hash = getPasswordHash(email, password);
-  let roleId = await role_model.getRoleId(role);
+  let roleId = await roleService.getRoleId(role);
 
   const newUserQuery = `CALL create_user(null, '${name}', '${surname}','${email}', '${phone}', '${password_hash}', ${roleId.role_id});`;
   let userId = null;

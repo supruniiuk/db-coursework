@@ -5,11 +5,10 @@ const query = async () => {
   await pool.connect();
 };
 
-
 const getCars = async (limit_num, offset_num) => {
   const cars = `SELECT * FROM cars  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let count = await pageService.getCount('cars')
-  
+  let count = await pageService.getCount("cars");
+
   let car_table = [];
   await pool
     .query(cars)
@@ -20,7 +19,7 @@ const getCars = async (limit_num, offset_num) => {
       console.log(err);
     });
 
-  return {count, car_table};
+  return { count, car_table };
 };
 
 const getCarById = async (id) => {
@@ -38,12 +37,24 @@ const getCarById = async (id) => {
   return car;
 };
 
+const deleteAllUserCars = async (user_id) => {
+  const deleteAllCarsQuery = `DELETE FROM cars WHERE driver_id = ${user_id};`;
+  await pool
+    .query(deleteAllCarsQuery)
+    .then((res) => {
+      console.log("All cars successfully deleted");
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
+};
+
 const deleteCarById = async (id) => {
   const deleteCarQuery = `CALL delete_car(${id});`;
   await pool
     .query(deleteCarQuery)
     .then((res) => {
-      console.log('Car successfully deleted');
+      console.log("Car successfully deleted");
     })
     .catch((err) => {
       console.log("ERROR", err);
@@ -93,7 +104,7 @@ const updateCar = async (body) => {
   await pool
     .query(changeCarQuery)
     .then((res) => {
-      console.log('Car successfully updated');
+      console.log("Car successfully updated");
     })
     .catch((err) => {
       console.log(err);
@@ -106,6 +117,7 @@ module.exports = {
   getCarById,
   deleteCarById,
   updateCar,
+  deleteAllUserCars
 };
 
 query();

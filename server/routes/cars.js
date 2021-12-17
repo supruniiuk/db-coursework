@@ -3,6 +3,7 @@ const router = new Router();
 const carControllers = require("../controllers/carControllers");
 
 router.get("/", carControllers.getCars);
+router.get("/types", carControllers.getAllCarTypes);
 router.get("/:id", carControllers.getCarById);
 router.delete("/:id", carControllers.deleteCarById);
 router.post("/", carControllers.createCar);

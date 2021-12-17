@@ -1,5 +1,6 @@
 const ApiError = require("../error/apiError");
 const carService = require("../services/car.service");
+const carTypesService = require("../services/carTypes.service");
 
 class CarControllers {
   async getCars(req, res) {
@@ -11,6 +12,11 @@ class CarControllers {
 
     let cars = await carService.getCars(limit, offset);
     res.json(cars);
+  }
+
+  async getAllCarTypes(req, res) {
+    let types = await carTypesService.getAllCarTypes();
+    res.json(types);
   }
 
   async getCarById(req, res) {
