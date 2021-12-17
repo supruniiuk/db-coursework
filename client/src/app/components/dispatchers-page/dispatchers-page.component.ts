@@ -11,6 +11,7 @@ export class DispatchersPageComponent implements OnInit {
   page = 1;
   pages = 0;
   count = 0;
+  deleteUser: UserInfo = null;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -37,6 +38,8 @@ export class DispatchersPageComponent implements OnInit {
         this.dispatchers = this.dispatchers.filter(
           (dispatcher) => dispatcher.user_id != id
         );
+        this.count -= 1;
+
         console.log('success');
       },
       (err) => {

@@ -11,6 +11,7 @@ export class DriversPageComponent implements OnInit {
   page = 1;
   pages = 0;
   count = 0;
+  deleteUser: UserInfo = null;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class DriversPageComponent implements OnInit {
     this.userService.deleteUserById(id).subscribe(
       () => {
         this.drivers = this.drivers.filter((driver) => driver.user_id != id);
+        this.count -= 1;
 
         console.log('success');
       },

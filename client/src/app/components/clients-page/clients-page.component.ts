@@ -12,6 +12,7 @@ export class ClientsPageComponent implements OnInit {
   page = 1;
   pages = 0;
   count = 0;
+  deleteUser: UserInfo = null;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class ClientsPageComponent implements OnInit {
     this.userService.deleteUserById(id).subscribe(
       () => {
         this.clients = this.clients.filter((client) => client.user_id != id);
+        this.count -= 1;
         console.log('success');
       },
       (err) => {
