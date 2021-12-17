@@ -73,7 +73,7 @@ const getUserRolesById = async (userId) => {
   for (let i = 0; i < allRoles.length; i++) {
     let role_name = allRoles[i];
     let is_role = await checkUserRole(userId, role_name);
-    userRoles.push({ role_name, is_role });
+    userRoles.role_name = is_role;
   }
 
   return userRoles;
