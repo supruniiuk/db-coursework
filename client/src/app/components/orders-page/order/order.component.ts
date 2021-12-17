@@ -1,15 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { CarService, CarType } from 'src/app/shared/services/car.service';
+import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
-
-  constructor() { }
+  order: Order;
+  car_type: CarType;
+  constructor(private orderService: OrderService, private carService: CarService) {}
 
   ngOnInit(): void {
+    let href = location.pathname;
+    let id = href.split('/')[2];
+    this.getOrder(id);
   }
 
+  getOrder(id) {
+    this.orderService.getOrderById(id).subscribe(
+      (res) => {
+        this.order = res;
+        this.getCarType(this.order.car_type_id)
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getCarType(id){
+    this.carService.getCarTypeById(id).subscribe(
+      (res) => {
+        this.car_type=res
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
 }

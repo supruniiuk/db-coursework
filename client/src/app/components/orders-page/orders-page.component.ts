@@ -39,7 +39,7 @@ export class OrdersPageComponent implements OnInit {
   getOrders(page) {
     this.orderService
       .getOrders(
-        `?userId=${this.userInfo.id}&userRole=${this.userInfo.role}&page=${this.page}`
+        `?userId=${this.userInfo.id}&userRole=${this.userInfo.role}&page=${page}`
       )
       .subscribe(
         (res) => {

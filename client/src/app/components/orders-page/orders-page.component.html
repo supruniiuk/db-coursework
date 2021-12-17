@@ -29,7 +29,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders; first as isFirst">
+      <tr
+        *ngFor="let order of orders; first as isFirst"
+        [routerLink]="['/orders/', order.order_id]"
+      >
         <td>{{ order.driver_id | json }}</td>
         <td>{{ order.origin_address }}</td>
         <td>{{ order.destination_address }}</td>
