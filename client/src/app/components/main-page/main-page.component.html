@@ -1,7 +1,5 @@
 <div class="home">
-  <nav
-    class="navbar navbar-expand-lg navbar-light bg-warning"
-  >
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
     <a class="navbar-brand" href="#">TaxiCall</a>
     <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
@@ -10,24 +8,49 @@
       class="collapse navbar-collapse d-flex justify-content-between"
       id="navbarText"
     >
-    <ul class="navbar-nav mr-auto" *ngIf="!isAuthenticated()"></ul>
+      <ul class="navbar-nav mr-auto" *ngIf="!isAuthenticated()"></ul>
       <ul class="navbar-nav mr-auto" *ngIf="isAuthenticated()">
         <li class="nav-item">
-          <a class="nav-link" href="#"  *ngIf="role" [routerLink]="['/info']">Info</a>
+          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/info']"
+            >Info</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"  *ngIf="role=='admin' || role=='dispatcher'" [routerLink]="['/clients']">Clients</a>
+          <a
+            class="nav-link"
+            href="#"
+            *ngIf="role == 'admin' || role == 'dispatcher'"
+            [routerLink]="['/clients']"
+            >Clients</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role=='admin'" [routerLink]="['/dispatchers']"
+          <a
+            class="nav-link"
+            href="#"
+            *ngIf="role == 'admin'"
+            [routerLink]="['/dispatchers']"
             >Dispatchers</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role=='admin' || role=='dispatcher'" [routerLink]="['/drivers']">Drivers</a>
+          <a
+            class="nav-link"
+            href="#"
+            *ngIf="role == 'admin' || role == 'dispatcher'"
+            [routerLink]="['/drivers']"
+            >Drivers</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/orders']">Orders</a>
+          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/orders']"
+            >Orders</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/cars']"
+            >My cars</a
+          >
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -63,9 +86,9 @@
   </main>
 
   <footer class="page-footer font-small bg-warning">
-    <div class="footer-copyright text-center py-3">©2021 Copyright:
+    <div class="footer-copyright text-center py-3">
+      ©2021 Copyright:
       <a href="https://github.com/supruniiuk/db-coursework">Yuliia Supruniuk</a>
     </div>
   </footer>
 </div>
-

@@ -4,14 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
-import { ClientsPageComponent } from './components/clients-page/clients-page.component';
-import { DriversPageComponent } from './components/drivers-page/drivers-page.component';
 import { OrdersPageComponent } from './components/orders-page/orders-page.component';
-import { DispatchersPageComponent } from './components/dispatchers-page/dispatchers-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { ClientComponent } from './components/clients-page/client/client.component';
-import { DriverComponent } from './components/drivers-page/driver/driver.component';
-import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './shared/services/auth.service';
 import {
@@ -25,6 +19,10 @@ import { RequestService } from './shared/services/request.service';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
 import { OrderComponent } from './components/orders-page/order/order.component';
 import { OrdersAdminPageComponent } from './components/orders-admin-page/orders-admin-page.component';
+import { UsersPageComponent } from './components/users-page/users-page.component';
+import { UserComponent } from './components/users-page/user/user.component';
+import { CarsComponent } from './components/cars/cars.component';
+import { CreateCarComponent } from './components/cars/create-car/create-car.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -36,17 +34,15 @@ const INTERCEPTOR_PROVIDER: Provider = {
   declarations: [
     AppComponent,
     MainPageComponent,
-    ClientsPageComponent,
-    DriversPageComponent,
     OrdersPageComponent,
-    DispatchersPageComponent,
     LoginPageComponent,
-    ClientComponent,
     OrderComponent,
-    DriverComponent,
-    DispatcherComponent,
     CreateOrderComponent,
     OrdersAdminPageComponent,
+    UsersPageComponent,
+    UserComponent,
+    CarsComponent,
+    CreateCarComponent
   ],
   imports: [
     BrowserModule,

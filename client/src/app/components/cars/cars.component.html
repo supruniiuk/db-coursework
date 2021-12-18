@@ -1,0 +1,51 @@
+<div class="orders-page page">
+  <div class="d-flex justify-content-between">
+    <h2>
+      Cars
+      <button
+        type="button"
+        [routerLink]="['/cars/', 'create']"
+        class="btn btn-warning"
+      >
+        New car
+      </button>
+    </h2>
+  </div>
+  <div class="alert alert-warning" role="alert">Total number of cars:</div>
+  <router-outlet></router-outlet>
+
+  <div class="cars">
+    <!--*ngFor="let car of cars; first as isFirst"-->
+    <div class="card">
+      <div class="card-header">License number</div>
+      <div class="card-body">
+        <h5 class="card-title">Model</h5>
+        <p class="card-text">Color</p>
+        <p class="card-text">Type id</p>
+        <p class="card-text">Air condition</p>
+        <p class="card-text">Terminal</p>
+        <p class="card-text">Empty trunk</p>
+        <p class="card-text">Animals</p>
+        <p class="card-text">Added date</p>
+        <hr />
+        <a href="#" class="btn btn-warning">Delete</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">License number</div>
+      <div class="card-body">
+        <h5 class="card-title">Model</h5>
+        <p class="card-text">Color</p>
+        <p class="card-text">Type id</p>
+        <p class="card-text">Air condition</p>
+        <p class="card-text">Terminal</p>
+        <p class="card-text">Empty trunk</p>
+        <p class="card-text">Animals</p>
+        <p class="card-text">Added date</p>
+        <hr />
+        <a href="#" class="btn btn-warning">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>

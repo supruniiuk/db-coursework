@@ -28,4 +28,8 @@ export class CarService {
   getCarTypeById(id): Observable<CarType> {
     return this.requestService.get<CarType>(this.route + `types/` + String(id));
   }
+
+  createCar(car): Observable<any> {
+    return this.requestService.create<any>(this.route, car);
+  }
 }

@@ -1,0 +1,67 @@
+<form [formGroup]="newCar" class="alert alert-warning" (ngSubmit)="submit()">
+  <div class="form-group mt-4">
+    <input
+      class="form-control"
+      placeholder="License number"
+      formControlName="license_number"
+    />
+  </div>
+  <div class="form-group mt-4">
+    <input class="form-control" placeholder="Model" formControlName="model" />
+  </div>
+  <div class="form-group mt-4">
+    <input class="form-control" placeholder="Color" formControlName="color" />
+  </div>
+
+  <div class="form-check mt-4">
+    <input
+      class="form-check-input"
+      formControlName="air_conditioning"
+      type="checkbox"
+      value=""
+    />
+    <label class="form-check-label">Air conditioning</label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      formControlName="terminal"
+    />
+    <label class="form-check-label">Terminal</label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      formControlName="empty_trunk"
+    />
+    <label class="form-check-label">Empty trunk</label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      formControlName="animals"
+    />
+    <label class="form-check-label"> Animals</label>
+  </div>
+  <div class="form-group mt-4">
+    <select formControlName="type_id" class="form-select">
+      <option value="" disabled selected>Car type</option>
+      <option
+        *ngFor="let type of carTypes; first as isFirst"
+        value="{{ type.type_id }}"
+      >
+       {{type.type_name}} - {{type.description}}
+      </option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-warning m-4">Create</button>
+  <button [routerLink]="['/cars/']" class="btn btn-warning m-4">Close</button>
+</form>

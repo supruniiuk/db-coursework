@@ -5,17 +5,15 @@ import {
   RouterModule,
   Routes,
 } from '@angular/router';
-import { ClientComponent } from './components/clients-page/client/client.component';
-import { ClientsPageComponent } from './components/clients-page/clients-page.component';
-import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
-import { DispatchersPageComponent } from './components/dispatchers-page/dispatchers-page.component';
-import { DriverComponent } from './components/drivers-page/driver/driver.component';
-import { DriversPageComponent } from './components/drivers-page/drivers-page.component';
+import { CarsComponent } from './components/cars/cars.component';
+import { CreateCarComponent } from './components/cars/create-car/create-car.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
 import { OrderComponent } from './components/orders-page/order/order.component';
 import { OrdersPageComponent } from './components/orders-page/orders-page.component';
+import { UserComponent } from './components/users-page/user/user.component';
+import { UsersPageComponent } from './components/users-page/users-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
 
 const routes: Routes = [
@@ -28,25 +26,25 @@ const routes: Routes = [
       { path: 'registration', component: LoginPageComponent },
       {
         path: 'clients',
-        component: ClientsPageComponent,
+        component: UsersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher'] },
       },
-      { path: 'clients/:id', component: ClientComponent },
+      { path: 'clients/:id', component: UserComponent },
       {
         path: 'drivers',
-        component: DriversPageComponent,
+        component: UsersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher'] },
       },
-      { path: 'drivers/:id', component: DriverComponent },
+      { path: 'drivers/:id', component: UserComponent },
       {
         path: 'dispatchers',
-        component: DispatchersPageComponent,
+        component: UsersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin'] },
       },
-      { path: 'dispatchers/:id', component: DispatcherComponent },
+      { path: 'dispatchers/:id', component: UserComponent },
       {
         path: 'orders',
         component: OrdersPageComponent,
@@ -55,6 +53,13 @@ const routes: Routes = [
         children: [{ path: 'create', component: CreateOrderComponent }],
       },
       { path: 'orders/:id', component: OrderComponent },
+      {
+        path: 'cars',
+        component: CarsComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['driver'] },
+        children: [{ path: 'create', component: CreateCarComponent }],
+      },
     ],
   },
 ];

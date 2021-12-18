@@ -1,5 +1,5 @@
 <div *ngIf="!errorMessage" class="users-page page">
-  <h2>{{ role }}s</h2>
+  <h2>{{ role.charAt(0).toUpperCase() + role.slice(1) }}s</h2>
   <div class="alert alert-warning" role="alert">
     Total number of {{ role }}s: {{ count }}
   </div>
