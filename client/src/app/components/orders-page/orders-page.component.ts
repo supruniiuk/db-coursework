@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
-interface UserTokenInfo {
+export interface UserTokenInfo {
   id: number;
   role: string;
   email: string;

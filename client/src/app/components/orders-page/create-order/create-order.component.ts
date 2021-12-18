@@ -62,5 +62,6 @@ export class CreateOrderComponent implements OnInit {
         console.log(err);
       }
     );
+    this.newOrder.reset();
   }
 }

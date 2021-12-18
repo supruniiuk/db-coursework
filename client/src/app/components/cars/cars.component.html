@@ -11,40 +11,80 @@
       </button>
     </h2>
   </div>
-  <div class="alert alert-warning" role="alert">Total number of cars:</div>
+  <div class="alert alert-warning" role="alert">
+    Total number of cars: {{ count }}
+  </div>
   <router-outlet></router-outlet>
 
   <div class="cars">
-    <!--*ngFor="let car of cars; first as isFirst"-->
-    <div class="card">
-      <div class="card-header">License number</div>
+    <div class="card" *ngFor="let car of cars; first as isFirst">
+      <div class="card-header">{{ car.license_number }}</div>
       <div class="card-body">
-        <h5 class="card-title">Model</h5>
-        <p class="card-text">Color</p>
-        <p class="card-text">Type id</p>
-        <p class="card-text">Air condition</p>
-        <p class="card-text">Terminal</p>
-        <p class="card-text">Empty trunk</p>
-        <p class="card-text">Animals</p>
-        <p class="card-text">Added date</p>
+        <h5 class="card-title">{{ car.model }}</h5>
+        <p class="card-text">{{ car.color }}</p>
+        <p class="card-text">{{ car.type_id }}</p>
+        <p class="card-text">
+          Air condition
+          <i *ngIf="car.air_condition" class="bi bi-check-lg"></i>
+          <i *ngIf="!car.air_condition" class="bi bi-x-lg"></i>
+        </p>
+        <p class="card-text">
+          Terminal
+          <i *ngIf="car.terminal" class="bi bi-check-lg"></i>
+          <i *ngIf="!car.terminal" class="bi bi-x-lg"></i>
+        </p>
+        <p class="card-text">
+          Empty trunk
+          <i *ngIf="car.empty_trunk" class="bi bi-check-lg"></i>
+          <i *ngIf="!car.empty_trunk" class="bi bi-x-lg"></i>
+        </p>
+        <p class="card-text">
+          Animals
+          <i *ngIf="car.animals" class="bi bi-check-lg"></i>
+          <i *ngIf="!car.animals" class="bi bi-x-lg"></i>
+        </p>
+        <p class="card-text">{{ car.added_date | date: "MM/dd/yy, h:mm a" }}</p>
         <hr />
-        <a href="#" class="btn btn-warning">Delete</a>
+        <div class="d-flex justify-content-between">
+          <a (click)="deleteCarObj = car" class="btn btn-danger">Delete</a>
+          <a class="btn btn-warning">Update</a>
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="card">
-      <div class="card-header">License number</div>
-      <div class="card-body">
-        <h5 class="card-title">Model</h5>
-        <p class="card-text">Color</p>
-        <p class="card-text">Type id</p>
-        <p class="card-text">Air condition</p>
-        <p class="card-text">Terminal</p>
-        <p class="card-text">Empty trunk</p>
-        <p class="card-text">Animals</p>
-        <p class="card-text">Added date</p>
-        <hr />
-        <a href="#" class="btn btn-warning">Delete</a>
+<div class="backdrop" *ngIf="deleteCarObj"></div>
+
+<div *ngIf="deleteCarObj" class="modalWidow">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to delete {{ deleteCarObj.model }}({{
+            deleteCarObj.license_number
+          }})?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteCar(deleteCarObj.car_id); deleteCarObj = null"
+        >
+          Delete
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="deleteCarObj = null"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>

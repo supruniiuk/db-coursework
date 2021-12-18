@@ -1,3 +1,4 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 .wrapper {
   padding: 20px 250px;
 }
@@ -52,4 +53,10 @@ tr {
 
 svg {
   height: 25px;
+}
+.bi-x-lg {
+  color: red;
+}
+.bi-check-lg {
+  color: green;
 }

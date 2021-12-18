@@ -29,7 +29,7 @@ export class CreateCarComponent implements OnInit {
 
   submit() {
     console.log(this.newCar.value);
-   if (this.newCar.valid) {
+    if (this.newCar.valid) {
       const formData = { ...this.newCar.value };
       console.log(formData);
       this.createCar(formData);
@@ -58,5 +58,6 @@ export class CreateCarComponent implements OnInit {
         console.log(err);
       }
     );
+    this.newCar.reset();
   }
 }

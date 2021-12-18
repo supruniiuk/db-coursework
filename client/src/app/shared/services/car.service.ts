@@ -8,6 +8,20 @@ export interface CarType {
   description: string;
 }
 
+export interface Car {
+  car_id: number;
+  driver_id: number;
+  license_number: string;
+  model: string;
+  color: string;
+  type_id: number;
+  air_condition: boolean;
+  terminal: boolean;
+  empty_trunk: boolean;
+  animals: boolean;
+  added_date: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,12 +29,10 @@ export class CarService {
   route = 'cars/';
   constructor(public requestService: RequestService) {}
 
-  /*getUsers(page, role): Observable<UsersResponse[]> {
-    return this.requestService.get<UsersResponse[]>(
-      this.route + `role/${role}` + `?page=${page}`
-    );
+  getCars(params = ''): Observable<Car[]> {
+    return this.requestService.get<Car[]>(this.route + params);
   }
-*/
+
   getAllCarTypes(): Observable<CarType[]> {
     return this.requestService.get<CarType[]>(this.route + `types`);
   }
