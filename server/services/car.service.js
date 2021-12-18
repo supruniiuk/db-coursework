@@ -61,9 +61,8 @@ const deleteCarById = async (id) => {
     });
 };
 
-const createCar = async (body) => {
+const createCar = async (body, driver_id) => {
   let {
-    driver_id,
     license_number,
     model,
     color,
@@ -75,6 +74,7 @@ const createCar = async (body) => {
   } = body;
   const newCarQuery = `CALL create_car(null, ${driver_id}, '${license_number}', '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
   let carId = null;
+  console.log(newCarQuery);
   await pool
     .query(newCarQuery)
     .then((res) => {
@@ -117,7 +117,7 @@ module.exports = {
   getCarById,
   deleteCarById,
   updateCar,
-  deleteAllUserCars
+  deleteAllUserCars,
 };
 
 query();

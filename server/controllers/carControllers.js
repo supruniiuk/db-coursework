@@ -1,6 +1,7 @@
 const ApiError = require("../error/apiError");
 const carService = require("../services/car.service");
 const carTypesService = require("../services/carTypes.service");
+const tokenService = require("../services/token.service");
 
 class CarControllers {
   async getCars(req, res) {
@@ -37,7 +38,8 @@ class CarControllers {
   }
 
   async createCar(req, res) {
-    let carId = await carService.createCar(req.body);
+    let userId = tokenService.getUserIdFromToken(req);
+    let carId = await carService.createCar(req.body, userId);
     res.json(carId);
   }
 
