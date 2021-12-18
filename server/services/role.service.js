@@ -19,18 +19,6 @@ const getRoleId = async (role) => {
   return roleId[0];
 };
 
-const deleteUserRole = async (id) => {
-  const result = `CALL delete_user_role_connection(${id});`;
-  await pool
-    .query(result)
-    .then((res) => {
-      console.log("User successfully deleted!");
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-    });
-};
-
 const updateUserRole = async (body) => {
   let { id, user_id, role_id } = body;
   const changeUserRoleQuery = `CALL update_role_connection(${id}, ${user_id}, ${role_id})`;
@@ -75,8 +63,38 @@ const getUserRolesById = async (userId) => {
     let is_role = await checkUserRole(userId, role_name);
     userRoles[role_name] = is_role;
   }
-  
+
   return userRoles;
+};
+
+const addUserRole = async (userId, rolename) => {
+  const roleObj = await getRoleId(rolename);
+  const roleId = roleObj.role_id;
+
+  const query = `CALL connect_user_role(${userId},${roleId})`;
+  await pool
+    .query(query)
+    .then((res) => {
+      console.log("Role successfully added!", res.rows);
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
+};
+
+const deleteUserRole = async (userId, rolename) => {
+  const roleObj = await getRoleId(rolename);
+  const roleId = roleObj.role_id;
+
+  const query = `DELETE FROM user_role WHERE user_id = ${userId} AND role_id = ${roleId}`;
+  await pool
+    .query(query)
+    .then((res) => {
+      console.log("Role successfully deleted!", res.rows);
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
 };
 
 module.exports = {
@@ -85,6 +103,7 @@ module.exports = {
   deleteUserRole,
   checkUserRole,
   getUserRolesById,
+  addUserRole,
 };
 
 query();

@@ -4,9 +4,6 @@ const roleService = require("../services/role.service");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-//const redis = require("redis");
-//const clientRedis = redis.createClient();
-//clientRedis.connect();
 
 const generateToken = (id, email, role) => {
   return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
@@ -112,9 +109,14 @@ class UserControllers {
     res.json(await roleService.updateUserRole(req.body));
   }
 
+  async addUserRole(req, res) {
+    const { user_id, rolename } = req.body;
+    res.json(await roleService.addUserRole(user_id, rolename));
+  }
+
   async deleteUserRole(req, res) {
-    let connection_id = req.params.id;
-    res.json(await roleService.deleteUserRole(connection_id));
+    const { user_id, rolename } = req.query;
+    res.json(await roleService.deleteUserRole(user_id, rolename));
   }
 }
 
