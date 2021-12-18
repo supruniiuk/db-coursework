@@ -11,7 +11,6 @@ class OrderControllers {
 
     let orders = [];
     orders = await orderService.getOrders(limit, offset, userId, userRole);
-    console.log(orders)
 
     res.json(orders);
   }
@@ -35,7 +34,14 @@ class OrderControllers {
 
   async updateOrderByDispatcher(req, res) {
     let orderId = req.params.id;
-    res.json(await orderService.updateOrderByDispatcher(orderId, req.body));
+    let dispatcherId = tokenService.getUserIdFromToken(req);
+    res.json(
+      await orderService.updateOrderByDispatcher(
+        orderId,
+        dispatcherId,
+        req.body
+      )
+    );
   }
 
   async updateOrderByDriver(req, res) {

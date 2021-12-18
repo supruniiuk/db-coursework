@@ -5,21 +5,28 @@ const query = async () => {
   await pool.connect();
 };
 
-const getCars = async (limit_num, offset_num) => {
-  const cars = `SELECT * FROM cars  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let count = await pageService.getCount("cars");
+const getCars = async (limit_num, offset_num, userId) => {
+  let query = "";
+  if (userId) {
+    query = `SELECT * FROM cars 
+              WHERE driver_id = ${userId}
+              LIMIT ${limit_num} OFFSET ${offset_num}`;
+  } else {
+    query = `SELECT * FROM cars  LIMIT ${limit_num} OFFSET ${offset_num}`;
+  }
+  let count = await pageService.getCount(query);
 
-  let car_table = [];
+  let cars = [];
   await pool
-    .query(cars)
+    .query(query)
     .then((res) => {
-      car_table = res.rows;
+      cars = res.rows;
     })
     .catch((err) => {
       console.log(err);
     });
 
-  return { count, car_table };
+  return { count, cars };
 };
 
 const getCarById = async (id) => {

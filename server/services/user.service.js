@@ -14,7 +14,7 @@ const getPasswordHash = (email, password) => {
 
 const getUsers = async (limit_num, offset_num) => {
   const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
-  let count = await pageService.getCount("users");
+  let count = await pageService.getCount("SELECT * FROM users");
 
   let user_table = [];
   await pool
@@ -77,7 +77,9 @@ const getUsersByRole = async (role, limit_num, offset_num) => {
                 ORDER BY created_on DESC
                 LIMIT ${limit_num} OFFSET ${offset_num};`;
 
-  const count = await pageService.getCount(`get_users_by_role('${role}')`);
+  const count =
+    await pageService.getCount(`SELECT user_id, name, surname, email, phone, created_on 
+                                FROM get_users_by_role('${role}')`);
   let users = [];
 
   await pool

@@ -4,6 +4,8 @@ const carControllers = require("../controllers/carControllers");
 
 router.get("/", carControllers.getCars);
 router.get("/types", carControllers.getAllCarTypes);
+
+router.get("/types", carControllers.getAllCarTypes);
 router.get("/types/:id", carControllers.getCarTypeById);
 
 router.get("/:id", carControllers.getCarById);

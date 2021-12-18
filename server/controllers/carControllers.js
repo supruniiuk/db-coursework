@@ -5,41 +5,40 @@ const tokenService = require("../services/token.service");
 
 class CarControllers {
   async getCars(req, res) {
-    let { limit, page } = req.query;
-    console.log(limit, page);
+    let { limit, page, userId } = req.query;
     page = page || 1;
     limit = limit || 10;
-    let offset = page * limit - limit;
+    const offset = page * limit - limit;
 
-    let cars = await carService.getCars(limit, offset);
+    const cars = await carService.getCars(limit, offset, userId);
     res.json(cars);
   }
 
   async getAllCarTypes(req, res) {
-    let types = await carTypesService.getAllCarTypes();
+    const types = await carTypesService.getAllCarTypes();
     res.json(types);
   }
 
   async getCarTypeById(req, res) {
-    let typeId = req.params.id;
-    let type = await carTypesService.getCarTypeById(typeId);
+    const typeId = req.params.id;
+    const type = await carTypesService.getCarTypeById(typeId);
     res.json(type);
   }
 
   async getCarById(req, res) {
-    let carId = req.params.id;
-    let car = await carService.getCarById(carId);
+    const carId = req.params.id;
+    const car = await carService.getCarById(carId);
     res.json(car);
   }
 
   async deleteCarById(req, res) {
-    let carId = req.params.id;
+    const carId = req.params.id;
     res.json(await carService.deleteCarById(carId));
   }
 
   async createCar(req, res) {
-    let userId = tokenService.getUserIdFromToken(req);
-    let carId = await carService.createCar(req.body, userId);
+    const userId = tokenService.getUserIdFromToken(req);
+    const carId = await carService.createCar(req.body, userId);
     res.json(carId);
   }
 

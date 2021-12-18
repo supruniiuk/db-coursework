@@ -6,19 +6,22 @@ const query = async () => {
 };
 
 const getOrders = async (limit_num, offset_num, userId, userRole) => {
-  console.log(userRole);
   let ordersQuery = "";
+  let count = 0;
   if (userRole === "admin" || userRole === "dispatcher") {
-    ordersQuery = `SELECT * FROM orders 
+    ordersQuery = `SELECT  orders.*, car_types.type_name FROM orders 
+                   JOIN car_types ON car_types.type_id = orders.car_type_id
                     ORDER BY creation_date DESC 
                     LIMIT ${limit_num} OFFSET ${offset_num}`;
+    count = await pageService.getCount(`SELECT * FROM orders`);
   } else if (userRole === "driver") {
-    ordersQuery = `SELECT * FROM orders 
+    ordersQuery = `SELECT  orders.*, car_types.type_name FROM orders 
                  JOIN car_types ON car_types.type_id = orders.car_type_id
-
                   WHERE driver_id=${userId} 
                   ORDER BY creation_date DESC
                   LIMIT ${limit_num} OFFSET ${offset_num}`;
+    count = await pageService.getCount(`SELECT *
+                                           FROM orders  WHERE driver_id=${userId}`);
   } else if (userRole === "client") {
     ordersQuery = `SELECT orders.*, car_types.type_name 
                     FROM orders 
@@ -26,15 +29,15 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
                     WHERE client_id=${userId} 
                     ORDER BY creation_date DESC
                     LIMIT ${limit_num} OFFSET ${offset_num}`;
-  }
 
-  let count = await pageService.getCount("orders");
+    count = await pageService.getCount(`SELECT *
+                    FROM orders  WHERE client_id=${userId}`);
+  }
 
   let orders = [];
   await pool
     .query(ordersQuery)
     .then((res) => {
-      console.log(res);
       orders = res.rows;
     })
     .catch((err) => {
@@ -75,7 +78,6 @@ const createOrder = async (client_id, body) => {
   } = body;
 
   const newOrderQuery = `CALL create_order(${client_id}, '${origin_address}', '${destination_address}', ${number_of_people}, ${empty_trunk}, ${animals}, ${terminal}, ${air_condition}, ${car_type_id});`;
-  console.log(newOrderQuery);
   await pool
     .query(newOrderQuery)
     .then((res) => {
@@ -128,12 +130,10 @@ const gradeOrderByDriver = async (order_id, body) => {
     });
 };
 
-const updateOrderByDispatcher = async (order_id, body) => {
-  // types: interrupted, executing, completed
-  let { dispatcher_id, is_approved, payment } = body;
+const updateOrderByDispatcher = async (order_id, dispatcher_id, body) => {
+  let { approved, payment } = body;
 
-  const query = `CALL update_order_dispatcher(${order_id}, ${dispatcher_id}, ${is_approved}, ${payment});`;
-  console.log(query);
+  const query = `CALL update_order_dispatcher(${order_id}, ${dispatcher_id}, ${approved}, ${payment});`;
 
   await pool
     .query(query)

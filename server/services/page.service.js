@@ -6,7 +6,7 @@ const query = async () => {
 };
 
 const getCount = async (table) => {
-  const pageQuery = `SELECT COUNT(*) FROM ${table};`;
+  const pageQuery = `SELECT COUNT(*) FROM (${table}) as t;`;
   let objects = null;
 
   await pool
