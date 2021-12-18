@@ -14,13 +14,30 @@
   </div>
   <router-outlet></router-outlet>
 
-  <div class="alert alert-warning" role="alert">
+  <div *ngIf="count" class="alert alert-warning" role="alert">
     Total number of orders: {{ count }}
   </div>
 
-  <table class="table table-hover">
+  <div
+    class="alert alert-danger"
+    *ngIf="count == 0 && role == 'driver'"
+    role="alert"
+  >
+    <i class="bi bi-info-circle-fill"></i> You dont have completed orders.
+  </div>
+
+  <div
+    class="alert alert-danger"
+    *ngIf="count == 0 && role == 'client'"
+    role="alert"
+  >
+    <i class="bi bi-info-circle-fill"></i> You haven`t called a taxi!
+  </div>
+
+  <table *ngIf="count" class="table table-hover">
     <thead>
       <tr>
+        <th *ngIf="role != 'client'">Client</th>
         <th scope="col">Driver</th>
         <th scope="col">Origin address</th>
         <th scope="col">Destination</th>
@@ -35,6 +52,9 @@
         *ngFor="let order of orders; first as isFirst"
         [routerLink]="['/orders/', order.order_id]"
       >
+        <td *ngIf="role == 'dispatcher' || role == 'admin'">
+          {{ order.client_id }}
+        </td>
         <td>{{ order.driver_id | json }}</td>
         <td>{{ order.origin_address }}</td>
         <td>{{ order.destination_address }}</td>
@@ -58,7 +78,7 @@
           </svg>
         </td>
 
-        <td *ngIf="order.approved"  class="approved">
+        <td *ngIf="order.approved" class="approved">
           <svg
             aria-hidden="true"
             focusable="false"

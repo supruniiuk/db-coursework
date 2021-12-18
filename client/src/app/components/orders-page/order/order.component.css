@@ -1,3 +1,6 @@
-.alert{
-    width: 800px;
+.alert {
+  width: 800px;
+}
+.btn-danger {
+  margin-right: 20px;
 }

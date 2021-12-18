@@ -1,0 +1,20 @@
+<div
+  class="alert alert-success"
+  *ngIf="!order.total_payment && role == 'dispatcher'"
+  role="alert"
+>
+  <form>
+    <div class="form-group">
+      <input
+        type="number"
+        min="0"
+        class="form-control"
+        (input)="setPayment($event)"
+        placeholder="Payment"
+      />
+    </div>
+    <button type="submit" class="btn btn-success mt-4" (click)="approveOrder()">
+      Approve
+    </button>
+  </form>
+</div>

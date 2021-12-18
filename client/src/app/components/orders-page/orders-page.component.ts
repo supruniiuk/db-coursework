@@ -22,7 +22,7 @@ export class OrdersPageComponent implements OnInit {
   page = 1;
   pages = 0;
   count = 0;
-
+  role: string = '';
   constructor(
     public authService: AuthService,
     private orderService: OrderService
@@ -30,7 +30,7 @@ export class OrdersPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.authService.getDecodedAccessToken();
-
+    this.role = this.userInfo.role;
     this.getOrders(this.page);
 
     console.log(this.userInfo.email);

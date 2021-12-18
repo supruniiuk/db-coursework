@@ -57,6 +57,7 @@ export class CreateOrderComponent implements OnInit {
     this.orderService.createOrder(order).subscribe(
       () => {
         console.log('success');
+        window.location.reload();
       },
       (err) => {
         console.log(err);
