@@ -31,6 +31,7 @@ export class CarsComponent implements OnInit {
   }
 
   getCars(page) {
+    console.log(`?userId=${this.userInfo.id}&page=${page}`)
     this.carService
       .getCars(`?userId=${this.userInfo.id}&page=${page}`)
       .subscribe(

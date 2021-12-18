@@ -25,6 +25,8 @@ export interface Order {
   total_payment: number;
 
   type_name: string;
+  client_name?: string;
+  client_surname?: string;
 }
 
 export interface OrdersResponse {
@@ -48,5 +50,12 @@ export class OrderService {
 
   getOrderById(id: number): Observable<Order> {
     return this.requestService.get<Order>(this.route + String(id));
+  }
+
+  updateOrderByDispatcher(id, body): Observable<any> {
+    return this.requestService.update<any>(
+      this.route + 'dispatcher/' + String(id),
+      body
+    );
   }
 }

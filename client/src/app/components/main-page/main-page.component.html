@@ -11,15 +11,13 @@
       <ul class="navbar-nav mr-auto" *ngIf="!isAuthenticated()"></ul>
       <ul class="navbar-nav mr-auto" *ngIf="isAuthenticated()">
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/info']"
-            >Info</a
-          >
-        </li>
-        <li class="nav-item">
           <a
             class="nav-link"
             href="#"
-            *ngIf="role == 'admin' || role == 'dispatcher'"
+            *ngIf="
+              auth.getUserRole() == 'admin' ||
+              auth.getUserRole() == 'dispatcher'
+            "
             [routerLink]="['/clients']"
             >Clients</a
           >
@@ -28,7 +26,7 @@
           <a
             class="nav-link"
             href="#"
-            *ngIf="role == 'admin'"
+            *ngIf="auth.getUserRole() == 'admin'"
             [routerLink]="['/dispatchers']"
             >Dispatchers</a
           >
@@ -37,18 +35,29 @@
           <a
             class="nav-link"
             href="#"
-            *ngIf="role == 'admin' || role == 'dispatcher'"
+            *ngIf="
+              auth.getUserRole() == 'admin' ||
+              auth.getUserRole() == 'dispatcher'
+            "
             [routerLink]="['/drivers']"
             >Drivers</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/orders']"
+          <a
+            class="nav-link"
+            href="#"
+            *ngIf="auth.getUserRole()"
+            [routerLink]="['/orders']"
             >Orders</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" *ngIf="role" [routerLink]="['/cars']"
+          <a
+            class="nav-link"
+            href="#"
+            *ngIf="auth.getUserRole() == 'driver'"
+            [routerLink]="['/cars']"
             >My cars</a
           >
         </li>

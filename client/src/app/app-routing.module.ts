@@ -12,6 +12,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
 import { OrderComponent } from './components/orders-page/order/order.component';
 import { OrdersPageComponent } from './components/orders-page/orders-page.component';
+import { UpdateOrderDispatcherComponent } from './components/orders-page/update-order-dispatcher/update-order-dispatcher.component';
 import { UserComponent } from './components/users-page/user/user.component';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -50,9 +51,18 @@ const routes: Routes = [
         component: OrdersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher', 'client', 'driver'] },
-        children: [{ path: 'create', component: CreateOrderComponent }],
+        children: [
+          { path: 'create', component: CreateOrderComponent, children: [] },
+        ],
       },
-      { path: 'orders/:id', component: OrderComponent },
+      {
+        path: 'orders/:id',
+        component: OrderComponent,
+        children: [
+          { path: 'approve', component: UpdateOrderDispatcherComponent },
+        ],
+      },
+
       {
         path: 'cars',
         component: CarsComponent,

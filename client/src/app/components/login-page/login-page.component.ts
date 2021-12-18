@@ -48,7 +48,6 @@ export class LoginPageComponent implements OnInit {
   login(authData: UserRegistration) {
     this.auth.login(authData);
     this.router.navigate(['/']);
-
   }
 
   logout(event: Event) {
