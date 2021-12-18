@@ -12,6 +12,8 @@
       </button>
     </h2>
   </div>
+  <router-outlet></router-outlet>
+
   <div class="alert alert-warning" role="alert">
     Total number of orders: {{ count }}
   </div>
@@ -38,7 +40,7 @@
         <td>{{ order.destination_address }}</td>
         <td>{{ order.total_payment | json }}</td>
         <td>{{ order.creation_date | date: "MM/dd/yy, h:mm a" }}</td>
-        <td *ngIf="!order.approved">
+        <td *ngIf="!order.approved" class="approved">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -56,7 +58,7 @@
           </svg>
         </td>
 
-        <td *ngIf="order.approved">
+        <td *ngIf="order.approved"  class="approved">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -87,5 +89,3 @@
     </ul>
   </nav>
 </div>
-
-<router-outlet></router-outlet>

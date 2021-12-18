@@ -10,7 +10,6 @@ import { OrdersPageComponent } from './components/orders-page/orders-page.compon
 import { DispatchersPageComponent } from './components/dispatchers-page/dispatchers-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ClientComponent } from './components/clients-page/client/client.component';
-import { OrderComponent } from './components/order/order.component';
 import { DriverComponent } from './components/drivers-page/driver/driver.component';
 import { DispatcherComponent } from './components/dispatchers-page/dispatcher/dispatcher.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +23,8 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { RequestService } from './shared/services/request.service';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
+import { OrderComponent } from './components/orders-page/order/order.component';
+import { OrdersAdminPageComponent } from './components/orders-admin-page/orders-admin-page.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -45,6 +46,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
     DriverComponent,
     DispatcherComponent,
     CreateOrderComponent,
+    OrdersAdminPageComponent,
   ],
   imports: [
     BrowserModule,

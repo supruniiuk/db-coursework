@@ -11,6 +11,10 @@ export class ClientComponent implements OnInit {
   client: UserInfo;
   roles: FormGroup;
 
+  userRoles;
+
+  btnDisable: boolean = true;
+
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -41,6 +45,7 @@ export class ClientComponent implements OnInit {
   getUserRoles(id) {
     this.userService.getUserRoles(id).subscribe(
       (res: any) => {
+        this.userRoles = res;
         this.roles = new FormGroup({
           client: new FormControl(res.client),
           driver: new FormControl(res.driver),
@@ -51,6 +56,54 @@ export class ClientComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getNewRoles() {
+    let pickedRoles = this.roles.value;
+    let newRoles = {};
+    for (let role in pickedRoles) {
+      if (this.userRoles[role] != pickedRoles[role]) {
+        newRoles[role] = pickedRoles[role];
+      }
+    }
+
+    return newRoles;
+  }
+
+  checkUpdate() {
+    let newRoles = this.getNewRoles();
+    if (Object.keys(newRoles).length === 0) {
+      this.btnDisable = true;
+    } else {
+      this.btnDisable = false;
+    }
+  }
+
+  submit() {
+    let newRoles = this.getNewRoles();
+
+    for (let role in newRoles) {
+      if (newRoles[role]) {
+        this.userService.setUserRole(this.client.user_id, role).subscribe(
+          () => {
+            console.log('SUCCESS add');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.userService.deleteUserRole(this.client.user_id, role).subscribe(
+          () => {
+            console.log('SUCCESS delete');
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    }
+    console.log(newRoles);
   }
 
   getClientOrder(id) {}

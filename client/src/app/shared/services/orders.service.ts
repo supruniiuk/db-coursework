@@ -23,6 +23,8 @@ export interface Order {
   approved: boolean;
   order_status_id: number;
   total_payment: number;
+
+  type_name: string;
 }
 
 export interface OrdersResponse {
@@ -42,5 +44,9 @@ export class OrderService {
 
   getOrders(params): Observable<OrdersResponse> {
     return this.requestService.get<OrdersResponse>(this.route + params);
+  }
+
+  getOrderById(id: number): Observable<Order> {
+    return this.requestService.get<Order>(this.route + String(id));
   }
 }

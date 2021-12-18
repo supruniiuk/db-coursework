@@ -24,4 +24,8 @@ export class CarService {
   getAllCarTypes(): Observable<CarType[]> {
     return this.requestService.get<CarType[]>(this.route + `types`);
   }
+
+  getCarTypeById(id): Observable<CarType> {
+    return this.requestService.get<CarType>(this.route + `types/` + String(id));
+  }
 }

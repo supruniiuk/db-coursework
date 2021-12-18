@@ -11,6 +11,11 @@ export interface UserInfo {
   created_on: string;
 }
 
+export interface Role {
+  role_id: number;
+  role_name: string;
+}
+
 export interface UsersResponse {
   count: number;
   users: UserInfo[];
@@ -34,5 +39,22 @@ export class UserService {
 
   deleteUserById(id: number): Observable<null> {
     return this.requestService.delete<null>(this.route + String(id));
+  }
+
+  getUserRoles(id): Observable<Role[]> {
+    return this.requestService.get<Role[]>(this.route + id + `/roles`);
+  }
+
+  setUserRole(id, role): Observable<any> {
+    return this.requestService.create<any>(this.route + `role`, {
+      user_id: id,
+      rolename: role,
+    });
+  }
+
+  deleteUserRole(id, role): Observable<any> {
+    return this.requestService.delete<any>(
+      this.route + `role?user_id=${id}&rolename=${role}`
+    );
   }
 }
