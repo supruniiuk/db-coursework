@@ -67,6 +67,7 @@
           *ngIf="!isAuthenticated()"
           class="btn btn-dark btn-space btn-margin"
           [routerLink]="['/login']"
+          (click) = "visible=false"
         >
           Login
         </button>
@@ -74,6 +75,7 @@
           class="btn btn-dark"
           *ngIf="!isAuthenticated()"
           [routerLink]="['/registration']"
+          (click) = "visible=false"
         >
         Sign up
         </button>
