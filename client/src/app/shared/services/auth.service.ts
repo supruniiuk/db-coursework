@@ -59,8 +59,6 @@ export class AuthService {
       const expiresIn = new Date(tokenInfo.exp * 1000);
       localStorage.setItem('token', token);
       localStorage.setItem('expires', expiresIn.toString());
-      console.log('AUTH', this.isAuthenticated());
-
       this.router.navigate(['/']);
     } else {
       localStorage.clear();

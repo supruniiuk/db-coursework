@@ -43,7 +43,7 @@ total_payment: number;-->
       </button>
     </p>
 
-    <p *ngIf="role == 'driver' && order.waiting_time">
+    <p *ngIf="role == 'driver' && !order.waiting_time">
       <button type="submit" [routerLink]="['take']" class="btn btn-warning">
         Take
       </button>
@@ -102,5 +102,17 @@ total_payment: number;-->
 <div *ngIf="order.waiting_time" class="alert alert-primary" role="alert">
   <p><b>Waiting time:</b> {{ order.waiting_time }}</p>
   <p><b>Status:</b> {{ getStatusName() }}</p>
+  <p><b>Driver:</b> {{ order.driver_id }}</p>
+
+  <div *ngIf="order.driver_grade">
+    <p><b>Driver`s grade:</b> {{ order.driver_grade }}</p>
+    <p><b>Driver`s feedback:</b> {{ order.driver_comment }}</p>
+    <p><b>Finished status:</b> {{ order.order_status_id }}</p>
+  </div>
+  <p *ngIf="order.waiting_time && !order.driver_grade && role == 'driver'">
+    <button type="submit" [routerLink]="['take']" class="btn btn-primary">
+      Finish order
+    </button>
+  </p>
 </div>
 <router-outlet></router-outlet>

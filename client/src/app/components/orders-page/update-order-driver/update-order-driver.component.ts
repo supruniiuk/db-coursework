@@ -13,12 +13,14 @@ import {
 })
 export class UpdateOrderDriverComponent implements OnInit {
   driverUpdate: FormGroup;
+  gradeOrder: FormGroup;
   orderStatuses: OrderStatus[] = [];
   path: string;
-  id: number
+  id: number;
   order: Order;
 
   close: boolean = false;
+  gradeClose: boolean = false;
 
   constructor(private orderService: OrderService) {}
 
@@ -29,10 +31,16 @@ export class UpdateOrderDriverComponent implements OnInit {
 
     this.driverUpdate = new FormGroup({
       waiting_time: new FormControl('', [Validators.required]),
-      order_status: new FormControl('', [Validators.required]),
+      order_status: new FormControl(null, [Validators.required]),
     });
-    this.getOrder(this.id);
 
+    this.gradeOrder = new FormGroup({
+      driver_grade: new FormControl(5, [Validators.required]),
+      driver_comment: new FormControl('', [Validators.required]),
+      order_status: new FormControl(null, [Validators.required]),
+    });
+
+    this.getOrder(this.id);
     this.getOrderStatuses();
   }
 
@@ -50,7 +58,7 @@ export class UpdateOrderDriverComponent implements OnInit {
     this.orderService.takeOrderDriver(this.id, data).subscribe(
       () => {
         console.log('success');
-        this.close = true
+        this.close = true;
       },
       (err) => {
         console.log(err);
@@ -64,10 +72,11 @@ export class UpdateOrderDriverComponent implements OnInit {
       (res) => {
         if (this.path == 'take') {
           this.orderStatuses = res;
-
-          this.orderStatuses = this.orderStatuses.filter(
-            (status) => status.status_name == 'executing'
-          );
+          if (!this.order.waiting_time) {
+            this.orderStatuses = this.orderStatuses.filter(
+              (status) => status.status_name == 'executing'
+            );
+          }
         }
       },
       (err) => {
@@ -86,5 +95,21 @@ export class UpdateOrderDriverComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  grade() {
+    if (this.gradeOrder.valid) {
+      const formData = { ...this.gradeOrder.value };
+      console.log(formData);
+      this.orderService.gradeOrderDriver(this.id, formData).subscribe(
+        () => {
+          console.log('success');
+          this.gradeClose = true;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

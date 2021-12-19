@@ -32,36 +32,67 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher'] },
       },
-      { path: 'clients/:id', component: UserComponent },
+      {
+        path: 'clients/:id',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin', 'dispatcher'] },
+      },
       {
         path: 'drivers',
         component: UsersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher'] },
       },
-      { path: 'drivers/:id', component: UserComponent },
+      {
+        path: 'drivers/:id',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin', 'dispatcher'] },
+      },
       {
         path: 'dispatchers',
         component: UsersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin'] },
       },
-      { path: 'dispatchers/:id', component: UserComponent },
+      {
+        path: 'dispatchers/:id',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+        data: { allowedRoles: ['admin'] },
+      },
       {
         path: 'orders',
         component: OrdersPageComponent,
         canActivate: [AuthGuard],
         data: { allowedRoles: ['admin', 'dispatcher', 'client', 'driver'] },
         children: [
-          { path: 'create', component: CreateOrderComponent, children: [] },
+          {
+            path: 'create',
+            component: CreateOrderComponent,
+            children: [],
+            canActivate: [AuthGuard],
+            data: { allowedRoles: ['client'] },
+          },
         ],
       },
       {
         path: 'orders/:id',
         component: OrderComponent,
         children: [
-          { path: 'approve', component: UpdateOrderDispatcherComponent },
-          { path: 'take', component: UpdateOrderDriverComponent },
+          {
+            path: 'approve',
+            component: UpdateOrderDispatcherComponent,
+            canActivate: [AuthGuard],
+            data: { allowedRoles: ['dispatcher'] },
+          },
+          {
+            path: 'take',
+            component: UpdateOrderDriverComponent,
+            canActivate: [AuthGuard],
+            data: { allowedRoles: ['driver'] },
+          },
         ],
       },
 

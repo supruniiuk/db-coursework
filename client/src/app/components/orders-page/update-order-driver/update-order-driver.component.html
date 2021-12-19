@@ -1,4 +1,8 @@
-<div class="alert alert-primary" *ngIf="!close && !order.waiting_time" role="alert">
+<div
+  class="alert alert-primary"
+  *ngIf="!close && !order.waiting_time"
+  role="alert"
+>
   <form [formGroup]="driverUpdate">
     <div class="form-group">
       <input
@@ -27,9 +31,59 @@
   </form>
 </div>
 
-<div *ngIf="close && order.waiting_time" class="alert alert-primary" role="alert">
+<div
+  *ngIf="close && order.waiting_time"
+  class="alert alert-primary"
+  role="alert"
+>
   <p><b>Waiting time:</b> {{ driverUpdate.value.waiting_time }}</p>
   <p><b>Status:</b> executing</p>
+  <div *ngIf="order.driver_grade">
+    <p><b>Driver`s grade:</b> {{ gradeOrder.value.driver_grade }}</p>
+    <p><b>Driver`s feedback:</b> {{ gradeOrder.value.driver_comment }}</p>
+    <p><b>Status:</b> {{ gradeOrder.value.order_status }}</p>
+  </div>
+</div>
+
+<div
+  *ngIf="order.waiting_time && !order.driver_grade && !gradeClose"
+  class="alert alert-primary"
+  role="alert"
+>
+  <form [formGroup]="gradeOrder" (ngSubmit)="grade()">
+    <div class="form-group mt-4">
+      <i class="bi bi-star-fill checked"></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-fill"></i>
+    </div>
+    <div class="form-group mt-4">
+      <input
+        class="form-control"
+        placeholder="Your feedback"
+        formControlName="driver_comment"
+      />
+    </div>
+    <div class="form-group mt-4">
+      <select formControlName="order_status" class="form-select">
+        <option value="" selected disabled>Set order status</option>
+        <option
+          *ngFor="let status of orderStatuses; first as isFirst"
+          value="{{ status.status_id }}"
+        >
+          {{ status.status_name }}
+        </option>
+      </select>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!gradeOrder.valid"
+      class="btn btn-primary mt-4"
+    >
+      Finish
+    </button>
+  </form>
 </div>
 
 <!-- <option

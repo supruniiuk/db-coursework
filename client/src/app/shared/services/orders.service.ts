@@ -71,6 +71,13 @@ export class OrderService {
     );
   }
 
+  gradeOrderDriver(id, body): Observable<any> {
+    return this.requestService.update<any>(
+      this.route + 'grade/driver/' + String(id),
+      body
+    );
+  }
+
   getOrderStatuses(): Observable<OrderStatus[]> {
     return this.requestService.get<OrderStatus[]>(this.route + 'statuses');
   }
