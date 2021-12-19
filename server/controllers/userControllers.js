@@ -40,14 +40,22 @@ class UserControllers {
       return next(ApiError.badRequest("Incorrect email or password"));
     }
 
-    /* а тут надо проверка на роль, потому что можно много ролей иметь*/
     const checkExisting = await userService.getUserByEmail(email);
-    if (checkExisting) {
+    const checkRole = await roleService.checkUserRole(
+      checkExisting.user_id,
+      role
+    );
+    let userId = null;
+    if (checkExisting && checkRole) {
       return next(ApiError.badRequest("User already exists"));
+    } else if (checkExisting) {
+      await roleService.addUserRole(checkExisting.user_id, role);
+      userId = checkExisting.user_id;
+    } else {
+      userId = await userService.createUser(req.body);
     }
 
-    let userId = await userService.createUser(req.body);
-    let user = await userService.getUserById(userId.ind);
+    let user = await userService.getUserById(userId);
 
     const token = generateToken(user.user_id, user.email, role);
     return res.json({ token });

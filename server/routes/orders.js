@@ -3,7 +3,7 @@ const router = new Router();
 const orderControllers = require("../controllers/orderControllers");
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.get("/", authMiddleware, orderControllers.getOrders);
+router.get("/", orderControllers.getOrders);
 router.get("/statuses", authMiddleware, orderControllers.getOrderStatuses);
 router.post("/", authMiddleware, orderControllers.createOrder);
 router.delete("/:id", orderControllers.deleteOrderById);
