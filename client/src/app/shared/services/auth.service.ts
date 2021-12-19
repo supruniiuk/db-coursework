@@ -60,6 +60,7 @@ export class AuthService {
       localStorage.setItem('token', token);
       localStorage.setItem('expires', expiresIn.toString());
       this.router.navigate(['/']);
+      location.reload();
     } else {
       localStorage.clear();
     }

@@ -19,6 +19,7 @@
               auth.getUserRole() == 'dispatcher'
             "
             [routerLink]="['/clients']"
+            (click)="visible = false"
             >Clients</a
           >
         </li>
@@ -28,6 +29,7 @@
             href="#"
             *ngIf="auth.getUserRole() == 'admin'"
             [routerLink]="['/dispatchers']"
+            (click)="visible = false"
             >Dispatchers</a
           >
         </li>
@@ -40,6 +42,7 @@
               auth.getUserRole() == 'dispatcher'
             "
             [routerLink]="['/drivers']"
+            (click)="visible = false"
             >Drivers</a
           >
         </li>
@@ -48,6 +51,7 @@
             class="nav-link"
             href="#"
             *ngIf="auth.getUserRole()"
+            (click)="visible = false"
             [routerLink]="['/orders']"
             >Orders</a
           >
@@ -58,6 +62,7 @@
             href="#"
             *ngIf="auth.getUserRole() == 'driver'"
             [routerLink]="['/cars']"
+            (click)="visible = false"
             >My cars</a
           >
         </li>
@@ -67,7 +72,7 @@
           *ngIf="!isAuthenticated()"
           class="btn btn-dark btn-space btn-margin"
           [routerLink]="['/login']"
-          (click) = "visible=false"
+          (click)="visible = false"
         >
           Login
         </button>
@@ -75,9 +80,9 @@
           class="btn btn-dark"
           *ngIf="!isAuthenticated()"
           [routerLink]="['/registration']"
-          (click) = "visible=false"
+          (click)="visible = false"
         >
-        Sign up
+          Sign up
         </button>
 
         <button
@@ -93,7 +98,7 @@
   </nav>
 
   <main class="wrapper">
-<!--   <div *ngIf="(path == '/')">
+    <div *ngIf="visible">
       <h1><b>TaxiCall</b> - your reliable taxi service</h1>
       <img
         class="taxi-img d-block"
@@ -103,12 +108,12 @@
         *ngIf="!isAuthenticated()"
         type="button"
         class="btn btn-warning btn-lg"
-        (click) = "visible=false"
+        (click)="visible = false"
         [routerLink]="['/login']"
       >
         Start a ride
       </button>
-    </div>--> 
+    </div>
     <router-outlet></router-outlet>
   </main>
 
