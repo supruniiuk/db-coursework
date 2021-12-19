@@ -13,6 +13,7 @@ import { CreateOrderComponent } from './components/orders-page/create-order/crea
 import { OrderComponent } from './components/orders-page/order/order.component';
 import { OrdersPageComponent } from './components/orders-page/orders-page.component';
 import { UpdateOrderDispatcherComponent } from './components/orders-page/update-order-dispatcher/update-order-dispatcher.component';
+import { UpdateOrderDriverComponent } from './components/orders-page/update-order-driver/update-order-driver.component';
 import { UserComponent } from './components/users-page/user/user.component';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -60,6 +61,7 @@ const routes: Routes = [
         component: OrderComponent,
         children: [
           { path: 'approve', component: UpdateOrderDispatcherComponent },
+          { path: 'take', component: UpdateOrderDriverComponent },
         ],
       },
 

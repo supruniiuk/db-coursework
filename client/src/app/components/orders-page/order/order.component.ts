@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CarService, CarType } from 'src/app/shared/services/car.service';
-import { Order, OrderService } from 'src/app/shared/services/orders.service';
+import {
+  Order,
+  OrderService,
+  OrderStatus,
+} from 'src/app/shared/services/orders.service';
 
 @Component({
   selector: 'app-order',
@@ -12,6 +16,8 @@ export class OrderComponent implements OnInit {
   order: Order;
   car_type: CarType;
   role: string = '';
+  reject = false;
+  orderStatuses: OrderStatus[] = [];
 
   constructor(
     public authService: AuthService,
@@ -20,6 +26,8 @@ export class OrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getOrderStatuses();
+
     let href = location.pathname;
     let id = href.split('/')[2];
     this.role = this.authService.getDecodedAccessToken().role;
@@ -48,5 +56,40 @@ export class OrderComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getStatusName() {
+    return this.orderStatuses.find(
+      (status) => status.status_id == this.order.order_status_id
+    ).status_name;
+  }
+
+  getOrderStatuses() {
+    this.orderService.getOrderStatuses().subscribe(
+      (res) => {
+        this.orderStatuses = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  rejectOrder() {
+    let update = {
+      payment: 0,
+      approved: false,
+    };
+    this.orderService
+      .updateOrderByDispatcher(this.order.order_id, update)
+      .subscribe(
+        (res) => {
+          this.reject = true;
+          this.order.approved = false;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

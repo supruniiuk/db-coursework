@@ -34,10 +34,22 @@
     <i class="bi bi-info-circle-fill"></i> You haven`t called a taxi!
   </div>
 
-  <table *ngIf="count" class="table table-hover">
+  <div
+    class="alert alert-danger"
+    *ngIf="!carNum && role == 'driver'"
+    role="alert"
+  >
+    <i class="bi bi-info-circle-fill"></i> Add your car, otherwise you cant
+    work!
+  </div>
+
+  <table
+    *ngIf="(count && role != 'driver') || (carNum && role == 'driver')"
+    class="table table-hover"
+  >
     <thead>
       <tr>
-        <th *ngIf="role != 'client'">Client</th>
+        <th *ngIf="role !== 'client'">Client</th>
         <th scope="col">Driver</th>
         <th scope="col">Origin address</th>
         <th scope="col">Destination</th>
@@ -52,7 +64,7 @@
         *ngFor="let order of orders; first as isFirst"
         [routerLink]="['/orders/', order.order_id]"
       >
-        <td *ngIf="role == 'dispatcher' || role == 'admin'">
+        <td *ngIf="role !== 'client'">
           {{ order.client_id }}
         </td>
         <td>{{ order.driver_id | json }}</td>
@@ -98,7 +110,7 @@
       </tr>
     </tbody>
   </table>
-  <nav>
+  <nav *ngIf="(count && role != 'driver') || (carNum && role == 'driver')">
     <ul class="pagination justify-content-center">
       <li
         *ngFor="let page of [].constructor(pages); let i = index"

@@ -15,7 +15,7 @@
     Total number of cars: {{ count }}
   </div>
   <div class="alert alert-danger" *ngIf="count == 0" role="alert">
-    Add your car, otherwise you cant work!
+    <i class="bi bi-info-circle-fill"></i> Add your car, otherwise you cant work!
   </div>
   <router-outlet></router-outlet>
 

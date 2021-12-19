@@ -12,6 +12,9 @@ export class UpdateOrderDispatcherComponent implements OnInit {
   payment: number;
   role: string = '';
 
+  close: boolean = false;
+  path: string = '';
+
   constructor(
     public authService: AuthService,
     private orderService: OrderService
@@ -19,9 +22,9 @@ export class UpdateOrderDispatcherComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.authService.getDecodedAccessToken().role;
-
     let href = location.pathname;
     let id = href.split('/')[2];
+    this.path = href.split('/')[3];
     this.getOrder(id);
   }
 
@@ -29,7 +32,6 @@ export class UpdateOrderDispatcherComponent implements OnInit {
     this.orderService.getOrderById(id).subscribe(
       (res) => {
         this.order = res;
-        console.log('ORDER', this.order);
       },
       (err) => {
         console.log(err);
@@ -51,6 +53,7 @@ export class UpdateOrderDispatcherComponent implements OnInit {
       .subscribe(
         (res) => {
           console.log('success');
+          this.close = true;
         },
         (err) => {
           console.log(err);

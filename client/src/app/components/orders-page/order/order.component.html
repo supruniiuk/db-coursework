@@ -24,18 +24,33 @@ total_payment: number;-->
     <p *ngIf="order.terminal"><b>Terminal</b></p>
     <p *ngIf="order.air_condition"><b>Air conditioning</b></p>
     <p *ngIf="role == 'dispatcher'">
-      <button type="submit" class="btn btn-danger" *ngIf="!order.total_payment">
+      <button
+        type="submit"
+        class="btn btn-danger"
+        (click)="rejectOrder()"
+        [disabled]="order.total_payment"
+        *ngIf="!order.total_payment && order.total_payment !== 0 && !reject"
+      >
         Reject
       </button>
       <button
         type="submit"
         [routerLink]="['approve']"
         class="btn btn-success"
-        *ngIf="!order.total_payment"
+        *ngIf="!order.total_payment && order.total_payment !== 0 && !reject"
       >
         Approve
       </button>
     </p>
+
+    <p *ngIf="role == 'driver' && order.waiting_time">
+      <button type="submit" [routerLink]="['take']" class="btn btn-warning">
+        Take
+      </button>
+    </p>
+    <h3 class="text-danger" *ngIf="order.total_payment === 0 || reject">
+      Rejected
+    </h3>
   </div>
 
   <div>
@@ -84,4 +99,8 @@ total_payment: number;-->
   <p><b>Total payment:</b> {{ order.total_payment }}$</p>
 </div>
 
+<div *ngIf="order.waiting_time" class="alert alert-primary" role="alert">
+  <p><b>Waiting time:</b> {{ order.waiting_time }}</p>
+  <p><b>Status:</b> {{ getStatusName() }}</p>
+</div>
 <router-outlet></router-outlet>

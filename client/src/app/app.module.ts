@@ -24,6 +24,7 @@ import { UserComponent } from './components/users-page/user/user.component';
 import { CarsComponent } from './components/cars/cars.component';
 import { CreateCarComponent } from './components/cars/create-car/create-car.component';
 import { UpdateOrderDispatcherComponent } from './components/orders-page/update-order-dispatcher/update-order-dispatcher.component';
+import { UpdateOrderDriverComponent } from './components/orders-page/update-order-driver/update-order-driver.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -44,7 +45,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     UserComponent,
     CarsComponent,
     CreateCarComponent,
-    UpdateOrderDispatcherComponent
+    UpdateOrderDispatcherComponent,
+    UpdateOrderDriverComponent
   ],
   imports: [
     BrowserModule,

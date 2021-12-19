@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CarService } from 'src/app/shared/services/car.service';
 import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
 export interface UserTokenInfo {
@@ -23,9 +24,12 @@ export class OrdersPageComponent implements OnInit {
   pages = 0;
   count = 0;
   role: string = '';
+
+  carNum: number = 0;
   constructor(
     public authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private carService: CarService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +37,9 @@ export class OrdersPageComponent implements OnInit {
     this.role = this.userInfo.role;
     this.getOrders(this.page);
 
-    console.log(this.userInfo.email);
+    if (this.role === 'driver') {
+      this.getCarsDriver();
+    }
   }
 
   getOrders(page) {
@@ -52,5 +58,17 @@ export class OrdersPageComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  getCarsDriver() {
+    this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
+      (res: any) => {
+        this.carNum = res.count;
+        console.log(this.carNum);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

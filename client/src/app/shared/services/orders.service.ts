@@ -33,6 +33,11 @@ export interface OrdersResponse {
   count: number;
   orders: Order[];
 }
+
+export interface OrderStatus {
+  status_id: number;
+  status_name: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -57,5 +62,16 @@ export class OrderService {
       this.route + 'dispatcher/' + String(id),
       body
     );
+  }
+
+  takeOrderDriver(id, body): Observable<any> {
+    return this.requestService.update<any>(
+      this.route + 'driver/' + String(id),
+      body
+    );
+  }
+
+  getOrderStatuses(): Observable<OrderStatus[]> {
+    return this.requestService.get<OrderStatus[]>(this.route + 'statuses');
   }
 }

@@ -1,0 +1,40 @@
+<div class="alert alert-primary" *ngIf="!close && !order.waiting_time" role="alert">
+  <form [formGroup]="driverUpdate">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Waiting time"
+        formControlName="waiting_time"
+      />
+    </div>
+
+    <div class="form-group mt-4">
+      <select formControlName="order_status" class="form-select">
+        <option value="" selected disabled>Set order status</option>
+        <option
+          *ngFor="let status of orderStatuses; first as isFirst"
+          value="{{ status.status_id }}"
+        >
+          {{ status.status_name }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4" (click)="submit()">
+      Take
+    </button>
+  </form>
+</div>
+
+<div *ngIf="close && order.waiting_time" class="alert alert-primary" role="alert">
+  <p><b>Waiting time:</b> {{ driverUpdate.value.waiting_time }}</p>
+  <p><b>Status:</b> executing</p>
+</div>
+
+<!-- <option
+          *ngFor="let status of orderStatuses; first as isFirst"
+          value="{{ status.status_id }}"
+        >
+          {{ status.status_name }}
+        </option>-->
