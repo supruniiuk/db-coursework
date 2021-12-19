@@ -106,7 +106,13 @@
     <p><b>Finished status:</b> {{ getStatusName() }}</p>
   </div>
   <p *ngIf="order.waiting_time && !order.driver_grade && role == 'driver'">
-    <button type="submit" [routerLink]="['take']" class="btn btn-primary">
+    <button
+      type="submit"
+      *ngIf="path != 'take' && !finish"
+      [routerLink]="['take']"
+      (click)="finish = true"
+      class="btn btn-primary"
+    >
       Finish order
     </button>
   </p>

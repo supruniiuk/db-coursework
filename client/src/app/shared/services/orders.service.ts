@@ -78,6 +78,13 @@ export class OrderService {
     );
   }
 
+  gradeOrderClient(id, body): Observable<any> {
+    return this.requestService.update<any>(
+      this.route + 'grade/client/' + String(id),
+      body
+    );
+  }
+
   getOrderStatuses(): Observable<OrderStatus[]> {
     return this.requestService.get<OrderStatus[]>(this.route + 'statuses');
   }

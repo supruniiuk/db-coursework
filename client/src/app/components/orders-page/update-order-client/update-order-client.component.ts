@@ -23,7 +23,7 @@ export class UpdateOrderClientComponent implements OnInit {
     this.id = +href.split('/')[2];
 
     this.gradeOrder = new FormGroup({
-      client_grade: new FormControl(5, [Validators.required]),
+      client_grade: new FormControl(null, [Validators.required]),
       client_comment: new FormControl('', [Validators.required]),
     });
 

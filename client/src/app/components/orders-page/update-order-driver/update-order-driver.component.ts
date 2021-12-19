@@ -35,7 +35,7 @@ export class UpdateOrderDriverComponent implements OnInit {
     });
 
     this.gradeOrder = new FormGroup({
-      driver_grade: new FormControl(5, [Validators.required]),
+      driver_grade: new FormControl(null, [Validators.required]),
       driver_comment: new FormControl('', [Validators.required]),
       order_status: new FormControl(null, [Validators.required]),
     });
@@ -46,7 +46,7 @@ export class UpdateOrderDriverComponent implements OnInit {
 
   submit() {
     console.log(this.driverUpdate.value);
-    if (this.driverUpdate.valid) {
+   if (this.driverUpdate.valid) {
       const formData = { ...this.driverUpdate.value };
       formData.order_status = +formData.order_status;
       console.log(formData);
@@ -98,7 +98,8 @@ export class UpdateOrderDriverComponent implements OnInit {
   }
 
   grade() {
-    if (this.gradeOrder.valid) {
+    console.log(this.gradeOrder.value);
+   /* if (this.gradeOrder.valid) {
       const formData = { ...this.gradeOrder.value };
       console.log(formData);
       this.orderService.gradeOrderDriver(this.id, formData).subscribe(
@@ -110,6 +111,6 @@ export class UpdateOrderDriverComponent implements OnInit {
           console.log(err);
         }
       );
-    }
+    }*/
   }
 }

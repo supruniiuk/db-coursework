@@ -19,6 +19,8 @@ export class OrderComponent implements OnInit {
   reject = false;
   orderStatuses: OrderStatus[] = [];
 
+  finish: boolean = false;
+  path: string
   constructor(
     public authService: AuthService,
     private orderService: OrderService,
@@ -30,6 +32,7 @@ export class OrderComponent implements OnInit {
 
     let href = location.pathname;
     let id = href.split('/')[2];
+    this.path = href.split('/')[3];
     this.role = this.authService.getDecodedAccessToken().role;
 
     this.getOrder(id);
