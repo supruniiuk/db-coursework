@@ -15,7 +15,7 @@ export interface Car {
   model: string;
   color: string;
   type_id: number;
-  air_condition: boolean;
+  air_conditioning: boolean;
   terminal: boolean;
   empty_trunk: boolean;
   animals: boolean;

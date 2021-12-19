@@ -62,6 +62,6 @@
       </option>
     </select>
   </div>
-  <button type="submit" class="btn btn-warning m-4">Create</button>
+  <button type="submit" class="btn btn-warning m-4" [disabled]='!newCar.valid'>Create</button>
   <button [routerLink]="['/cars/']" class="btn btn-warning m-4">Close</button>
 </form>

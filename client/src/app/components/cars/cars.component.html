@@ -28,8 +28,8 @@
         <p class="card-text">{{ car.type_id }}</p>
         <p class="card-text">
           Air condition
-          <i *ngIf="car.air_condition" class="bi bi-check-lg"></i>
-          <i *ngIf="!car.air_condition" class="bi bi-x-lg"></i>
+          <i *ngIf="car.air_conditioning" class="bi bi-check-lg"></i>
+          <i *ngIf="!car.air_conditioning" class="bi bi-x-lg"></i>
         </p>
         <p class="card-text">
           Terminal
@@ -50,7 +50,7 @@
         <hr />
         <div class="d-flex justify-content-between">
           <a (click)="deleteCarObj = car" class="btn btn-danger">Delete</a>
-          <a class="btn btn-warning">Update</a>
+         <!--<a class="btn btn-warning">Update</a>-->
         </div>
       </div>
     </div>
