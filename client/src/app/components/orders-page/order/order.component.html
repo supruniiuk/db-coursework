@@ -1,14 +1,3 @@
-<!--order_id: number; client_id: number; 
- client_comment: string; client_grade: number;
-
-driver_id: number; waiting_time: string;
-
-driver_comment: string; driver_grade:number; 
-
-approved: boolean; 
-order_status_id: number; 
-total_payment: number;-->
-
 <div
   class="alert alert-warning d-flex justify-content-between"
   *ngIf="order"
@@ -48,6 +37,13 @@ total_payment: number;-->
         Take
       </button>
     </p>
+
+    <p *ngIf="role == 'client' && order.driver_grade && !order.client_comment">
+      <button type="submit" [routerLink]="['grade']" class="btn btn-warning">
+        Grade order
+      </button>
+    </p>
+
     <h3 class="text-danger" *ngIf="order.total_payment === 0 || reject">
       Rejected
     </h3>
@@ -107,12 +103,24 @@ total_payment: number;-->
   <div *ngIf="order.driver_grade">
     <p><b>Driver`s grade:</b> {{ order.driver_grade }}</p>
     <p><b>Driver`s feedback:</b> {{ order.driver_comment }}</p>
-    <p><b>Finished status:</b> {{ order.order_status_id }}</p>
+    <p><b>Finished status:</b> {{ getStatusName() }}</p>
   </div>
   <p *ngIf="order.waiting_time && !order.driver_grade && role == 'driver'">
     <button type="submit" [routerLink]="['take']" class="btn btn-primary">
       Finish order
     </button>
   </p>
+</div>
+
+<div class="alert alert-warning" *ngIf="order.client_comment" role="alert">
+  <div class="form-group mt-4">
+    <i class="bi bi-star-fill checked"></i>
+    <i class="bi bi-star-fill"></i>
+    <i class="bi bi-star-fill"></i>
+    <i class="bi bi-star-fill"></i>
+    <i class="bi bi-star-fill"></i>
+  </div>
+
+  <p><b>Client feedback:</b> {{ order.client_comment }}</p>
 </div>
 <router-outlet></router-outlet>
