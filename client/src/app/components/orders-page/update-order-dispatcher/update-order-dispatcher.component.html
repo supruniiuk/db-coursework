@@ -15,8 +15,9 @@
     </div>
     <button
       type="submit"
-      [disabled]="path == 'approve'"
       class="btn btn-success mt-4"
+      [disabled]="!payment"
+
       (click)="approveOrder()"
     >
       Approve

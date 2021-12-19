@@ -64,7 +64,6 @@ export class OrdersPageComponent implements OnInit {
     this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
       (res: any) => {
         this.carNum = res.count;
-        console.log(this.carNum);
       },
       (err) => {
         console.log(err);

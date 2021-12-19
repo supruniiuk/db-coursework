@@ -46,7 +46,7 @@ export class UpdateOrderDriverComponent implements OnInit {
 
   submit() {
     console.log(this.driverUpdate.value);
-   if (this.driverUpdate.valid) {
+    if (this.driverUpdate.valid) {
       const formData = { ...this.driverUpdate.value };
       formData.order_status = +formData.order_status;
       console.log(formData);
@@ -59,6 +59,7 @@ export class UpdateOrderDriverComponent implements OnInit {
       () => {
         console.log('success');
         this.close = true;
+        this.getOrder(this.id);
       },
       (err) => {
         console.log(err);
@@ -70,14 +71,7 @@ export class UpdateOrderDriverComponent implements OnInit {
   getOrderStatuses() {
     this.orderService.getOrderStatuses().subscribe(
       (res) => {
-        if (this.path == 'take') {
-          this.orderStatuses = res;
-          if (!this.order.waiting_time) {
-            this.orderStatuses = this.orderStatuses.filter(
-              (status) => status.status_name == 'executing'
-            );
-          }
-        }
+        this.orderStatuses = res;
       },
       (err) => {
         console.log(err);
@@ -98,10 +92,10 @@ export class UpdateOrderDriverComponent implements OnInit {
   }
 
   grade() {
-    console.log(this.gradeOrder.value);
-   /* if (this.gradeOrder.valid) {
+    if (this.gradeOrder.valid) {
       const formData = { ...this.gradeOrder.value };
       console.log(formData);
+      formData.grade = +formData.grade;
       this.orderService.gradeOrderDriver(this.id, formData).subscribe(
         () => {
           console.log('success');
@@ -111,6 +105,6 @@ export class UpdateOrderDriverComponent implements OnInit {
           console.log(err);
         }
       );
-    }*/
+    }
   }
 }

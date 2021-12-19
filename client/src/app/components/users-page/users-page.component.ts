@@ -22,7 +22,6 @@ export class UsersPageComponent implements OnInit {
     let pathname = location.pathname;
     this.role = pathname.split('/')[1];
     this.role = this.role.substring(0, this.role.length - 1);
-    console.log('this.role', this.role);
     this.getUsers(this.page, this.role);
   }
 
@@ -32,7 +31,6 @@ export class UsersPageComponent implements OnInit {
         this.count = res.count;
         this.pages = Math.ceil(this.count / 10);
         this.users = res.users;
-        console.log(this.pages);
       },
       (err) => {
         this.errorMessage = err;

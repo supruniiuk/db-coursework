@@ -23,6 +23,7 @@ export interface Order {
   approved: boolean;
   order_status_id: number;
   total_payment: number;
+  dispatcher_id: string;
 
   type_name: string;
   client_name?: string;
