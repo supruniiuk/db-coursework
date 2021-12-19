@@ -26,7 +26,9 @@ export interface Order {
 
   type_name: string;
   client_name?: string;
-  client_surname?: string;
+  driver_name?: string;
+  dispatcher_name?: string;
+
 }
 
 export interface OrdersResponse {

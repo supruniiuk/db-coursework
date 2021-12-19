@@ -6,7 +6,7 @@
   <div>
     <p><b>Origin address:</b> {{ order.origin_address }}</p>
     <p><b>Destination address:</b> {{ order.destination_address }}</p>
-    <p><b>Number of people:</b> {{ order.number_of_people }}</p>
+    <p><b>Passengers:</b> {{ order.number_of_people }}</p>
     <p *ngIf="car_type"><b>Car type:</b> {{ car_type.type_name }}</p>
     <p *ngIf="order.empty_trunk"><b>Empty trunk</b></p>
     <p *ngIf="order.animals"><b>Animals</b></p>

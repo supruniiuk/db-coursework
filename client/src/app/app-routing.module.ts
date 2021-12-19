@@ -5,6 +5,7 @@ import {
   RouterModule,
   Routes,
 } from '@angular/router';
+import { AppComponent } from './app.component';
 import { CarsComponent } from './components/cars/cars.component';
 import { CreateCarComponent } from './components/cars/create-car/create-car.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
     path: '',
     component: MainPageComponent,
     children: [
-      { path: '', redirectTo: '/', pathMatch: 'full' },
+      { path: '', redirectTo: '', pathMatch: 'full'},
       { path: 'login', component: LoginPageComponent },
       { path: 'registration', component: LoginPageComponent },
       {

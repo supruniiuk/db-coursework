@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-dark mt-4">Submit</button>
+    <button type="submit" class="btn btn-dark mt-4" [disabled]="!formLogin.valid">Submit</button>
   </form>
 
   <form
@@ -192,6 +192,6 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-dark mt-4">Submit</button>
+    <button type="submit" class="btn btn-dark mt-4"  [disabled]="!formRegistration.valid">Submit</button>
   </form>
 </div>

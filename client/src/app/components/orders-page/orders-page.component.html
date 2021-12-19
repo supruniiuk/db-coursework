@@ -51,6 +51,7 @@
       <tr>
         <th *ngIf="role !== 'client'">Client</th>
         <th scope="col">Driver</th>
+        <th *ngIf="role !== 'client'" scope="col">Dispatcher</th>
         <th scope="col">Origin address</th>
         <th scope="col">Destination</th>
         <th scope="col">Payment</th>
@@ -65,9 +66,10 @@
         [routerLink]="['/orders/', order.order_id]"
       >
         <td *ngIf="role !== 'client'">
-          {{ order.client_id }}
+          {{ order.client_name }}
         </td>
-        <td>{{ order.driver_id | json }}</td>
+        <td>{{ order.driver_name }}</td>
+        <td  *ngIf="role !== 'client'" >{{ order.dispatcher_name }}</td>
         <td>{{ order.origin_address }}</td>
         <td>{{ order.destination_address }}</td>
         <td>{{ order.total_payment | json }}</td>

@@ -18,7 +18,6 @@ import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { RequestService } from './shared/services/request.service';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
 import { OrderComponent } from './components/orders-page/order/order.component';
-import { OrdersAdminPageComponent } from './components/orders-admin-page/orders-admin-page.component';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { UserComponent } from './components/users-page/user/user.component';
 import { CarsComponent } from './components/cars/cars.component';
@@ -41,7 +40,6 @@ const INTERCEPTOR_PROVIDER: Provider = {
     LoginPageComponent,
     OrderComponent,
     CreateOrderComponent,
-    OrdersAdminPageComponent,
     UsersPageComponent,
     UserComponent,
     CarsComponent,
