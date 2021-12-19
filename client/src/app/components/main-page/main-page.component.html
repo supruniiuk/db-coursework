@@ -1,6 +1,6 @@
 <div class="home">
   <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <a class="navbar-brand" href="#">TaxiCall</a>
+    <a class="navbar-brand" href="#"><b>TaxiCall</b></a>
     <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -75,7 +75,7 @@
           *ngIf="!isAuthenticated()"
           [routerLink]="['/registration']"
         >
-          Register
+        Sign up
         </button>
 
         <button
@@ -91,6 +91,22 @@
   </nav>
 
   <main class="wrapper">
+    <div *ngIf="path == '/' && visible==true">
+      <h1><b>TaxiCall</b> - your reliable taxi service</h1>
+      <img
+        class="taxi-img d-block"
+        src="https://spectrum.ieee.org/media-library/a-group-of-nyc-taxis.jpg?id=25585849&width=1200&coordinates=0%2C155%2C0%2C155&height=600"
+      />
+      <button
+        *ngIf="!isAuthenticated()"
+        type="button"
+        class="btn btn-warning btn-lg"
+        (click) = "visible=false"
+        [routerLink]="['/login']"
+      >
+        Start a ride
+      </button>
+    </div>
     <router-outlet></router-outlet>
   </main>
 

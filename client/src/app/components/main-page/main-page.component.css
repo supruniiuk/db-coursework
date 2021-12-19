@@ -30,3 +30,12 @@ main {
   display: flex;
   justify-content: center;
 }
+
+.taxi-img {
+  height: 60vh;
+  margin-bottom: 30px;
+}
+.btn-lg {
+  display: grid;
+  margin: 0 auto;
+}
