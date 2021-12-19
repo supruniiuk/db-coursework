@@ -16,12 +16,13 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
     count = await pageService.getCount(`SELECT * FROM orders`);
   } else if (userRole === "driver") {
     ordersQuery = `SELECT  orders.*, car_types.type_name FROM orders 
-                 JOIN car_types ON car_types.type_id = orders.car_type_id
-                  WHERE driver_id=${userId} 
+                  JOIN car_types ON car_types.type_id = orders.car_type_id
+                  WHERE approved=true
                   ORDER BY creation_date DESC
                   LIMIT ${limit_num} OFFSET ${offset_num}`;
+
     count = await pageService.getCount(`SELECT *
-                                           FROM orders  WHERE driver_id=${userId}`);
+                                           FROM orders  WHERE  approved=true`);
   } else if (userRole === "client") {
     ordersQuery = `SELECT orders.*, car_types.type_name 
                     FROM orders 
@@ -61,6 +62,21 @@ const getOrderById = async (id) => {
     });
 
   return order[0];
+};
+
+const getOrderStatuses = async (id) => {
+  const query = `SELECT * FROM order_status`;
+  let statuses = [];
+  await pool
+    .query(query)
+    .then((res) => {
+      statuses = res.rows;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return statuses;
 };
 
 const createOrder = async (client_id, body) => {
@@ -145,13 +161,13 @@ const updateOrderByDispatcher = async (order_id, dispatcher_id, body) => {
     });
 };
 
-const updateOrderByDriver = async (order_id, body) => {
+const updateOrderByDriver = async (order_id, driver_id, body) => {
   // types: interrupted, executing, completed
-  let { driver_id, waiting_time, order_status } = body;
+  let { waiting_time, order_status } = body;
 
   const query = `CALL take_order_driver(${order_id}, ${driver_id}, '${waiting_time}', ${order_status});`;
-
-  await pool
+  console.log(query);
+ await pool
     .query(query)
     .then((res) => {
       console.log("Order is successfully updated by driver");
@@ -170,6 +186,7 @@ module.exports = {
   updateOrderByDriver,
   gradeOrderByClient,
   gradeOrderByDriver,
+  getOrderStatuses,
 };
 
 query();

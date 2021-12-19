@@ -15,6 +15,11 @@ class OrderControllers {
     res.json(orders);
   }
 
+  async getOrderStatuses(req, res) {
+    let statuses = await orderService.getOrderStatuses();
+    res.json(statuses);
+  }
+
   async getOrderById(req, res) {
     let orderId = req.params.id;
     let order = await orderService.getOrderById(orderId);
@@ -46,7 +51,10 @@ class OrderControllers {
 
   async updateOrderByDriver(req, res) {
     let orderId = req.params.id;
-    res.json(await orderService.updateOrderByDriver(orderId, req.body));
+    let driverId = tokenService.getUserIdFromToken(req);
+    res.json(
+      await orderService.updateOrderByDriver(orderId, driverId, req.body)
+    );
   }
 
   async gradeOrderByClient(req, res) {
