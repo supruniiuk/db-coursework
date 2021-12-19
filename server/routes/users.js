@@ -5,19 +5,19 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/auth", authMiddleware, userControllers.check);
 
-router.get("/", userControllers.getUsers);
-router.get("/:id/roles", userControllers.getUserRolesById);
-router.get("/:id", userControllers.getUserById);
-router.get("/role/:rolename", userControllers.getUsersByRole);
+router.get("/", authMiddleware, userControllers.getUsers);
+router.get("/:id/roles", authMiddleware, userControllers.getUserRolesById);
+router.get("/:id", authMiddleware, userControllers.getUserById);
+router.get("/role/:rolename", authMiddleware, userControllers.getUsersByRole);
 
-router.post("/role", userControllers.addUserRole);
+router.post("/role", authMiddleware, userControllers.addUserRole);
 router.post("/", userControllers.registration);
 router.post("/login", userControllers.login);
 
-router.delete("/role", userControllers.deleteUserRole);
-router.delete("/:id", userControllers.deleteUserById);
+router.delete("/role", authMiddleware, userControllers.deleteUserRole);
+router.delete("/:id", authMiddleware, userControllers.deleteUserById);
 
-router.put("/", userControllers.updateUser);
-router.put("/role", userControllers.updateUserRole);
+router.put("/", authMiddleware, userControllers.updateUser);
+router.put("/role", authMiddleware, userControllers.updateUserRole);
 
 module.exports = router;

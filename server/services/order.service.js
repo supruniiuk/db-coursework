@@ -15,30 +15,32 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
   LEFT JOIN users AS U2
        ON orders.driver_id = U2.user_id
   LEFT JOIN users AS U3
-       ON orders.dispatcher_id = U3.user_id
-   ORDER BY creation_date DESC `;
+       ON orders.dispatcher_id = U3.user_id `;
 
   let count = 0;
   if (userRole === "admin" || userRole === "dispatcher") {
-    ordersQuery = ordersQuery + `LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = ordersQuery + `ORDER BY creation_date DESC 
+                                 LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(`SELECT * FROM orders`);
   } else if (userRole === "driver") {
-    ordersQuery = ordersQuery + `LIMIT ${limit_num} OFFSET ${offset_num}`;
+    ordersQuery = ordersQuery + `WHERE approved=true 
+                                  ORDER BY creation_date DESC
+                                  LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(
       `SELECT *  FROM orders  WHERE  approved=true`
     );
   } else if (userRole === "client") {
     ordersQuery = `SELECT orders.*, car_types.type_name, CONCAT(U1.name,' ', U1.surname)  AS client_name,
-                    CONCAT(U2.name,' ', U2.surname) AS driver_name,
-                    FROM orders 
-                   LEFT JOIN users AS U1
-                        ON orders.client_id = U1.user_id
-                   LEFT JOIN users AS U2
-                        ON orders.driver_id = U2.user_id
-                    JOIN car_types ON car_types.type_id = orders.car_type_id
-                    WHERE client_id=${userId} 
-                    ORDER BY creation_date DESC
-                    LIMIT ${limit_num} OFFSET ${offset_num}`;
+                  CONCAT(U2.name,' ', U2.surname) AS driver_name
+                  FROM orders 
+                  LEFT JOIN users AS U1
+                  ON orders.client_id = U1.user_id
+                  LEFT JOIN users AS U2
+                  ON orders.driver_id = U2.user_id
+                  JOIN car_types ON car_types.type_id = orders.car_type_id
+                  WHERE client_id=${userId} 
+                  ORDER BY creation_date DESC
+                  LIMIT ${limit_num} OFFSET ${offset_num}`;
 
     count = await pageService.getCount(`SELECT *
                     FROM orders  WHERE client_id=${userId}`);
@@ -58,7 +60,17 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
 };
 
 const getOrderById = async (id) => {
-  const orderQuery = `SELECT * FROM orders
+  const orderQuery = `SELECT *, CONCAT(U1.name,' ', U1.surname)  AS client_name,
+                      CONCAT(U2.name,' ', U2.surname) AS driver_name,
+                      CONCAT(U3.name,' ', U3.surname) AS dispatcher_name 
+                      FROM orders 
+                      JOIN car_types ON car_types.type_id = orders.car_type_id
+                      LEFT JOIN users AS U1
+                      ON orders.client_id = U1.user_id
+                      LEFT JOIN users AS U2
+                      ON orders.driver_id = U2.user_id
+                      LEFT JOIN users AS U3
+                      ON orders.dispatcher_id = U3.user_id
                       WHERE order_id=${id}`;
   let order = "";
   await pool
@@ -169,11 +181,9 @@ const updateOrderByDispatcher = async (order_id, dispatcher_id, body) => {
 };
 
 const updateOrderByDriver = async (order_id, driver_id, body) => {
-  // types: interrupted, executing, completed
   let { waiting_time, order_status } = body;
 
   const query = `CALL take_order_driver(${order_id}, ${driver_id}, '${waiting_time}', ${order_status});`;
-  console.log(query);
   await pool
     .query(query)
     .then((res) => {

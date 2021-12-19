@@ -13,21 +13,20 @@ const getPasswordHash = (email, password) => {
 };
 
 const getUsers = async (limit_num, offset_num) => {
-  const users = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
+  const query = `SELECT * FROM users  LIMIT ${limit_num} OFFSET ${offset_num}`;
   let count = await pageService.getCount("SELECT * FROM users");
 
-  let user_table = [];
+  let users = [];
   await pool
-    .query(users)
+    .query(query)
     .then((res) => {
-      user_table = res.rows;
+      users = res.rows;
     })
     .catch((err) => {
       console.log(err);
     });
 
-  console.log(user_table);
-  return { count, user_table };
+  return { count, users };
 };
 
 const deleteUserById = async (id) => {

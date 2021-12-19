@@ -81,7 +81,6 @@ const createCar = async (body, driver_id) => {
   } = body;
   const newCarQuery = `CALL create_car(null, ${driver_id}, '${license_number}', '${model}', '${color}', ${type_id}, ${air_conditioning}, ${terminal}, ${empty_trunk}, ${animals});`;
   let carId = null;
-  console.log(newCarQuery);
   await pool
     .query(newCarQuery)
     .then((res) => {

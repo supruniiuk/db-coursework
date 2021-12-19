@@ -99,7 +99,6 @@ class UserControllers {
   async getUserRolesById(req, res) {
     let userId = req.params.id;
     let roles = await roleService.getUserRolesById(userId);
-    console.log(roles);
     res.json(roles);
   }
 
