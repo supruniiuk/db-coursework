@@ -6,7 +6,6 @@ const authMiddleware = require("../middleware/authMiddleware");
 router.get("/", authMiddleware, carControllers.getCars);
 router.get("/types", authMiddleware, carControllers.getAllCarTypes);
 
-router.get("/types", authMiddleware, carControllers.getAllCarTypes);
 router.get("/types/:id", authMiddleware, carControllers.getCarTypeById);
 
 router.get("/:id",authMiddleware, carControllers.getCarById);

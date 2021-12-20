@@ -181,9 +181,9 @@ const updateOrderByDispatcher = async (order_id, dispatcher_id, body) => {
 };
 
 const updateOrderByDriver = async (order_id, driver_id, body) => {
-  let { waiting_time, order_status } = body;
+  let { waiting_time, order_status, car_id } = body;
 
-  const query = `CALL take_order_driver(${order_id}, ${driver_id}, '${waiting_time}', ${order_status});`;
+  const query = `CALL take_order_driver(${order_id}, ${driver_id}, '${waiting_time}', ${order_status}, ${car_id});`;
   await pool
     .query(query)
     .then((res) => {

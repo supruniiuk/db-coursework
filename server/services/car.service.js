@@ -41,7 +41,7 @@ const getCarById = async (id) => {
       console.log(err);
     });
 
-  return car;
+  return car[0];
 };
 
 const deleteAllUserCars = async (user_id) => {
