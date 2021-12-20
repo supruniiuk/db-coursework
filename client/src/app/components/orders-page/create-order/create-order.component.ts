@@ -5,8 +5,7 @@ import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
 @Component({
   selector: 'app-create-order',
-  templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.css'],
+  templateUrl: './create-order.component.html'
 })
 export class CreateOrderComponent implements OnInit {
   newOrder: FormGroup;
@@ -32,7 +31,6 @@ export class CreateOrderComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.newOrder.value);
     if (this.newOrder.valid) {
       const formData = { ...this.newOrder.value };
       console.log(formData);
@@ -44,8 +42,6 @@ export class CreateOrderComponent implements OnInit {
     this.carService.getAllCarTypes().subscribe(
       (res) => {
         this.carTypes = res;
-        console.log(this.carTypes);
-        console.log('success');
       },
       (err) => {
         console.log(err);

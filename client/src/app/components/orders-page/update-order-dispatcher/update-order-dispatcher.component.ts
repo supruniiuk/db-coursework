@@ -52,7 +52,6 @@ export class UpdateOrderDispatcherComponent implements OnInit {
       .updateOrderByDispatcher(this.order.order_id, update)
       .subscribe(
         (res) => {
-          console.log('success');
           this.close = true;
         },
         (err) => {

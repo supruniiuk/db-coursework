@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { CarService, CarType } from 'src/app/shared/services/car.service';
+import { Car, CarService, CarType } from 'src/app/shared/services/car.service';
 import {
   Order,
   OrderService,
@@ -18,9 +18,10 @@ export class OrderComponent implements OnInit {
   role: string = '';
   reject = false;
   orderStatuses: OrderStatus[] = [];
+  car: Car;
 
   finish: boolean = false;
-  path: string
+  path: string;
   constructor(
     public authService: AuthService,
     private orderService: OrderService,
@@ -43,6 +44,7 @@ export class OrderComponent implements OnInit {
       (res) => {
         this.order = res;
         this.getCarType(this.order.car_type_id);
+        this.getCar(this.order.car_id);
       },
       (err) => {
         console.log(err);
@@ -54,6 +56,17 @@ export class OrderComponent implements OnInit {
     this.carService.getCarTypeById(id).subscribe(
       (res) => {
         this.car_type = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getCar(id) {
+    this.carService.getCarById(id).subscribe(
+      (res) => {
+        this.car = res;
       },
       (err) => {
         console.log(err);

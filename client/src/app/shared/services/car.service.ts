@@ -33,6 +33,10 @@ export class CarService {
     return this.requestService.get<Car[]>(this.route + params);
   }
 
+  getCarById(id): Observable<Car> {
+    return this.requestService.get<Car>(this.route + id);
+  }
+
   getAllCarTypes(): Observable<CarType[]> {
     return this.requestService.get<CarType[]>(this.route + `types`);
   }

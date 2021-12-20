@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Car, CarService } from 'src/app/shared/services/car.service';
 import {
   Order,
   OrderService,
   OrderStatus,
 } from 'src/app/shared/services/orders.service';
+import { UserInfo } from 'src/app/shared/services/user.service';
+import { UserTokenInfo } from '../orders-page.component';
 
 @Component({
   selector: 'app-update-order-driver',
@@ -18,20 +22,27 @@ export class UpdateOrderDriverComponent implements OnInit {
   path: string;
   id: number;
   order: Order;
+  cars: Car[];
 
   close: boolean = false;
   gradeClose: boolean = false;
-
-  constructor(private orderService: OrderService) {}
+  userInfo: UserTokenInfo;
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService,
+    private carService: CarService
+  ) {}
 
   ngOnInit(): void {
     let href = location.pathname;
     this.path = href.split('/')[3];
     this.id = +href.split('/')[2];
+    this.userInfo = this.authService.getDecodedAccessToken();
 
     this.driverUpdate = new FormGroup({
       waiting_time: new FormControl('', [Validators.required]),
       order_status: new FormControl(null, [Validators.required]),
+      car_id: new FormControl(null, [Validators.required]),
     });
 
     this.gradeOrder = new FormGroup({
@@ -40,16 +51,16 @@ export class UpdateOrderDriverComponent implements OnInit {
       order_status: new FormControl(null, [Validators.required]),
     });
 
+    this.getCars();
     this.getOrder(this.id);
     this.getOrderStatuses();
   }
 
   submit() {
-    console.log(this.driverUpdate.value);
     if (this.driverUpdate.valid) {
       const formData = { ...this.driverUpdate.value };
       formData.order_status = +formData.order_status;
-      console.log(formData);
+      formData.car_id = +formData.car_id;
       this.takeOrder(formData);
     }
   }
@@ -57,7 +68,6 @@ export class UpdateOrderDriverComponent implements OnInit {
   takeOrder(data) {
     this.orderService.takeOrderDriver(this.id, data).subscribe(
       () => {
-        console.log('success');
         this.close = true;
         this.getOrder(this.id);
       },
@@ -79,11 +89,21 @@ export class UpdateOrderDriverComponent implements OnInit {
     );
   }
 
+  getCars() {
+    this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
+      (res: any) => {
+        this.cars = res.cars;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   getOrder(id) {
     this.orderService.getOrderById(id).subscribe(
       (res) => {
         this.order = res;
-        console.log('ORDER', this.order);
       },
       (err) => {
         console.log(err);
@@ -94,11 +114,9 @@ export class UpdateOrderDriverComponent implements OnInit {
   grade() {
     if (this.gradeOrder.valid) {
       const formData = { ...this.gradeOrder.value };
-      console.log(formData);
       formData.grade = +formData.grade;
       this.orderService.gradeOrderDriver(this.id, formData).subscribe(
         () => {
-          console.log('success');
           this.gradeClose = true;
         },
         (err) => {

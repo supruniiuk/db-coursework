@@ -1,6 +1,6 @@
 <div
   class="alert alert-success"
-  *ngIf="!order.total_payment && role == 'dispatcher' && !close"
+  *ngIf="!order.total_payment && role == 'dispatcher' && !close && order"
   role="alert"
 >
   <form>
@@ -25,6 +25,6 @@
   </form>
 </div>
 
-<div *ngIf="payment && close" class="alert alert-success" role="alert">
+<div *ngIf="order &&payment && close" class="alert alert-success" role="alert">
   <p><b>Total payment:</b> {{ payment }}$</p>
 </div>

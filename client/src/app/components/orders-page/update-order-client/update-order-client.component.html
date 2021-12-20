@@ -1,6 +1,6 @@
 <div
   class="alert alert-warning"
-  *ngIf="!gradeClose && !order.client_comment"
+  *ngIf="!gradeClose && !order.client_comment && order"
   role="alert"
 >
   <form [formGroup]="gradeOrder" (ngSubmit)="grade()">

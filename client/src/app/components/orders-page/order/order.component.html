@@ -12,7 +12,6 @@
   </div>
   <div
     class="alert alert-warning d-flex justify-content-between"
-    *ngIf="order"
     role="alert"
   >
     <div>
@@ -113,6 +112,7 @@
   <div *ngIf="order.waiting_time" class="alert alert-primary" role="alert">
     <p><b>Waiting time:</b> {{ order.waiting_time }}</p>
     <p><b>Status:</b> {{ getStatusName() }}</p>
+    <p *ngIf='car'><b>Car:</b> {{car.model}}, {{car.color}}({{car.license_number}})</p>
 
     <div *ngIf="order.driver_grade">
       <p>

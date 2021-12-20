@@ -1,19 +1,16 @@
 <div
   class="alert alert-primary"
-  *ngIf="!close && !order.waiting_time"
+  *ngIf="!close && !order.waiting_time && order"
   role="alert"
 >
   <form [formGroup]="driverUpdate">
     <div class="form-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Waiting time"
-        formControlName="waiting_time"
-      />
+      <label>Waiting time</label>
+      <input type="text" class="form-control" formControlName="waiting_time" />
     </div>
 
     <div class="form-group mt-4">
+      <label>Status</label>
       <select formControlName="order_status" class="form-select">
         <option value="" selected disabled>Set order status</option>
         <option
@@ -25,13 +22,25 @@
       </select>
     </div>
 
+    <div class="form-group mt-4">
+      <label>Select car</label>
+      <select formControlName="car_id" class="form-select">
+        <option
+          *ngFor="let car of cars; first as isFirst"
+          value="{{ car.car_id }}"
+        >
+          {{ car.model }}, {{ car.license_number }}
+        </option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-primary mt-4" (click)="submit()">
       Take
     </button>
   </form>
 </div>
 
-<div *ngIf="close" class="alert alert-primary" role="alert">
+<div *ngIf="close && order" class="alert alert-primary" role="alert">
   <p><b>Waiting time:</b> {{ driverUpdate.value.waiting_time }}</p>
   <p><b>Status:</b> executing</p>
   <div *ngIf="order.driver_grade">
@@ -139,6 +148,8 @@
       />
     </div>
     <div class="form-group mt-4">
+      <label>Set status</label>
+
       <select formControlName="order_status" class="form-select">
         <option value="" selected disabled>Set order status</option>
         <option

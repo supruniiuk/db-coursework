@@ -24,6 +24,7 @@ export interface Order {
   order_status_id: number;
   total_payment: number;
   dispatcher_id: string;
+  car_id: number;
 
   type_name: string;
   client_name?: string;

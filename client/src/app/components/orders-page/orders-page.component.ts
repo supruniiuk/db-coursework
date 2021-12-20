@@ -52,7 +52,6 @@ export class OrdersPageComponent implements OnInit {
           this.orders = res.orders;
           this.count = res.count;
           this.pages = Math.ceil(this.count / 10);
-          console.log('success', this.orders);
         },
         (err) => {
           console.log(err);

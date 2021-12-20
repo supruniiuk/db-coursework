@@ -44,12 +44,10 @@ export class UpdateOrderClientComponent implements OnInit {
   grade() {
     if (this.gradeOrder.valid) {
       const formData = { ...this.gradeOrder.value };
-      console.log(formData);
       formData.grade = +formData.grade;
 
       this.orderService.gradeOrderClient(this.id, formData).subscribe(
         () => {
-          console.log('success');
           this.gradeClose = true;
         },
         (err) => {
