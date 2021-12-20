@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserInfo, UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -16,9 +17,15 @@ export class UsersPageComponent implements OnInit {
   count = 0;
   deleteUser: UserInfo = null;
 
-  constructor(private userService: UserService) {}
+  loginUserRole: string = '';
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.loginUserRole = this.authService.getDecodedAccessToken().role;
     let pathname = location.pathname;
     this.role = pathname.split('/')[1];
     this.role = this.role.substring(0, this.role.length - 1);

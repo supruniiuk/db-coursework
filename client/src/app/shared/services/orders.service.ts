@@ -68,6 +68,10 @@ export class OrderService {
     );
   }
 
+  deleteOrderById(id: number): Observable<null> {
+    return this.requestService.delete<null>(this.route + String(id));
+  }
+
   takeOrderDriver(id, body): Observable<any> {
     return this.requestService.update<any>(
       this.route + 'driver/' + String(id),

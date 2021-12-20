@@ -19,6 +19,7 @@ export interface UserTokenInfo {
 export class OrdersPageComponent implements OnInit {
   orders: Order[];
   userInfo: UserTokenInfo;
+  deleteOrder: Order;
 
   page = 1;
   pages = 0;
@@ -63,6 +64,19 @@ export class OrdersPageComponent implements OnInit {
     this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
       (res: any) => {
         this.carNum = res.count;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteOrderById(id) {
+    this.orderService.deleteOrderById(id).subscribe(
+      () => {
+        this.orders = this.orders.filter((order) => order.order_id != id);
+        this.count -= 1;
+        console.log('success');
       },
       (err) => {
         console.log(err);
