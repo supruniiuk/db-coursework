@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserInfo, UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -12,15 +13,20 @@ export class UserComponent implements OnInit {
   user: UserInfo;
   roles: FormGroup;
 
+  loginUserRole: string = '';
+
   userRoles;
 
   btnDisable: boolean = true;
+
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
     let pathname = location.pathname;
     this.role = pathname.split('/')[1];
     this.role = this.role.substring(0, this.role.length - 1);
 
+    this.loginUserRole = this.authService.getDecodedAccessToken().role
     this.roles = new FormGroup({
       client: new FormControl(false),
       driver: new FormControl(false),
@@ -32,7 +38,6 @@ export class UserComponent implements OnInit {
     this.getUser(id);
   }
 
-  constructor(private userService: UserService) {}
 
   getUser(id) {
     this.userService.getUserById(id).subscribe(

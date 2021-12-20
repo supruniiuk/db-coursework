@@ -5,7 +5,11 @@
     <p>Email: {{ user.email }}</p>
     <p>Phone: {{ user.phone }}</p>
     <p>Date of joining: {{ user.created_on | date: "MM/dd/yy, h:mm a" }}</p>
-    <form [formGroup]="roles" *ngIf="role=='admin'" (ngSubmit)="submit()">
+    <form
+      [formGroup]="roles"
+      *ngIf="loginUserRole == 'admin'"
+      (ngSubmit)="submit()"
+    >
       <div class="form-check">
         <input
           class="form-check-input"
