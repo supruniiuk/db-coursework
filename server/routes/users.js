@@ -15,7 +15,7 @@ router.post("/", userControllers.registration);
 router.post("/login", userControllers.login);
 
 router.delete("/role", authMiddleware, userControllers.deleteUserRole);
-router.delete("/:id", authMiddleware, userControllers.deleteUserById);
+//router.delete("/:id", authMiddleware, userControllers.deleteUserById);
 
 router.put("/", authMiddleware, userControllers.updateUser);
 router.put("/role", authMiddleware, userControllers.updateUserRole);
