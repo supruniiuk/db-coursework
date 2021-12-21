@@ -41,7 +41,7 @@
     *ngIf="
       role == 'admin' ||
       role == 'dispatcher' ||
-      role == 'client' ||
+      role == 'client' && count ||
       (count && role != 'driver') ||
       (count && carNum != 0 && role == 'driver')
     "

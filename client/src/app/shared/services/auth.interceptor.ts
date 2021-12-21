@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(() => {
-        console.log('Intercept');
+        //console.log('Intercept');
       }),
       catchError((error: HttpErrorResponse) => {
         console.log('[Interceptor Error]: ', error);
@@ -32,6 +32,9 @@ export class AuthInterceptor implements HttpInterceptor {
               authFailed: true,
             },
           });
+        }
+        else{
+          this.router.navigate(['/error'])
         }
         return throwError(error);
       })

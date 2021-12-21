@@ -40,8 +40,6 @@ export class CreateCarComponent implements OnInit {
     this.carService.getAllCarTypes().subscribe(
       (res) => {
         this.carTypes = res;
-        console.log(this.carTypes);
-        console.log('success');
       },
       (err) => {
         console.log(err);
@@ -60,4 +58,5 @@ export class CreateCarComponent implements OnInit {
     );
     this.newCar.reset();
   }
+  
 }

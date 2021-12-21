@@ -8,6 +8,7 @@ import {
 import { AppComponent } from './app.component';
 import { CarsComponent } from './components/cars/cars.component';
 import { CreateCarComponent } from './components/cars/create-car/create-car.component';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { CreateOrderComponent } from './components/orders-page/create-order/create-order.component';
@@ -111,6 +112,11 @@ const routes: Routes = [
         data: { allowedRoles: ['driver'] },
         children: [{ path: 'create', component: CreateCarComponent }],
       },
+
+      {
+        path: 'error',
+        component: ErrorPageComponent
+      }
     ],
   },
 ];

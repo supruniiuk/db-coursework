@@ -42,6 +42,8 @@ export class UpdateOrderDriverComponent implements OnInit {
     this.path = href.split('/')[3];
     this.id = +href.split('/')[2];
     this.userInfo = this.authService.getDecodedAccessToken();
+    this.getOrder(this.id);
+    this.getOrderStatuses();
 
     this.driverUpdate = new FormGroup({
       waiting_time: new FormControl('', [Validators.required]),
@@ -54,10 +56,6 @@ export class UpdateOrderDriverComponent implements OnInit {
       driver_comment: new FormControl('', [Validators.required]),
       order_status: new FormControl(null, [Validators.required]),
     });
-
-    this.getCars();
-    this.getOrder(this.id);
-    this.getOrderStatuses();
   }
 
   submit() {
@@ -103,26 +101,32 @@ export class UpdateOrderDriverComponent implements OnInit {
     };
 
     for (let feature in featuresOrder) {
-      if (featuresOrder[feature] != true) {
+      if (featuresOrder[feature] !== true && feature != 'type_id') {
         delete featuresOrder[feature];
       }
     }
 
+    this.cars = [];
+
     this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
       (res: CarResponse) => {
         let carsResponse = res.cars;
-        for (let car of carsResponse) {
+        for (let i = 0; i < carsResponse.length; i++) {
           let indicator = false;
-          for (let feature in car) {
+          for (let feature in carsResponse[i]) {
             if (
               featuresOrder.hasOwnProperty(feature) &&
-              car[feature] !== featuresOrder[feature]
+              carsResponse[i][feature] != featuresOrder[feature]
             ) {
               indicator = true;
             }
           }
           if (!indicator) {
-            this.cars.push(car);
+            if (this.cars) {
+              this.cars = [carsResponse[i]];
+            } else {
+              this.cars.push(carsResponse[i]);
+            }
           }
         }
       },
@@ -136,6 +140,7 @@ export class UpdateOrderDriverComponent implements OnInit {
     this.orderService.getOrderById(id).subscribe(
       (res) => {
         this.order = res;
+        this.getCars();
       },
       (err) => {
         console.log(err);

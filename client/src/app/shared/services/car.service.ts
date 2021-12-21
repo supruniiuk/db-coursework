@@ -53,4 +53,8 @@ export class CarService {
   createCar(car): Observable<any> {
     return this.requestService.create<any>(this.route, car);
   }
+
+  deleteCarById(id: number): Observable<null> {
+    return this.requestService.delete<null>(this.route + String(id));
+  }
 }

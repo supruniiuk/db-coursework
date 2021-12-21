@@ -1,4 +1,4 @@
-<div class="orders-page page">
+<div class="orders-page page" *ngIf="cars">
   <div class="d-flex justify-content-between">
     <h2>
       Cars
@@ -15,7 +15,8 @@
     Total number of cars: {{ count }}
   </div>
   <div class="alert alert-danger" *ngIf="count == 0" role="alert">
-    <i class="bi bi-info-circle-fill"></i> Add your car, otherwise you cant work!
+    <i class="bi bi-info-circle-fill"></i> Add your car, otherwise you cant
+    work!
   </div>
   <router-outlet></router-outlet>
 
@@ -25,7 +26,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ car.model }}</h5>
         <p class="card-text">{{ car.color }}</p>
-        <p class="card-text">{{ car.type_id }}</p>
+        <p class="card-text">{{ getType(car.type_id) }}</p>
         <p class="card-text">
           Air condition
           <i *ngIf="car.air_conditioning" class="bi bi-check-lg"></i>
@@ -50,7 +51,7 @@
         <hr />
         <div class="d-flex justify-content-between">
           <a (click)="deleteCarObj = car" class="btn btn-danger">Delete</a>
-         <!--<a class="btn btn-warning">Update</a>-->
+          <!--<a class="btn btn-warning">Update</a>-->
         </div>
       </div>
     </div>
