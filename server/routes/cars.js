@@ -9,7 +9,7 @@ router.get("/types", authMiddleware, carControllers.getAllCarTypes);
 router.get("/types/:id", authMiddleware, carControllers.getCarTypeById);
 
 router.get("/:id",authMiddleware, carControllers.getCarById);
-router.delete("/:id", authMiddleware, carControllers.deleteCarById);
+//router.delete("/:id", authMiddleware, carControllers.deleteCarById);
 router.post("/", authMiddleware, carControllers.createCar);
 router.put("/", authMiddleware, carControllers.updateCar);
 
