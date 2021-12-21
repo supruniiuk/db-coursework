@@ -5,6 +5,12 @@
     <p>Email: {{ user.email }}</p>
     <p>Phone: {{ user.phone }}</p>
     <p>Date of joining: {{ user.created_on | date: "MM/dd/yy, h:mm a" }}</p>
+    <div class="d-flex justify-content-evenly">
+      <p class="mb-0">Total orders: {{ statistics.total }}</p>
+      <p *ngIf="role !== 'driver'" class="mb-0">
+        Approved: {{ statistics.approved }}
+      </p>
+    </div>
     <form
       [formGroup]="roles"
       *ngIf="loginUserRole == 'admin'"
@@ -56,7 +62,5 @@
         </button>
       </div>
     </form>
-    <p class="mb-0">Total orders: {{statistics.total}}</p>
-    <p *ngIf="role!=='driver'" class="mb-0">Approved: {{statistics.approved}}</p>
   </div>
 </div>
