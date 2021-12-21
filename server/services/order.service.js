@@ -5,6 +5,37 @@ const query = async () => {
   await pool.connect();
 };
 
+const getStatistics = async (userId, userRole) => {
+  const queryCount = `SELECT COUNT(*) as total
+                 FROM orders WHERE ${userRole}_id=${userId}`;
+
+  let count = null;
+  let approved = null;
+
+  await pool
+    .query(queryCount)
+    .then((res) => {
+      count = res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const queryApproved = `SELECT COUNT(*) as approved
+  FROM orders WHERE ${userRole}_id=${userId} AND approved=true;`;
+
+  await pool
+    .query(queryApproved)
+    .then((res) => {
+      approved = res.rows[0];
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return { ...count, ...approved };
+};
+
 const getOrders = async (limit_num, offset_num, userId, userRole) => {
   let ordersQuery = `SELECT  orders.*, car_types.type_name ,CONCAT(U1.name,' ', U1.surname)  AS client_name,
   CONCAT(U2.name,' ', U2.surname) AS driver_name,
@@ -19,11 +50,15 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
 
   let count = 0;
   if (userRole === "admin" || userRole === "dispatcher") {
-    ordersQuery = ordersQuery + `ORDER BY creation_date DESC 
+    ordersQuery =
+      ordersQuery +
+      `ORDER BY creation_date DESC 
                                  LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(`SELECT * FROM orders`);
   } else if (userRole === "driver") {
-    ordersQuery = ordersQuery + `WHERE approved=true 
+    ordersQuery =
+      ordersQuery +
+      `WHERE driver_id IS NULL OR driver_id = ${userId}
                                   ORDER BY creation_date DESC
                                   LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(
@@ -204,6 +239,7 @@ module.exports = {
   gradeOrderByClient,
   gradeOrderByDriver,
   getOrderStatuses,
+  getStatistics,
 };
 
 query();

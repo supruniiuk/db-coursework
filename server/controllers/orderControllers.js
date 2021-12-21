@@ -15,6 +15,13 @@ class OrderControllers {
     res.json(orders);
   }
 
+  async getStatistics(req, res) {
+    let { userId, userRole } = req.query;
+
+    const statistics = await orderService.getStatistics(userId, userRole);
+    res.json(statistics);
+  }
+
   async getOrderStatuses(req, res) {
     let statuses = await orderService.getOrderStatuses();
     res.json(statuses);
