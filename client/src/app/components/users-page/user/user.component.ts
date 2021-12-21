@@ -1,32 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import {
+  OrderService,
+  StatisticsResponse,
+} from 'src/app/shared/services/orders.service';
 import { UserInfo, UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit {
   role: string = '';
   user: UserInfo;
   roles: FormGroup;
-
+  statistics: StatisticsResponse;
   loginUserRole: string = '';
 
   userRoles;
 
   btnDisable: boolean = true;
 
-  constructor(private userService: UserService, private authService: AuthService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     let pathname = location.pathname;
     this.role = pathname.split('/')[1];
     this.role = this.role.substring(0, this.role.length - 1);
 
-    this.loginUserRole = this.authService.getDecodedAccessToken().role
+    this.loginUserRole = this.authService.getDecodedAccessToken().role;
     this.roles = new FormGroup({
       client: new FormControl(false),
       driver: new FormControl(false),
@@ -38,12 +45,23 @@ export class UserComponent implements OnInit {
     this.getUser(id);
   }
 
-
   getUser(id) {
     this.userService.getUserById(id).subscribe(
       (res: any) => {
         this.user = res;
         this.getUserRoles(this.user.user_id);
+        this.getStatistics(this.user.user_id, this.role);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getStatistics(id, role) {
+    this.orderService.getStatistics(`?userId=${id}&userRole=${role}`).subscribe(
+      (res: any) => {
+        this.statistics = res;
       },
       (err) => {
         console.log(err);
@@ -96,7 +114,6 @@ export class UserComponent implements OnInit {
       if (newRoles[role]) {
         this.userService.setUserRole(this.user.user_id, role).subscribe(
           () => {
-            console.log('SUCCESS add');
             this.userRoles[role] = newRoles[role];
             this.checkUpdate();
           },
@@ -107,7 +124,6 @@ export class UserComponent implements OnInit {
       } else {
         this.userService.deleteUserRole(this.user.user_id, role).subscribe(
           () => {
-            console.log('SUCCESS delete');
             this.userRoles[role] = newRoles[role];
             this.checkUpdate();
           },
@@ -117,7 +133,6 @@ export class UserComponent implements OnInit {
         );
       }
     }
-    console.log(newRoles);
   }
 
   getUserOrder(id) {}

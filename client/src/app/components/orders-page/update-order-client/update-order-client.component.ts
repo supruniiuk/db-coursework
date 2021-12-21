@@ -4,8 +4,7 @@ import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
 @Component({
   selector: 'app-update-order-client',
-  templateUrl: './update-order-client.component.html',
-  styleUrls: ['./update-order-client.component.css'],
+  templateUrl: './update-order-client.component.html'
 })
 export class UpdateOrderClientComponent implements OnInit {
   gradeOrder: FormGroup;

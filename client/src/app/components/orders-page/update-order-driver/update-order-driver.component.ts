@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { Car, CarService } from 'src/app/shared/services/car.service';
+import {
+  Car,
+  CarResponse,
+  CarService,
+} from 'src/app/shared/services/car.service';
 import {
   Order,
   OrderService,
@@ -90,9 +94,37 @@ export class UpdateOrderDriverComponent implements OnInit {
   }
 
   getCars() {
+    let featuresOrder = {
+      type_id: this.order.car_type_id,
+      air_conditioning: this.order.air_condition,
+      terminal: this.order.terminal,
+      empty_trunk: this.order.empty_trunk,
+      animals: this.order.animals,
+    };
+
+    for (let feature in featuresOrder) {
+      if (featuresOrder[feature] != true) {
+        delete featuresOrder[feature];
+      }
+    }
+
     this.carService.getCars(`?userId=${this.userInfo.id}`).subscribe(
-      (res: any) => {
-        this.cars = res.cars;
+      (res: CarResponse) => {
+        let carsResponse = res.cars;
+        for (let car of carsResponse) {
+          let indicator = false;
+          for (let feature in car) {
+            if (
+              featuresOrder.hasOwnProperty(feature) &&
+              car[feature] !== featuresOrder[feature]
+            ) {
+              indicator = true;
+            }
+          }
+          if (!indicator) {
+            this.cars.push(car);
+          }
+        }
       },
       (err) => {
         console.log(err);

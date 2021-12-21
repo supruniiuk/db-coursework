@@ -38,6 +38,11 @@ export interface OrdersResponse {
   orders: Order[];
 }
 
+export interface StatisticsResponse {
+  total: number;
+  approved: boolean;
+}
+
 export interface OrderStatus {
   status_id: number;
   status_name: string;
@@ -55,6 +60,10 @@ export class OrderService {
 
   getOrders(params): Observable<OrdersResponse> {
     return this.requestService.get<OrdersResponse>(this.route + params);
+  }
+
+  getStatistics(params): Observable<StatisticsResponse> {
+    return this.requestService.get<StatisticsResponse>(this.route + 'statistics' + params)
   }
 
   getOrderById(id: number): Observable<Order> {

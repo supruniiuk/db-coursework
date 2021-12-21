@@ -76,7 +76,6 @@ export class OrdersPageComponent implements OnInit {
       () => {
         this.orders = this.orders.filter((order) => order.order_id != id);
         this.count -= 1;
-        console.log('success');
       },
       (err) => {
         console.log(err);

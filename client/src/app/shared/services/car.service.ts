@@ -8,6 +8,11 @@ export interface CarType {
   description: string;
 }
 
+export interface CarResponse {
+  count: number;
+  cars: Car[];
+}
+
 export interface Car {
   car_id: number;
   driver_id: number;
@@ -29,8 +34,8 @@ export class CarService {
   route = 'cars/';
   constructor(public requestService: RequestService) {}
 
-  getCars(params = ''): Observable<Car[]> {
-    return this.requestService.get<Car[]>(this.route + params);
+  getCars(params = ''): Observable<CarResponse> {
+    return this.requestService.get<CarResponse>(this.route + params);
   }
 
   getCarById(id): Observable<Car> {

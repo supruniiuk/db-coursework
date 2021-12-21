@@ -50,7 +50,6 @@ export class UsersPageComponent implements OnInit {
       () => {
         this.users = this.users.filter((user) => user.user_id != id);
         this.count -= 1;
-        console.log('success');
       },
       (err) => {
         console.log(err);

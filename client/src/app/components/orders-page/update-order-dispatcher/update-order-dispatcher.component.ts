@@ -4,8 +4,7 @@ import { Order, OrderService } from 'src/app/shared/services/orders.service';
 
 @Component({
   selector: 'app-update-order-dispatcher',
-  templateUrl: './update-order-dispatcher.component.html',
-  styleUrls: ['./update-order-dispatcher.component.css'],
+  templateUrl: './update-order-dispatcher.component.html'
 })
 export class UpdateOrderDispatcherComponent implements OnInit {
   order: Order;

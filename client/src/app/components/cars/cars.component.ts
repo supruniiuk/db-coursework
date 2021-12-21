@@ -26,12 +26,9 @@ export class CarsComponent implements OnInit {
     this.userInfo = this.authService.getDecodedAccessToken();
 
     this.getCars(this.page);
-
-    console.log(this.userInfo.email);
   }
 
   getCars(page) {
-    console.log(`?userId=${this.userInfo.id}&page=${page}`)
     this.carService
       .getCars(`?userId=${this.userInfo.id}&page=${page}`)
       .subscribe(
@@ -39,7 +36,6 @@ export class CarsComponent implements OnInit {
           this.cars = res.cars;
           this.count = res.count;
           this.pages = Math.ceil(this.count / 10);
-          console.log('success', this.cars);
         },
         (err) => {
           console.log(err);
