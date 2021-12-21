@@ -41,11 +41,13 @@ class UserControllers {
     }
 
     const checkExisting = await userService.getUserByEmail(email);
-    const checkRole = await roleService.checkUserRole(
-      checkExisting.user_id,
-      role
-    );
+
+    let checkRole = null;
     let userId = null;
+
+    if (checkExisting) {
+      checkRole = await roleService.checkUserRole(checkExisting.user_id, role);
+    }
     if (checkExisting && checkRole) {
       return next(ApiError.badRequest("User already exists"));
     } else if (checkExisting) {

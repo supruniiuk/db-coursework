@@ -58,7 +58,7 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
   } else if (userRole === "driver") {
     ordersQuery =
       ordersQuery +
-      `WHERE driver_id IS NULL OR driver_id = ${userId}
+      `WHERE (driver_id IS NULL AND approved=true) OR driver_id = ${userId}
                                   ORDER BY creation_date DESC
                                   LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(

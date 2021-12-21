@@ -34,7 +34,6 @@ class OrderControllers {
   }
 
   async createOrder(req, res) {
-    //сделать после создания заказа кнопку отправки неактивной!!!
     let userId = tokenService.getUserIdFromToken(req);
     res.json(await orderService.createOrder(userId, req.body));
   }
