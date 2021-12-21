@@ -28,8 +28,8 @@
           type="submit"
           class="btn btn-danger"
           (click)="rejectOrder()"
-          [disabled]="order.total_payment"
-          *ngIf="!order.total_payment && order.total_payment !== 0 && !reject"
+          [disabled]="path=='approve' || order.total_payment"
+          *ngIf="!order.dispatcher_id"
         >
           Reject
         </button>

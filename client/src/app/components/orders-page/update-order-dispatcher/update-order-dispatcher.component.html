@@ -1,6 +1,6 @@
 <div
   class="alert alert-success"
-  *ngIf="!order.total_payment && role == 'dispatcher' && !close && order"
+  *ngIf="!order.dispatcher_id && !order.total_payment && role == 'dispatcher' && !close && order"
   role="alert"
 >
   <form>
@@ -17,7 +17,6 @@
       type="submit"
       class="btn btn-success mt-4"
       [disabled]="!payment"
-
       (click)="approveOrder()"
     >
       Approve
@@ -25,6 +24,6 @@
   </form>
 </div>
 
-<div *ngIf="order &&payment && close" class="alert alert-success" role="alert">
+<div *ngIf="order && payment && close" class="alert alert-success" role="alert">
   <p><b>Total payment:</b> {{ payment }}$</p>
 </div>

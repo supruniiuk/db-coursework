@@ -44,7 +44,7 @@ export class UpdateOrderDispatcherComponent implements OnInit {
 
   approveOrder() {
     let update = {
-      payment: +this.payment,
+      payment: (+this.payment).toFixed(2),
       approved: true,
     };
     this.orderService
@@ -57,5 +57,6 @@ export class UpdateOrderDispatcherComponent implements OnInit {
           console.log(err);
         }
       );
+    location.reload()
   }
 }
