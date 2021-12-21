@@ -42,8 +42,6 @@
 
       <hr />
       <div class="d-flex justify-content-between align-items-center">
-        <p class="mb-0">Total orders: {{statistics.total}}</p>
-        <p class="mb-0">Approved: {{statistics.approved}}</p>
         <button
           type="submit"
           [disabled]="
@@ -58,5 +56,7 @@
         </button>
       </div>
     </form>
+    <p class="mb-0">Total orders: {{statistics.total}}</p>
+    <p *ngIf="role!=='driver'" class="mb-0">Approved: {{statistics.approved}}</p>
   </div>
 </div>
