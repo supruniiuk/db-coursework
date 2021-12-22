@@ -62,7 +62,7 @@ const getOrders = async (limit_num, offset_num, userId, userRole) => {
                                   ORDER BY creation_date DESC
                                   LIMIT ${limit_num} OFFSET ${offset_num}`;
     count = await pageService.getCount(
-      `SELECT *  FROM orders  WHERE  approved=true`
+      `SELECT * FROM orders WHERE (driver_id IS NULL AND approved=true) OR driver_id = ${userId}`
     );
   } else if (userRole === "client") {
     ordersQuery = `SELECT orders.*, car_types.type_name, CONCAT(U1.name,' ', U1.surname)  AS client_name,
